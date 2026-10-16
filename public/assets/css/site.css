@@ -266,7 +266,7 @@ body.no-scroll{overflow:hidden}
 
 /* Before / after */
 .ba-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.ba-grid .ba:first-child{grid-column:span 2;grid-row:span 2}
+.ba-grid--feature .ba:first-child{grid-column:span 2;grid-row:span 2}
 .ba{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:var(--grey-100);user-select:none;-webkit-user-select:none;touch-action:pan-y;--pos:50%}
 .ba img{width:100%;height:100%;object-fit:cover;pointer-events:none}
 .ba__after{position:absolute;inset:0;clip-path:inset(0 0 0 var(--pos))}
@@ -279,7 +279,7 @@ body.no-scroll{overflow:hidden}
 .ba__tag--a{right:14px;background:var(--yellow);color:var(--green-900)}
 .ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0;touch-action:pan-y}
 .ba figcaption{position:absolute;left:0;right:0;bottom:0;padding:28px 16px 14px;background:linear-gradient(0deg,rgba(16,40,3,.85),transparent);color:var(--white);font-weight:600;font-size:.92rem;pointer-events:none}
-@media (max-width:900px){.ba-grid{grid-template-columns:1fr 1fr}.ba-grid .ba:first-child{grid-column:1/-1;grid-row:auto}}
+@media (max-width:900px){.ba-grid{grid-template-columns:1fr 1fr}.ba-grid--feature .ba:first-child{grid-column:1/-1;grid-row:auto}}
 @media (max-width:560px){.ba-grid{grid-template-columns:1fr}}
 
 /* Gallery */
@@ -502,8 +502,8 @@ body.no-scroll{overflow:hidden}
 /* Before/after tiles share one frame so the grid lines up */
 .ba{margin:0;aspect-ratio:4/3}
 .ba > img,.ba__after img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.ba-grid .ba:first-child{aspect-ratio:auto;min-height:100%}
-@media (max-width:900px){.ba-grid .ba:first-child{aspect-ratio:4/3}}
+.ba-grid--feature .ba:first-child{aspect-ratio:auto;min-height:100%}
+@media (max-width:900px){.ba-grid--feature .ba:first-child{aspect-ratio:4/3}}
 .prose .ba-grid{margin:1.6em 0}
 .ba-cta{display:flex;flex-direction:column;justify-content:center;gap:10px;padding:28px;border-radius:var(--radius);background:var(--green);color:var(--off);text-decoration:none;box-shadow:var(--shadow);aspect-ratio:4/3;transition:transform .35s var(--ease),box-shadow .35s}
 .ba-cta:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);color:var(--off)}
@@ -513,3 +513,31 @@ body.no-scroll{overflow:hidden}
 .ba-cta__icon svg{width:24px;height:24px}
 @media (max-width:900px){.ba-cta{aspect-ratio:auto}}
 .stat span{display:block;line-height:1.4;margin-top:4px}
+/* Linked suburb chips + GBP map */
+.suburbs li a{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;width:100%}
+.suburbs li:has(a):hover{background:rgba(255,217,0,.18)}
+.section--white .suburbs li:has(a):hover{background:var(--off-2)}
+.gbp-map{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);background:var(--grey-100);aspect-ratio:4/3}
+.gbp-map iframe{display:block;width:100%;height:100%}
+.footer-bottom a{color:inherit;text-decoration:underline;text-decoration-color:rgba(255,255,255,.3)}
+.nearby{display:flex;flex-wrap:wrap;gap:10px;list-style:none;padding:0;margin:1em 0 1.6em}
+.nearby a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;background:var(--white);border:1px solid var(--grey-100);box-shadow:var(--shadow-sm);text-decoration:none;font-weight:700;color:var(--green-800);transition:transform .25s var(--ease),background-color .25s}
+.nearby a:hover{transform:translateY(-2px);background:var(--yellow);color:var(--green-900)}
+.nearby svg{width:16px;height:16px}
+.area-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.area-card{display:flex;flex-direction:column;background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--grey-100);text-decoration:none;color:var(--ink);transition:transform .35s var(--ease),box-shadow .35s}
+.area-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);color:var(--ink)}
+.area-card__img{aspect-ratio:4/3;overflow:hidden}
+.area-card__img img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.area-card:hover .area-card__img img{transform:scale(1.06)}
+.area-card__body{padding:18px 18px 20px}
+.area-card__body h3{font-size:1rem;margin-bottom:.35em}
+.area-card__body p{font-size:.92rem;color:var(--grey-700);margin:0 0 .8em}
+@media (max-width:1060px){.area-cards{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.area-cards{grid-template-columns:1fr}}
+.prose .ba{margin:0;box-shadow:var(--shadow)}
+.prose .ba figcaption{background:linear-gradient(0deg,rgba(16,40,3,.85),transparent);color:var(--white);font-size:.92rem;padding:28px 16px 14px}
+@media (max-width:560px){.prose .ba-grid{grid-template-columns:1fr!important}}
+.prose .suburbs li:not(.is-home),.section:not(.section--green):not(.section--deep) .suburbs li:not(.is-home){background:var(--white);border-color:var(--grey-100);box-shadow:var(--shadow-sm)}
+.prose .suburbs li:not(.is-home) svg,.section:not(.section--green):not(.section--deep) .suburbs li:not(.is-home) svg{color:var(--green)}
+.prose .suburbs li:has(a):hover{background:var(--off-2)}

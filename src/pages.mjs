@@ -2,8 +2,9 @@
 // Step 1 SEO research report (keyword-to-page map, Phase 1 and Phase 4 tables).
 import {
   SITE, SUBURBS, SERVICES, suburbSentence, icon, stars, img, esc, crumbs, faqBlock, suburbList,
-  mapVideo, beforeAfter, quoteSection, ctaBand, faqSchema, serviceSchema, breadcrumbSchema,
+  mapVideo, beforeAfter, quoteSection, ctaBand, faqSchema, serviceSchema, breadcrumbSchema, gbpMap,
 } from "./lib.mjs";
+import { AREA_PAGES } from "./area-pages.mjs";
 
 // The hero video lives locally once exported; the Higgsfield render is used as a
 // fallback source until then (sources are tried in order).
@@ -142,7 +143,7 @@ const home = {
       </div>
       <p class="lead" data-reveal>Drag the handle to compare. Every photo here is one of our own jobs, not stock imagery.</p>
     </div>
-    <div class="ba-grid">
+    <div class="ba-grid ba-grid--feature">
       ${beforeAfter("hedge-trimming-before-after-wellington-point", "Hedge trimming, Wellington Point", { first: true })}
       ${beforeAfter("hedge-trimming-before-after-ormiston", "Front hedge reshape, Ormiston", { d: .08 })}
       ${beforeAfter("garden-maintenance-before-after-thornlands", "Shrub shaping, Thornlands", { d: .16 })}
@@ -176,7 +177,10 @@ const home = {
       <h2 id="areas-title">Lawn care across Wellington Point and the Redlands bayside</h2>
       <p class="lead">We're based in Wellington Point and look after lawns and gardens in eleven Redlands and bayside suburbs within roughly 10 km of home.</p>
       ${suburbList()}
-      <a class="btn" href="#quote">Check we cover you ${icon("arrow")}</a>
+      <div class="hero__ctas" style="margin:0">
+        <a class="btn" href="/service-areas">All service areas ${icon("arrow")}</a>
+        <a class="btn btn--ghost" href="#quote">Check we cover you</a>
+      </div>
     </div>
   </div>
 </section>
@@ -314,7 +318,7 @@ const mowing = servicePage({
         ${[["lawn-mowing-cleveland-canal-front", "Lawn mowing Cleveland — canal-front lawn"], ["front-yard-mowing-victoria-point", "Front yard lawn mowing Victoria Point"], ["verge-mowing-capalaba", "Verge mowing and edging in Capalaba"], ["large-lawn-mowing-redland-bay", "Large lawn mowing Redland Bay"]]
           .map(([s, a]) => `<figure data-reveal>${img(s, a, { sizes: "(max-width: 600px) 100vw, 30vw" })}<figcaption>${a}</figcaption></figure>`).join("")}
       </div>
-      <p>Also see our <a href="/hedging">hedge trimming</a>, <a href="/weed-control">weed spraying</a> and <a href="/gardening">garden maintenance</a> services, or read <a href="/blog/what-time-can-you-mow-your-lawn-queensland">what time you can mow your lawn in Queensland</a>.</p>`,
+      <p>Also see our <a href="/hedging">hedge trimming</a>, <a href="/weed-control">weed spraying</a> and <a href="/gardening">garden maintenance</a> services, or read <a href="/blog/how-often-should-you-mow-your-lawn">how often you should mow your lawn</a> and <a href="/blog/what-time-can-you-mow-your-lawn-queensland">what time you can mow in Queensland</a>.</p>`,
   faqs: [
     ["How often should my lawn be mowed in the Redlands?", "From September to April most Redlands lawns need mowing every one to two weeks; through the cooler months every three to four weeks is usually enough. We'll recommend a schedule based on your grass type and how quickly it grows."],
     ["Do you take the clippings away?", "Yes. Green waste removal is included, and we blow down your paths, driveway and patio before we leave."],
@@ -399,6 +403,7 @@ const weeds = servicePage({
       <h2>Is it safe for pets and kids?</h2>
       <p>We'll tell you before we spray so you can keep pets inside. We recommend keeping pets and children off treated areas until the spray has completely dried, and for any longer period the product label specifies. If you have a fish pond, veggie patch or anything else we should avoid, just let us know.</p>
       <h2>Regular treatments work best</h2>
+      <p>Got prickles in the lawn? Read our guide to <a href="/blog/how-to-get-rid-of-bindii">how to get rid of bindii and when to spray it in Queensland</a>.</p>
       <p>One spray rarely fixes a weed problem for good, because seeds already in the soil keep germinating. A follow-up treatment and a regular <a href="/mowing">lawn mowing</a> schedule keep the lawn thick enough to crowd weeds out. Pair weed spraying with <a href="/gardening">garden maintenance</a> to keep beds clean all year.</p>
       ${figure("front-lawn-mowing-ormiston", "Weed-free front lawn and garden beds in Ormiston", "A clean, weed-free front lawn and garden in Ormiston")}`,
   faqs: [
@@ -554,7 +559,10 @@ const contact = {
 ${quoteSection({ title: "Request a free quote", intro: "Fill in the form and we'll be in touch, or call us directly. We service " + suburbSentence() + "." })}
 <section class="section section--white">
   <div class="wrap areas">
-    ${mapVideo()}
+    <div>
+      ${gbpMap("Golden Cane Lawns, Wellington Point, on Google Maps")}
+      <p style="margin-top:14px"><a class="btn btn--green" href="${SITE.gbp}" target="_blank" rel="noopener">${icon("google")} Find us on Google Maps</a></p>
+    </div>
     <div data-reveal="right">
       <span class="eyebrow">Service areas</span>
       <h2>Where we work</h2>
@@ -692,4 +700,4 @@ ${quoteSection({ service: p.service })}
   };
 });
 
-export const PAGES = [home, mowing, hedging, weeds, gardening, about, contact, blogIndex, ...postPages, thankYou, notFound];
+export const PAGES = [home, mowing, hedging, weeds, gardening, about, contact, ...AREA_PAGES, blogIndex, ...postPages, thankYou, notFound];

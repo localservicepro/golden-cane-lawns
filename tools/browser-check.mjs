@@ -25,7 +25,7 @@ async function newPage(viewport, mobile = false) {
   const ctx = await browser.newContext({ viewport, deviceScaleFactor: mobile ? 2 : 1, isMobile: mobile, hasTouch: mobile });
   await ctx.route("https://link.msgsndr.com/**", r => r.fulfill({ contentType: "application/javascript", body: TRACKER_STUB }));
   // Third-party hosts the sandbox can't reach: fail fast instead of hanging.
-  await ctx.route(/cloudfront\.net/, r => r.abort());
+  await ctx.route(/cloudfront\.net|google\.com\/maps/, r => r.abort());
   const page = await ctx.newPage();
   const errors = [];
   page.on("console", m => { if (m.type() === "error" && !/cloudfront|ERR_FAILED|net::/.test(m.text())) errors.push(m.text()); });
@@ -33,7 +33,11 @@ async function newPage(viewport, mobile = false) {
   return { ctx, page, errors };
 }
 
-const PAGES = ["/", "/mowing", "/hedging", "/weed-control", "/gardening", "/about", "/contact", "/blog", "/blog/lawn-mowing-cost-redlands", "/thank-you", "/404"];
+const PAGES = ["/", "/mowing", "/hedging", "/weed-control", "/gardening", "/about", "/contact", "/service-areas",
+  "/lawn-mowing-capalaba", "/lawn-mowing-cleveland", "/lawn-mowing-victoria-point", "/lawn-mowing-redland-bay",
+  "/lawn-mowing-wynnum", "/lawn-mowing-thornlands", "/lawn-mowing-birkdale", "/lawn-mowing-manly",
+  "/blog", "/blog/lawn-mowing-cost-redlands", "/blog/how-often-should-you-mow-your-lawn", "/blog/brown-patches-in-lawn",
+  "/blog/how-to-get-rid-of-bindii", "/thank-you", "/404"];
 
 for (const [label, viewport, mobile] of [["desktop", { width: 1440, height: 900 }, false], ["mobile", { width: 390, height: 844 }, true]]) {
   const { ctx, page, errors } = await newPage(viewport, mobile);
@@ -57,6 +61,8 @@ for (const [label, viewport, mobile] of [["desktop", { width: 1440, height: 900 
     log(overflow <= 0, `${label} ${p} no horizontal overflow (${overflow}px)`);
     const h1 = await page.locator("h1").count();
     log(h1 === 1, `${label} ${p} has exactly one H1 (${h1})`);
+    const flatBa = await page.evaluate(() => [...document.querySelectorAll(".ba")].filter(b => b.getBoundingClientRect().height < 150).length);
+    log(flatBa === 0, `${label} ${p} before/after sliders have height (${flatBa} collapsed)`);
     const badImgs = await page.evaluate(() => [...document.images].filter(i => !i.alt && !i.closest("dialog")).length);
     log(badImgs === 0, `${label} ${p} all images have alt text (${badImgs} missing)`);
   }
@@ -157,7 +163,24 @@ for (const [label, viewport, mobile] of [["desktop", { width: 1440, height: 900 
   log(!v2.paused && v2.t < v1.dur, `map video looped past its ${v1.dur?.toFixed?.(1)}s end and kept playing (t=${v2.t.toFixed(2)})`);
   const crawlable = await page.locator("#service-areas .suburbs li").allTextContents();
   log(crawlable.length === 11, `11 suburbs listed as crawlable text: ${crawlable.map(s => s.replace(/\s+·.*/, "").trim()).join(", ")}`);
-  await page.locator("#service-areas").screenshot({ path: `${SHOTS}/desktop-service-areas.png` });
+  await page.locator("#service-areas").screenshot({ path: `${SHOTS}/desktop-home-map-section.png` });
+  await ctx.close();
+}
+
+// Internal links all resolve; GBP link + map embed present
+{
+  const { ctx, page } = await newPage({ width: 1280, height: 900 });
+  const seen = new Set(), bad = [];
+  for (const p of PAGES.filter(x => x !== "/404")) {
+    await page.goto(BASE + p);
+    const hrefs = await page.$$eval("a[href^='/']", as => as.map(a => a.getAttribute("href").split("#")[0]).filter(Boolean));
+    hrefs.forEach(h => seen.add(h));
+  }
+  for (const h of seen) { const r = await page.request.get(BASE + h); if (r.status() >= 400) bad.push(`${h} ${r.status()}`); }
+  log(bad.length === 0, `all ${seen.size} internal link targets resolve ${bad.join(", ")}`);
+  await page.goto(BASE + "/contact");
+  log(await page.locator('iframe[src*="google.com/maps/embed"][loading="lazy"]').count() === 1, "contact page has lazy GBP map embed");
+  log(await page.locator('a[href="https://maps.app.goo.gl/EN3i29DbcVP2TDBf9"]').count() > 0, "GBP short link used");
   await ctx.close();
 }
 

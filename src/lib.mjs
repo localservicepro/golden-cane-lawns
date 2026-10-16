@@ -1,5 +1,6 @@
 // Shared data, icons, layout and schema helpers for the static build.
 import { readFileSync } from "node:fs";
+import { suburbPath } from "./suburbs.mjs";
 
 export const SITE = {
   name: "Golden Cane Lawns",
@@ -15,7 +16,9 @@ export const SITE = {
   geo: { lat: -27.4840, lon: 153.2400 },
   facebook: "https://www.facebook.com/share/1DH79eo2d4/?mibextid=wwXIfr",
   instagram: "https://www.instagram.com/goldencanelawns",
-  gbp: "https://www.google.com/maps?cid=8359013510260214639",
+  gbp: "https://maps.app.goo.gl/EN3i29DbcVP2TDBf9",
+  gbpCid: "https://www.google.com/maps?cid=8359013510260214639",
+  gbpEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3538.6451050331375!2d153.2333207!3d-27.511410599999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x24ce2e4c69e9f177%3A0x74012e7fe7c04b6f!2sGolden%20Cane%20lawns!5e0!3m2!1sen!2sph!4v1792164036558!5m2!1sen!2sph",
   rating: "4.9",
   reviews: 54,
   trackingId: "tk_d4d7db7b0f0649dbbb4d49fa5cd5cc8e",
@@ -115,7 +118,8 @@ export function businessSchema() {
     geo: { "@type": "GeoCoordinates", latitude: SITE.geo.lat, longitude: SITE.geo.lon },
     areaServed: SUBURBS.map(s => ({ "@type": "City", name: `${s} QLD` })),
     serviceArea: { "@type": "GeoCircle", geoMidpoint: { "@type": "GeoCoordinates", latitude: SITE.geo.lat, longitude: SITE.geo.lon }, geoRadius: "10000" },
-    sameAs: [SITE.facebook, SITE.instagram, SITE.gbp],
+    sameAs: [SITE.facebook, SITE.instagram, SITE.gbp, SITE.gbpCid],
+    hasMap: SITE.gbpCid,
     hasOfferCatalog: {
       "@type": "OfferCatalog", name: "Lawn and garden maintenance services",
       itemListElement: ["Lawn Mowing", "Hedge Trimming", "Weed Spraying", "Whipper Snipping", "Garden Maintenance"].map(n => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: n } })),
@@ -152,7 +156,17 @@ export function faqBlock(faqs) {
 }
 
 export function suburbList(cls = "") {
-  return `<ul class="suburbs ${cls}">${SUBURBS.map((s, i) => `<li${i === 0 ? ' class="is-home"' : ""}>${icon(i === 0 ? "home" : "pin")}${s}${i === 0 ? " <small>&nbsp;· home base</small>" : ""}</li>`).join("")}</ul>`;
+  return `<ul class="suburbs ${cls}">${SUBURBS.map((s, i) => {
+    const href = i === 0 ? "/" : suburbPath(s);
+    const inner = `${icon(i === 0 ? "home" : "pin")}${s}${i === 0 ? " <small>&nbsp;· home base</small>" : ""}`;
+    return `<li${i === 0 ? ' class="is-home"' : ""}>${href ? `<a href="${href}">${inner}</a>` : inner}</li>`;
+  }).join("")}</ul>`;
+}
+
+export function gbpMap(title = "Golden Cane Lawns on Google Maps") {
+  return `<div class="gbp-map" data-reveal>
+    <iframe src="${SITE.gbpEmbed}" title="${esc(title)}" width="600" height="450" style="border:0" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>`;
 }
 
 export function mapVideo() {
@@ -301,7 +315,7 @@ function header(path) {
         </div>
       </div>
       ${NAV.slice(3).map(n => `<a href="${n.href}"${cur(n.href)}>${n.label === "Garden Maintenance" ? "Gardening" : n.label}</a>`).join("")}
-      <a href="/#service-areas">Service Areas</a>
+      <a href="/service-areas"${cur("/service-areas")}>Service Areas</a>
     </nav>
     <div class="header-cta">
       <a class="header-phone" href="tel:${SITE.phoneIntl}" aria-label="Call ${SITE.phone}">${icon("phone")}<span>${SITE.phone}</span></a>
@@ -321,7 +335,7 @@ function header(path) {
       <a href="/"${cur("/")}>Home ${icon("chevron")}</a>
       ${NAV.map(n => `<a href="${n.href}"${cur(n.href)}>${n.label} ${icon("chevron")}</a>`).join("")}
       <a href="/mowing#whipper-snipping">Whipper Snipping ${icon("chevron")}</a>
-      <a href="/#service-areas">Service Areas ${icon("chevron")}</a>
+      <a href="/service-areas"${cur("/service-areas")}>Service Areas ${icon("chevron")}</a>
     </nav>
     <div class="drawer__cta">
       <a class="btn" href="#quote" data-close>Get a free quote</a>
@@ -361,7 +375,7 @@ function footer() {
         <ul>
           <li><a href="/about">About us</a></li>
           <li><a href="/#before-after">Before &amp; after</a></li>
-          <li><a href="/#service-areas">Service areas</a></li>
+          <li><a href="/service-areas">Service areas</a></li>
           <li><a href="/blog">Lawn care blog</a></li>
           <li><a href="/contact">Contact</a></li>
         </ul>
@@ -384,7 +398,7 @@ function footer() {
     </div>
     <div class="footer-bottom">
       <span>© <span data-year>2026</span> Golden Cane Lawns · ABN ${SITE.abn}</span>
-      <span>Serving ${suburbSentence()}.</span>
+      <span>Serving ${SUBURBS.map((s, i) => { const h = i === 0 ? "/" : suburbPath(s); return h ? `<a href="${h}">${s}</a>` : s; }).join(", ")}.</span>
     </div>
   </div>
 </footer>

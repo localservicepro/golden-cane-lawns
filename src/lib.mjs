@@ -319,6 +319,7 @@ function header(path) {
       <span class="brand-name">Golden Cane<br>Lawns</span>
     </a>
     <nav class="nav" aria-label="Main">
+      <a href="/"${path === "/" ? ' aria-current="page"' : ""}>Home</a>
       <div class="has-sub">
         <a href="/mowing"${cur("/mowing")}>Services</a>
         <div class="sub">

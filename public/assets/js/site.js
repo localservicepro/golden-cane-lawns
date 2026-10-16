@@ -160,6 +160,35 @@
     lb.addEventListener("click", function (e) { if (e.target === lb || e.target.closest("button")) lb.close(); });
   }
 
+  /* Quote popup: any link to "#quote" opens the form in a dialog (not on Contact,
+     which has no popup and keeps the in-page form). */
+  var modal = document.getElementById("quote-modal");
+  if (modal && typeof modal.showModal === "function") {
+    var lastTrigger = null;
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest('a[href$="#quote"]');
+      if (!a) return;
+      e.preventDefault();
+      lastTrigger = a;
+      if (drawer && drawer.classList.contains("is-open")) setDrawer(false);
+      modal.showModal();
+      document.body.classList.add("no-scroll");
+      var first = modal.querySelector("input:not([tabindex='-1'])");
+      if (first) setTimeout(function () { first.focus({ preventScroll: true }); }, 60);
+    });
+    modal.addEventListener("click", function (e) {
+      if (e.target.closest("[data-modal-close]")) { modal.close(); return; }
+      if (e.target !== modal) return;
+      // Click on the backdrop (outside the card) closes it.
+      var r = modal.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) modal.close();
+    });
+    modal.addEventListener("close", function () {
+      document.body.classList.remove("no-scroll");
+      if (lastTrigger) lastTrigger.focus({ preventScroll: true });
+    });
+  }
+
   /* Quote forms
      The GoHighLevel external tracking script captures native form submissions,
      so the form never posts anywhere itself. Order of operations:

@@ -58,11 +58,6 @@ const home = {
         <a class="btn" href="#quote">Get a free quote ${icon("arrow")}</a>
         <a class="btn btn--ghost" href="tel:${SITE.phoneIntl}">${icon("phone")} ${SITE.phone}</a>
       </div>
-      <ul class="hero__badges">
-        <li>${icon("award")}10+ years experience</li>
-        <li>${icon("shield")}Fully insured</li>
-        <li>${icon("users")}Family-run</li>
-      </ul>
     </div>
   </div>
   <a class="rating-card" href="${SITE.gbp}" target="_blank" rel="noopener">
@@ -220,6 +215,7 @@ function servicePage(cfg) {
   return {
     path: cfg.path,
     file: cfg.path.slice(1) + ".html",
+    formService: cfg.formService,
     title: cfg.title,
     description: cfg.description,
     ogImage: cfg.heroImg,
@@ -543,7 +539,7 @@ ${quoteSection()}
 
 /* ---------------------------------------------------------------- CONTACT */
 const contact = {
-  path: "/contact", file: "contact.html",
+  path: "/contact", file: "contact.html", noModal: true,
   title: "Contact Golden Cane Lawns | Free Lawn Care Quotes Redlands",
   description: "Get a free lawn mowing, hedge trimming or weed spraying quote from Golden Cane Lawns. Call 0415 190 092 or send the form. Wellington Point QLD 4160.",
   schema: [breadcrumbSchema([["Home", "/"], ["Contact", "/contact"]])],
@@ -654,7 +650,7 @@ ${quoteSection()}
 const postPages = POSTS.map(p => {
   const trail = [["Home", "/"], ["Blog", "/blog"], [p.crumb, p.path]];
   return {
-    path: p.path, file: p.path.slice(1) + ".html", ogType: "article", ogImage: p.img,
+    path: p.path, file: p.path.slice(1) + ".html", ogType: "article", ogImage: p.img, formService: p.service,
     title: p.title, description: p.description,
     schema: [
       { "@type": "BlogPosting", headline: p.h1, description: p.description, datePublished: p.date, dateModified: p.date,

@@ -126,7 +126,7 @@ strong{font-weight:700}
   .header-cta{margin-left:auto}
   .header-cta .btn{display:none}
 }
-@media (max-width:420px){.brand-name{display:none}}
+
 
 /* Mobile drawer */
 .drawer{position:fixed;inset:0;z-index:60;pointer-events:none}
@@ -541,3 +541,61 @@ body.no-scroll{overflow:hidden}
 .prose .suburbs li:not(.is-home),.section:not(.section--green):not(.section--deep) .suburbs li:not(.is-home){background:var(--white);border-color:var(--grey-100);box-shadow:var(--shadow-sm)}
 .prose .suburbs li:not(.is-home) svg,.section:not(.section--green):not(.section--deep) .suburbs li:not(.is-home) svg{color:var(--green)}
 .prose .suburbs li:has(a):hover{background:var(--off-2)}
+
+/* Header: business name beside the mark; mobile shows Free Quote instead of the call icon */
+.brand-name{display:block;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+@media (max-width:1100px){
+  .header-cta .header-phone{display:none}
+  .header-cta .btn{display:inline-flex;min-height:44px;padding:.55em 1.05em;font-size:.92rem}
+}
+@media (max-width:480px){
+  :root{--header-h:64px}
+  .site-header .wrap{gap:10px}
+  .brand{gap:9px}
+  .brand img{width:42px;height:42px;border-radius:10px}
+  .brand-name{font-size:.64rem;letter-spacing:.1em}
+  .header-cta .btn{min-height:42px;padding:.5em .85em;font-size:.86rem}
+  .menu-toggle{width:42px;height:42px;margin-left:6px}
+}
+@media (max-width:350px){.brand-name{display:none}}
+
+/* Mobile hero: shorter photo and tighter type so the quote button shows on first load */
+@media (max-width:760px){
+  .hero__media{aspect-ratio:auto;height:clamp(200px,32vh,290px);max-height:none}
+  .hero__media img,.hero__media video{object-position:72% 38%}
+  .hero__inner{margin-top:-40px;padding-block:0 32px}
+  .hero .eyebrow{margin-bottom:.55rem;font-size:.66rem}
+  .hero h1{font-size:clamp(1.45rem,6.4vw,1.9rem);margin-bottom:.4em}
+  .hero__lead{font-size:.98rem;line-height:1.55;margin-bottom:1.1rem}
+  .hero__ctas{gap:10px;margin-bottom:0}
+  .hero__ctas .btn{min-height:50px}
+}
+
+/* Quote popup */
+.quote-modal{border:0;padding:0;background:transparent;width:min(640px,calc(100vw - 24px));max-width:none;max-height:calc(100dvh - 24px);overflow:visible}
+.quote-modal[open]{animation:modal-in .35s var(--ease) both}
+.quote-modal::backdrop{background:rgba(16,40,3,.72);backdrop-filter:blur(4px)}
+.quote-modal[open]::backdrop{animation:fade-in .3s ease both}
+.quote-modal .form-card{max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain;border-top:6px solid var(--yellow);padding-bottom:84px}
+.quote-modal .form-card h3{padding-right:48px}
+.quote-modal__close{position:absolute;top:14px;right:14px;z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:var(--off);color:var(--green-800);display:grid;place-items:center;cursor:pointer;transition:background-color .2s,transform .2s}
+.quote-modal__close:hover{background:var(--yellow);transform:rotate(90deg)}
+.quote-modal__close svg{width:22px;height:22px}
+.quote-modal__trust{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:center;flex-wrap:wrap;gap:8px 16px;margin:0;padding:14px 16px;list-style:none;background:var(--green);color:var(--off);border-radius:0 0 var(--radius-lg) var(--radius-lg);font-size:.84rem;font-weight:600}
+.quote-modal__trust li{display:inline-flex;align-items:center;gap:6px}
+.quote-modal__trust svg{width:16px;height:16px;color:var(--yellow)}
+@keyframes modal-in{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes fade-in{from{opacity:0}to{opacity:1}}
+@media (max-width:560px){
+  .quote-modal{width:100vw;max-height:100dvh;margin:auto 0 0}
+  .quote-modal .form-card{border-radius:22px 22px 0 0;max-height:94dvh;padding:22px 18px 92px}
+  .quote-modal__trust{border-radius:0}
+  .quote-modal[open]{animation:sheet-in .4s var(--ease) both}
+}
+@keyframes sheet-in{from{transform:translateY(100%)}to{transform:none}}
+/* Popup layout: form scrolls, trust strip sits below it (never over the submit button) */
+.quote-modal[open]{display:flex;flex-direction:column}
+.quote-modal .form-card{flex:1 1 auto;min-height:0;padding-bottom:clamp(22px,4vw,40px);border-radius:var(--radius-lg) var(--radius-lg) 0 0}
+.quote-modal__trust{position:static;flex:none}
+@media (max-width:560px){.quote-modal .form-card{max-height:none;padding:22px 18px 24px;border-radius:22px 22px 0 0}.quote-modal{max-height:94dvh}}
+.drawer{overflow:hidden}html{overflow-x:clip}

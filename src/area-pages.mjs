@@ -15,7 +15,7 @@ function suburbPage(s) {
   const trail = [["Home", "/"], ["Service Areas", "/service-areas"], [`Lawn Mowing ${s.name}`, path]];
   const title = `Lawn Mowing ${s.name} | Golden Cane Lawns`;
   return {
-    path, file: path.slice(1) + ".html", title, description: s.description, ogImage: s.heroImg,
+    path, file: path.slice(1) + ".html", title, description: s.description, ogImage: s.heroImg, formService: "Lawn Mowing",
     schema: [
       { "@type": "Service", name: `Lawn Mowing ${s.name}`, serviceType: "Lawn Mowing", description: s.description,
         url: `${SITE.url}${path}`, provider: { "@id": `${SITE.url}/#business` },

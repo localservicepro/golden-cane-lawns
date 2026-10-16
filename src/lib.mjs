@@ -190,10 +190,10 @@ export function beforeAfter(slug, caption, { first = false, d = 0 } = {}) {
   </figure>`;
 }
 
-export function quoteForm({ heading = "Get a free quote", id = "quote-form", service = "" } = {}) {
+export function quoteForm({ heading = "Get a free quote", id = "quote-form", service = "", reveal = true } = {}) {
   const opt = (v) => `<option value="${v}"${v === service ? " selected" : ""}>${v}</option>`;
-  return `<div class="form-card" data-reveal="right">
-    <h3>${heading}</h3>
+  return `<div class="form-card"${reveal ? ' data-reveal="right"' : ""}>
+    <h3${reveal ? "" : ' id="quote-modal-title"'}>${heading}</h3>
     <p>Tell us a little about the job and we'll get back to you with a free, no-obligation quote.</p>
     <form class="js-quote" id="${id}" name="quote" method="post" action="/thank-you" novalidate>
       <div class="form-grid">
@@ -287,6 +287,17 @@ export function ctaBand(title = "Ready for a lawn you're proud of?", text = "Boo
   </div>`;
 }
 
+// Popup quote form, opened by any "#quote" link (every page except Contact).
+function quoteModal(service = "") {
+  return `<dialog class="quote-modal" id="quote-modal" aria-labelledby="quote-modal-title">
+  <button class="quote-modal__close" type="button" data-modal-close aria-label="Close quote form">${icon("x")}</button>
+  ${quoteForm({ id: "modal-quote-form", service, reveal: false })}
+  <ul class="quote-modal__trust">
+    <li>${icon("shield")}Fully insured</li><li>${icon("users")}Family-run</li><li>${icon("star")}${SITE.rating}★ Google</li>
+  </ul>
+</dialog>`;
+}
+
 /* ---------- Layout ---------- */
 const NAV = [
   { label: "Lawn Mowing", href: "/mowing" },
@@ -305,6 +316,7 @@ function header(path) {
   <div class="wrap">
     <a class="brand" href="/" aria-label="Golden Cane Lawns home">
       <img src="/assets/brand/golden-cane-lawns-mark-256.webp" width="52" height="52" alt="Golden Cane Lawns logo">
+      <span class="brand-name">Golden Cane<br>Lawns</span>
     </a>
     <nav class="nav" aria-label="Main">
       <div class="has-sub">
@@ -452,6 +464,7 @@ ${header(page.path)}
 ${page.body}
 </main>
 ${footer()}
+${page.noModal ? "" : quoteModal(page.formService)}
 <dialog class="lightbox" id="lightbox" aria-label="Photo viewer"><button type="button" aria-label="Close">${icon("x")}</button><img alt=""><p></p></dialog>
 <script src="/assets/js/site.js?v=${page.v}" defer></script>
 <script

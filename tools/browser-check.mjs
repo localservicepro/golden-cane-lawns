@@ -85,6 +85,71 @@ for (const [label, viewport, mobile] of [["desktop", { width: 1440, height: 900 
   await ctx.close();
 }
 
+// Mobile first load: header + hero quote button visible without scrolling
+for (const vp of [{ width: 390, height: 844 }, { width: 375, height: 667 }, { width: 360, height: 740 }]) {
+  const { ctx, page } = await newPage(vp, true);
+  await page.goto(BASE + "/", { waitUntil: "networkidle" });
+  await page.waitForTimeout(1200);
+  const r = await page.evaluate(() => {
+    const b = document.querySelector(".hero__ctas .btn").getBoundingClientRect();
+    const vis = el => !!el && getComputedStyle(el).display !== "none" && el.getBoundingClientRect().width > 0;
+    return {
+      ctaBottom: Math.round(b.bottom), vh: innerHeight,
+      badges: document.querySelectorAll(".hero__badges").length,
+      name: vis(document.querySelector(".brand-name")) ? document.querySelector(".brand-name").innerText.replace(/\s+/g, " ") : null,
+      headerQuote: vis(document.querySelector(".header-cta .btn")),
+      headerPhone: vis(document.querySelector(".header-cta .header-phone")),
+      overflow: document.documentElement.scrollWidth - innerWidth,
+    };
+  });
+  log(r.ctaBottom <= r.vh, `mobile ${vp.width}x${vp.height}: hero "Get a free quote" visible on first load (bottom ${r.ctaBottom}px of ${r.vh}px)`);
+  log(r.badges === 0, `mobile ${vp.width}: duplicate hero badges removed`);
+  log(vp.width < 351 || r.name === "GOLDEN CANE LAWNS", `mobile ${vp.width}: business name beside logo (${r.name})`);
+  log(r.headerQuote && !r.headerPhone, `mobile ${vp.width}: header shows Free Quote button, not call icon`);
+  log(r.overflow <= 0, `mobile ${vp.width}: header fits without overflow`);
+  if (vp.width === 390) await page.screenshot({ path: `${SHOTS}/mobile-home-fold.png` });
+  if (vp.width === 375) await page.screenshot({ path: `${SHOTS}/mobile-375-home-fold.png` });
+  await ctx.close();
+}
+
+// Quote popup opens from every quote button except on Contact, and submits
+for (const [label, vp, mobile] of [["desktop", { width: 1440, height: 900 }, false], ["mobile", { width: 390, height: 844 }, true]]) {
+  const { ctx, page } = await newPage(vp, mobile);
+  await page.goto(BASE + "/hedging", { waitUntil: "networkidle" });
+  await page.locator(".header-cta .btn").click();
+  await page.waitForTimeout(500);
+  const open = await page.evaluate(() => document.getElementById("quote-modal").open);
+  log(open, `${label}: header Free Quote opens popup`);
+  const pre = await page.locator("#modal-quote-form [name=service_needed]").inputValue();
+  log(pre === "Hedge Trimming", `${label}: popup preselects page service (${pre})`);
+  await page.screenshot({ path: `${SHOTS}/${label}-quote-popup.png` });
+  await page.keyboard.press("Escape");
+  await page.waitForTimeout(300);
+  log(!(await page.evaluate(() => document.getElementById("quote-modal").open)), `${label}: Escape closes popup`);
+  // hero / CTA band button also opens it, and submitting from it works
+  await page.locator(".page-hero .btn", { hasText: "Get a free quote" }).click();
+  await page.waitForTimeout(400);
+  const f = page.locator("#modal-quote-form");
+  await f.locator("[name=full_name]").fill("Popup Tester");
+  await f.locator("[name=phone]").fill("0411 111 111");
+  await f.locator("[name=email]").fill("popup@example.com");
+  await f.locator("[name=property_address]").fill("2 Test St, Cleveland");
+  await Promise.all([page.waitForURL(/\/thank-you$/, { timeout: 8000 }), f.locator("[type=submit]").click()]);
+  const tracked = await page.evaluate(() => JSON.parse(sessionStorage.getItem("__tracked") || "[]"));
+  log(tracked.length === 1 && tracked[0].service_needed === "Hedge Trimming" && tracked[0].full_name === "Popup Tester", `${label}: popup submission tracked and redirected ${JSON.stringify(tracked[0] || {})}`);
+  await ctx.close();
+}
+{
+  const { ctx, page } = await newPage({ width: 1280, height: 900 });
+  await page.goto(BASE + "/contact", { waitUntil: "networkidle" });
+  log(await page.locator("#quote-modal").count() === 0, "contact page has no popup");
+  await page.locator(".header-cta .btn").click();
+  await page.waitForTimeout(800);
+  const inView = await page.evaluate(() => { const r = document.getElementById("quote").getBoundingClientRect(); return r.top < innerHeight && r.bottom > 0; });
+  log(inView, "contact page Free Quote scrolls to the in-page form");
+  await ctx.close();
+}
+
 // Form: valid submission is tracked and redirects to /thank-you
 {
   const { ctx, page } = await newPage({ width: 1280, height: 900 });

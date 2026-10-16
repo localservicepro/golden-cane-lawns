@@ -90,8 +90,8 @@ const home = {
     <div class="services">
       ${SERVICES.map((s, i) => `
       <a class="svc" href="${s.href}" data-reveal style="--d:${i * 0.08}s">
-        <div class="svc__img">${img(s.img, s.alt, { sizes: "(max-width: 560px) 100vw, (max-width: 1060px) 50vw, 25vw" })}<span class="svc__icon">${icon(s.icon)}</span></div>
-        <div class="svc__body"><h3>${s.name}</h3><p>${s.blurb}</p><span class="link-arrow">Learn more ${icon("arrow")}</span></div>
+        <div class="svc__img">${img(s.img, s.alt, { sizes: "(max-width: 560px) 100vw, (max-width: 1060px) 50vw, 25vw" })}</div>
+        <div class="svc__body"><span class="svc__icon">${icon(s.icon)}</span><h3>${s.name}</h3><p>${s.blurb}</p><span class="link-arrow">Learn more ${icon("arrow")}</span></div>
       </a>`).join("")}
     </div>
     <div class="svc-extra" data-reveal>
@@ -516,8 +516,8 @@ const about = {
     <div class="services">
       ${SERVICES.map((s, i) => `
       <a class="svc" href="${s.href}" data-reveal style="--d:${i * 0.08}s">
-        <div class="svc__img">${img(s.img, s.alt, { sizes: "(max-width: 560px) 100vw, (max-width: 1060px) 50vw, 25vw" })}<span class="svc__icon">${icon(s.icon)}</span></div>
-        <div class="svc__body"><h3>${s.name}</h3><p>${s.blurb}</p><span class="link-arrow">Learn more ${icon("arrow")}</span></div>
+        <div class="svc__img">${img(s.img, s.alt, { sizes: "(max-width: 560px) 100vw, (max-width: 1060px) 50vw, 25vw" })}</div>
+        <div class="svc__body"><span class="svc__icon">${icon(s.icon)}</span><h3>${s.name}</h3><p>${s.blurb}</p><span class="link-arrow">Learn more ${icon("arrow")}</span></div>
       </a>`).join("")}
     </div>
   </div>

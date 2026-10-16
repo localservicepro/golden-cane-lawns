@@ -1,0 +1,727 @@
+{
+ "lawn-mowing-wellington-point-owner": {
+  "w": 1290,
+  "h": 1154,
+  "files": [
+   {
+    "w": 640,
+    "h": 573,
+    "src": "lawn-mowing-wellington-point-owner-640.webp"
+   },
+   {
+    "w": 960,
+    "h": 859,
+    "src": "lawn-mowing-wellington-point-owner-960.webp"
+   },
+   {
+    "w": 1290,
+    "h": 1154,
+    "src": "lawn-mowing-wellington-point-owner-1290.webp"
+   }
+  ]
+ },
+ "lawn-mowing-cleveland-canal-front": {
+  "w": 1536,
+  "h": 2048,
+  "files": [
+   {
+    "w": 480,
+    "h": 640,
+    "src": "lawn-mowing-cleveland-canal-front-480.webp"
+   },
+   {
+    "w": 800,
+    "h": 1067,
+    "src": "lawn-mowing-cleveland-canal-front-800.webp"
+   },
+   {
+    "w": 1200,
+    "h": 1600,
+    "src": "lawn-mowing-cleveland-canal-front-1200.webp"
+   }
+  ]
+ },
+ "striped-lawn-mowing-wellington-point": {
+  "w": 1536,
+  "h": 2048,
+  "files": [
+   {
+    "w": 480,
+    "h": 640,
+    "src": "striped-lawn-mowing-wellington-point-480.webp"
+   },
+   {
+    "w": 800,
+    "h": 1067,
+    "src": "striped-lawn-mowing-wellington-point-800.webp"
+   },
+   {
+    "w": 1200,
+    "h": 1600,
+    "src": "striped-lawn-mowing-wellington-point-1200.webp"
+   }
+  ]
+ },
+ "lawn-mowing-poolside-ormiston": {
+  "w": 1536,
+  "h": 2048,
+  "files": [
+   {
+    "w": 480,
+    "h": 640,
+    "src": "lawn-mowing-poolside-ormiston-480.webp"
+   },
+   {
+    "w": 800,
+    "h": 1067,
+    "src": "lawn-mowing-poolside-ormiston-800.webp"
+   },
+   {
+    "w": 1200,
+    "h": 1600,
+    "src": "lawn-mowing-poolside-ormiston-1200.webp"
+   }
+  ]
+ },
+ "front-lawn-mowing-ormiston": {
+  "w": 2048,
+  "h": 1536,
+  "files": [
+   {
+    "w": 480,
+    "h": 360,
+    "src": "front-lawn-mowing-ormiston-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 720,
+    "src": "front-lawn-mowing-ormiston-960.webp"
+   },
+   {
+    "w": 1600,
+    "h": 1200,
+    "src": "front-lawn-mowing-ormiston-1600.webp"
+   }
+  ]
+ },
+ "waterfront-lawn-care-redlands": {
+  "w": 2048,
+  "h": 1536,
+  "files": [
+   {
+    "w": 480,
+    "h": 360,
+    "src": "waterfront-lawn-care-redlands-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 720,
+    "src": "waterfront-lawn-care-redlands-960.webp"
+   },
+   {
+    "w": 1600,
+    "h": 1200,
+    "src": "waterfront-lawn-care-redlands-1600.webp"
+   }
+  ]
+ },
+ "lawn-mowing-thornlands-front-yard": {
+  "w": 2048,
+  "h": 1536,
+  "files": [
+   {
+    "w": 480,
+    "h": 360,
+    "src": "lawn-mowing-thornlands-front-yard-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 720,
+    "src": "lawn-mowing-thornlands-front-yard-960.webp"
+   },
+   {
+    "w": 1600,
+    "h": 1200,
+    "src": "lawn-mowing-thornlands-front-yard-1600.webp"
+   }
+  ]
+ },
+ "curved-lawn-edging-birkdale": {
+  "w": 1536,
+  "h": 2048,
+  "files": [
+   {
+    "w": 480,
+    "h": 640,
+    "src": "curved-lawn-edging-birkdale-480.webp"
+   },
+   {
+    "w": 800,
+    "h": 1067,
+    "src": "curved-lawn-edging-birkdale-800.webp"
+   },
+   {
+    "w": 1200,
+    "h": 1600,
+    "src": "curved-lawn-edging-birkdale-1200.webp"
+   }
+  ]
+ },
+ "verge-mowing-capalaba": {
+  "w": 1536,
+  "h": 2048,
+  "files": [
+   {
+    "w": 480,
+    "h": 640,
+    "src": "verge-mowing-capalaba-480.webp"
+   },
+   {
+    "w": 800,
+    "h": 1067,
+    "src": "verge-mowing-capalaba-800.webp"
+   },
+   {
+    "w": 1200,
+    "h": 1600,
+    "src": "verge-mowing-capalaba-1200.webp"
+   }
+  ]
+ },
+ "front-yard-mowing-victoria-point": {
+  "w": 2048,
+  "h": 1536,
+  "files": [
+   {
+    "w": 480,
+    "h": 360,
+    "src": "front-yard-mowing-victoria-point-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 720,
+    "src": "front-yard-mowing-victoria-point-960.webp"
+   },
+   {
+    "w": 1600,
+    "h": 1200,
+    "src": "front-yard-mowing-victoria-point-1600.webp"
+   }
+  ]
+ },
+ "large-lawn-mowing-redland-bay": {
+  "w": 1536,
+  "h": 2048,
+  "files": [
+   {
+    "w": 480,
+    "h": 640,
+    "src": "large-lawn-mowing-redland-bay-480.webp"
+   },
+   {
+    "w": 800,
+    "h": 1067,
+    "src": "large-lawn-mowing-redland-bay-800.webp"
+   },
+   {
+    "w": 1200,
+    "h": 1600,
+    "src": "large-lawn-mowing-redland-bay-1200.webp"
+   }
+  ]
+ },
+ "hedge-trimming-poolside-cleveland": {
+  "w": 2048,
+  "h": 1536,
+  "files": [
+   {
+    "w": 480,
+    "h": 360,
+    "src": "hedge-trimming-poolside-cleveland-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 720,
+    "src": "hedge-trimming-poolside-cleveland-960.webp"
+   },
+   {
+    "w": 1600,
+    "h": 1200,
+    "src": "hedge-trimming-poolside-cleveland-1600.webp"
+   }
+  ]
+ },
+ "hedge-trimming-driveway-wellington-point": {
+  "w": 2048,
+  "h": 1536,
+  "files": [
+   {
+    "w": 480,
+    "h": 360,
+    "src": "hedge-trimming-driveway-wellington-point-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 720,
+    "src": "hedge-trimming-driveway-wellington-point-960.webp"
+   },
+   {
+    "w": 1600,
+    "h": 1200,
+    "src": "hedge-trimming-driveway-wellington-point-1600.webp"
+   }
+  ]
+ },
+ "hedge-trimming-side-path-thornlands": {
+  "w": 1536,
+  "h": 2048,
+  "files": [
+   {
+    "w": 480,
+    "h": 640,
+    "src": "hedge-trimming-side-path-thornlands-480.webp"
+   },
+   {
+    "w": 800,
+    "h": 1067,
+    "src": "hedge-trimming-side-path-thornlands-800.webp"
+   },
+   {
+    "w": 1200,
+    "h": 1600,
+    "src": "hedge-trimming-side-path-thornlands-1200.webp"
+   }
+  ]
+ },
+ "box-hedge-trimming-waterfront-redlands": {
+  "w": 1536,
+  "h": 2048,
+  "files": [
+   {
+    "w": 480,
+    "h": 640,
+    "src": "box-hedge-trimming-waterfront-redlands-480.webp"
+   },
+   {
+    "w": 800,
+    "h": 1067,
+    "src": "box-hedge-trimming-waterfront-redlands-800.webp"
+   },
+   {
+    "w": 1200,
+    "h": 1600,
+    "src": "box-hedge-trimming-waterfront-redlands-1200.webp"
+   }
+  ]
+ },
+ "privacy-hedge-trimming-ormiston": {
+  "w": 1536,
+  "h": 2048,
+  "files": [
+   {
+    "w": 480,
+    "h": 640,
+    "src": "privacy-hedge-trimming-ormiston-480.webp"
+   },
+   {
+    "w": 800,
+    "h": 1067,
+    "src": "privacy-hedge-trimming-ormiston-800.webp"
+   },
+   {
+    "w": 1200,
+    "h": 1600,
+    "src": "privacy-hedge-trimming-ormiston-1200.webp"
+   }
+  ]
+ },
+ "hedge-trimming-front-garden-birkdale": {
+  "w": 2048,
+  "h": 1536,
+  "files": [
+   {
+    "w": 480,
+    "h": 360,
+    "src": "hedge-trimming-front-garden-birkdale-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 720,
+    "src": "hedge-trimming-front-garden-birkdale-960.webp"
+   },
+   {
+    "w": 1600,
+    "h": 1200,
+    "src": "hedge-trimming-front-garden-birkdale-1600.webp"
+   }
+  ]
+ },
+ "hedge-trimming-white-wall-cleveland": {
+  "w": 2048,
+  "h": 1536,
+  "files": [
+   {
+    "w": 480,
+    "h": 360,
+    "src": "hedge-trimming-white-wall-cleveland-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 720,
+    "src": "hedge-trimming-white-wall-cleveland-960.webp"
+   },
+   {
+    "w": 1600,
+    "h": 1200,
+    "src": "hedge-trimming-white-wall-cleveland-1600.webp"
+   }
+  ]
+ },
+ "shrub-shaping-garden-maintenance-capalaba": {
+  "w": 2048,
+  "h": 1536,
+  "files": [
+   {
+    "w": 480,
+    "h": 360,
+    "src": "shrub-shaping-garden-maintenance-capalaba-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 720,
+    "src": "shrub-shaping-garden-maintenance-capalaba-960.webp"
+   },
+   {
+    "w": 1600,
+    "h": 1200,
+    "src": "shrub-shaping-garden-maintenance-capalaba-1600.webp"
+   }
+  ]
+ },
+ "street-hedge-trimming-thorneside": {
+  "w": 960,
+  "h": 720,
+  "files": [
+   {
+    "w": 480,
+    "h": 360,
+    "src": "street-hedge-trimming-thorneside-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 720,
+    "src": "street-hedge-trimming-thorneside-960.webp"
+   }
+  ]
+ },
+ "hedge-trimming-wellington-point-team": {
+  "w": 1290,
+  "h": 619,
+  "files": [
+   {
+    "w": 480,
+    "h": 230,
+    "src": "hedge-trimming-wellington-point-team-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 461,
+    "src": "hedge-trimming-wellington-point-team-960.webp"
+   },
+   {
+    "w": 1290,
+    "h": 619,
+    "src": "hedge-trimming-wellington-point-team-1290.webp"
+   }
+  ]
+ },
+ "hedge-and-lawn-care-victoria-point": {
+  "w": 2048,
+  "h": 1536,
+  "files": [
+   {
+    "w": 480,
+    "h": 360,
+    "src": "hedge-and-lawn-care-victoria-point-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 720,
+    "src": "hedge-and-lawn-care-victoria-point-960.webp"
+   },
+   {
+    "w": 1600,
+    "h": 1200,
+    "src": "hedge-and-lawn-care-victoria-point-1600.webp"
+   }
+  ]
+ },
+ "weed-spraying-redlands-garden-bed": {
+  "w": 1536,
+  "h": 2048,
+  "files": [
+   {
+    "w": 480,
+    "h": 640,
+    "src": "weed-spraying-redlands-garden-bed-480.webp"
+   },
+   {
+    "w": 800,
+    "h": 1067,
+    "src": "weed-spraying-redlands-garden-bed-800.webp"
+   },
+   {
+    "w": 1200,
+    "h": 1600,
+    "src": "weed-spraying-redlands-garden-bed-1200.webp"
+   }
+  ]
+ },
+ "whipper-snipping-redlands-edges": {
+  "w": 944,
+  "h": 1801,
+  "files": [
+   {
+    "w": 480,
+    "h": 916,
+    "src": "whipper-snipping-redlands-edges-480.webp"
+   },
+   {
+    "w": 800,
+    "h": 1526,
+    "src": "whipper-snipping-redlands-edges-800.webp"
+   }
+  ]
+ },
+ "golden-cane-lawns-family-redlands": {
+  "w": 1536,
+  "h": 1598,
+  "files": [
+   {
+    "w": 480,
+    "h": 499,
+    "src": "golden-cane-lawns-family-redlands-480.webp"
+   },
+   {
+    "w": 800,
+    "h": 832,
+    "src": "golden-cane-lawns-family-redlands-800.webp"
+   },
+   {
+    "w": 1200,
+    "h": 1248,
+    "src": "golden-cane-lawns-family-redlands-1200.webp"
+   }
+  ]
+ },
+ "hedge-trimming-before-after-wellington-point-before": {
+  "w": 1566,
+  "h": 1165,
+  "files": [
+   {
+    "w": 480,
+    "h": 357,
+    "src": "hedge-trimming-before-after-wellington-point-before-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 714,
+    "src": "hedge-trimming-before-after-wellington-point-before-960.webp"
+   },
+   {
+    "w": 1400,
+    "h": 1042,
+    "src": "hedge-trimming-before-after-wellington-point-before-1400.webp"
+   }
+  ]
+ },
+ "hedge-trimming-before-after-wellington-point-after": {
+  "w": 1566,
+  "h": 1165,
+  "files": [
+   {
+    "w": 480,
+    "h": 357,
+    "src": "hedge-trimming-before-after-wellington-point-after-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 714,
+    "src": "hedge-trimming-before-after-wellington-point-after-960.webp"
+   },
+   {
+    "w": 1400,
+    "h": 1042,
+    "src": "hedge-trimming-before-after-wellington-point-after-1400.webp"
+   }
+  ]
+ },
+ "hedge-trimming-before-after-ormiston-before": {
+  "w": 1554,
+  "h": 1376,
+  "files": [
+   {
+    "w": 480,
+    "h": 425,
+    "src": "hedge-trimming-before-after-ormiston-before-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 850,
+    "src": "hedge-trimming-before-after-ormiston-before-960.webp"
+   },
+   {
+    "w": 1400,
+    "h": 1240,
+    "src": "hedge-trimming-before-after-ormiston-before-1400.webp"
+   }
+  ]
+ },
+ "hedge-trimming-before-after-ormiston-after": {
+  "w": 1554,
+  "h": 1376,
+  "files": [
+   {
+    "w": 480,
+    "h": 425,
+    "src": "hedge-trimming-before-after-ormiston-after-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 850,
+    "src": "hedge-trimming-before-after-ormiston-after-960.webp"
+   },
+   {
+    "w": 1400,
+    "h": 1240,
+    "src": "hedge-trimming-before-after-ormiston-after-1400.webp"
+   }
+  ]
+ },
+ "shrub-pruning-before-after-cleveland-before": {
+  "w": 1502,
+  "h": 2294,
+  "files": [
+   {
+    "w": 480,
+    "h": 733,
+    "src": "shrub-pruning-before-after-cleveland-before-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 1466,
+    "src": "shrub-pruning-before-after-cleveland-before-960.webp"
+   },
+   {
+    "w": 1400,
+    "h": 2138,
+    "src": "shrub-pruning-before-after-cleveland-before-1400.webp"
+   }
+  ]
+ },
+ "shrub-pruning-before-after-cleveland-after": {
+  "w": 1502,
+  "h": 2294,
+  "files": [
+   {
+    "w": 480,
+    "h": 733,
+    "src": "shrub-pruning-before-after-cleveland-after-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 1466,
+    "src": "shrub-pruning-before-after-cleveland-after-960.webp"
+   },
+   {
+    "w": 1400,
+    "h": 2138,
+    "src": "shrub-pruning-before-after-cleveland-after-1400.webp"
+   }
+  ]
+ },
+ "garden-maintenance-before-after-thornlands-before": {
+  "w": 1546,
+  "h": 1509,
+  "files": [
+   {
+    "w": 480,
+    "h": 469,
+    "src": "garden-maintenance-before-after-thornlands-before-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 937,
+    "src": "garden-maintenance-before-after-thornlands-before-960.webp"
+   },
+   {
+    "w": 1400,
+    "h": 1366,
+    "src": "garden-maintenance-before-after-thornlands-before-1400.webp"
+   }
+  ]
+ },
+ "garden-maintenance-before-after-thornlands-after": {
+  "w": 1546,
+  "h": 1509,
+  "files": [
+   {
+    "w": 480,
+    "h": 469,
+    "src": "garden-maintenance-before-after-thornlands-after-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 937,
+    "src": "garden-maintenance-before-after-thornlands-after-960.webp"
+   },
+   {
+    "w": 1400,
+    "h": 1366,
+    "src": "garden-maintenance-before-after-thornlands-after-1400.webp"
+   }
+  ]
+ },
+ "lawn-edging-before-after-capalaba-before": {
+  "w": 1481,
+  "h": 1622,
+  "files": [
+   {
+    "w": 480,
+    "h": 526,
+    "src": "lawn-edging-before-after-capalaba-before-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 1051,
+    "src": "lawn-edging-before-after-capalaba-before-960.webp"
+   },
+   {
+    "w": 1400,
+    "h": 1533,
+    "src": "lawn-edging-before-after-capalaba-before-1400.webp"
+   }
+  ]
+ },
+ "lawn-edging-before-after-capalaba-after": {
+  "w": 1481,
+  "h": 1622,
+  "files": [
+   {
+    "w": 480,
+    "h": 526,
+    "src": "lawn-edging-before-after-capalaba-after-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 1051,
+    "src": "lawn-edging-before-after-capalaba-after-960.webp"
+   },
+   {
+    "w": 1400,
+    "h": 1533,
+    "src": "lawn-edging-before-after-capalaba-after-1400.webp"
+   }
+  ]
+ }
+}

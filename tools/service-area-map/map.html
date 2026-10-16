@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Service area map frame renderer</title>
+<style>
+@font-face{font-family:Michroma;src:url(../../public/assets/fonts/michroma-400.woff2) format("woff2")}
+@font-face{font-family:"DM Sans";src:url(../../public/assets/fonts/dm-sans-var.woff2) format("woff2");font-weight:100 1000}
+html,body{margin:0;background:#1d4405}
+svg{display:block}
+.lbl{font-family:"DM Sans",sans-serif;font-weight:700;font-size:25px;letter-spacing:.02em}
+.home{font-family:Michroma,sans-serif;font-size:21px;letter-spacing:.08em}
+.title{font-family:Michroma,sans-serif;font-size:22px;letter-spacing:.18em}
+</style>
+</head>
+<body>
+<svg id="map" width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="waves" width="46" height="22" patternUnits="userSpaceOnUse">
+      <path d="M0 11 q11.5 -7 23 0 t23 0" fill="none" stroke="#2E6709" stroke-width="2" opacity=".55"/>
+    </pattern>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFD900" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#FFD900" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1080" height="1080" fill="#1d4405"/>
+  <rect width="1080" height="1080" fill="url(#waves)"/>
+  <g id="land"></g>
+  <g id="roads" fill="none" stroke="#F7F6EF" stroke-opacity=".13" stroke-width="5" stroke-linecap="round"></g>
+  <path id="trail" fill="none" stroke="#FFD900" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 16"/>
+  <g id="pins"></g>
+  <g id="mower"></g>
+  <g id="frame">
+    <text class="title" x="540" y="1048" text-anchor="middle" fill="#F7F6EF" fill-opacity=".75">REDLANDS &amp; BAYSIDE · QLD</text>
+  </g>
+</svg>
+<script>
+// Simple equirectangular projection tuned to the Redlands bayside.
+const LON0 = 153.135, LON1 = 153.365, LAT0 = -27.415, LAT1 = -27.655;
+const PAD = 40, SIZE = 1080 - PAD * 2;
+const kx = Math.cos(27.53 * Math.PI / 180);
+const spanX = (LON1 - LON0) * kx, spanY = LAT0 - LAT1;
+const scale = SIZE / Math.max(spanX, spanY);
+const offX = PAD + (SIZE - spanX * scale) / 2, offY = PAD + (SIZE - spanY * scale) / 2 - 18;
+const P = (lat, lon) => [offX + (lon - LON0) * kx * scale, offY + (LAT0 - lat) * scale];
+
+// Stylised mainland coastline (north-west to south), land lies west of it.
+const coast = [
+  [-27.405,153.168],[-27.425,153.172],[-27.438,153.178],[-27.446,153.186],[-27.455,153.188],
+  [-27.466,153.192],[-27.476,153.196],[-27.484,153.200],[-27.487,153.208],[-27.489,153.218],
+  [-27.484,153.226],[-27.474,153.231],[-27.462,153.236],[-27.457,153.243],[-27.463,153.249],
+  [-27.476,153.249],[-27.489,153.247],[-27.498,153.254],[-27.505,153.263],[-27.508,153.275],
+  [-27.511,153.286],[-27.519,153.288],[-27.528,153.281],[-27.537,153.276],[-27.547,153.281],
+  [-27.558,153.287],[-27.568,153.297],[-27.577,153.307],[-27.587,153.311],[-27.598,153.305],
+  [-27.610,153.307],[-27.622,153.313],[-27.636,153.318],[-27.700,153.326]
+];
+const landPts = [[-27.38,153.05], [-27.38,153.165], ...coast, [-27.72,153.33], [-27.72,153.05]].map(([a,b]) => P(a,b));
+const islands = [
+  [[-27.566,153.326],[-27.561,153.336],[-27.571,153.341],[-27.578,153.333]],          // Coochiemudlo
+  [[-27.493,153.335],[-27.488,153.352],[-27.500,153.360],[-27.506,153.344]],          // Peel
+  [[-27.415,153.372],[-27.470,153.366],[-27.540,153.380],[-27.620,153.392],[-27.720,153.405],[-27.720,153.460],[-27.380,153.460],[-27.380,153.374]] // Straddie edge
+];
+const svgNS = "http://www.w3.org/2000/svg";
+const el = (tag, attrs, parent) => { const n = document.createElementNS(svgNS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); parent && parent.appendChild(n); return n; };
+const poly = pts => "M" + pts.map(p => p.map(v => v.toFixed(1)).join(" ")).join(" L") + " Z";
+const land = document.getElementById("land");
+el("path", { d: poly(landPts), fill: "#2E6709", stroke: "#3f8a14", "stroke-width": 4, "stroke-linejoin": "round" }, land);
+islands.forEach(i => el("path", { d: poly(i.map(([a,b]) => P(a,b))), fill: "#2E6709", stroke: "#3f8a14", "stroke-width": 4 }, land));
+
+// A few major roads for texture (approximate alignments).
+const roads = [
+  [[-27.505,153.140],[-27.515,153.180],[-27.522,153.200],[-27.520,153.230],[-27.524,153.262]],   // Old Cleveland Rd
+  [[-27.455,153.150],[-27.470,153.175],[-27.490,153.205],[-27.484,153.238]],                     // Wynnum Rd / Birkdale
+  [[-27.530,153.200],[-27.555,153.235],[-27.575,153.265],[-27.598,153.290],[-27.620,153.296]],   // Redland Bay Rd
+  [[-27.470,153.240],[-27.500,153.245],[-27.527,153.262],[-27.560,153.268]]                      // Main Rd / Shore St
+];
+const roadG = document.getElementById("roads");
+roads.forEach(r => el("polyline", { points: r.map(([a,b]) => P(a,b).join(",")).join(" ") }, roadG));
+
+const HOME = { name: "Wellington Point", lat: -27.482, lon: 153.239 };
+// Tour order out from home and back; label anchor: [dx, dy, text-anchor]
+const SUBURBS = [
+  { name: "Ormiston",       lat: -27.514, lon: 153.254, a: [18, 8, "start"] },
+  { name: "Cleveland",      lat: -27.526, lon: 153.269, a: [20, 10, "start"] },
+  { name: "Thornlands",     lat: -27.558, lon: 153.263, a: [-20, 8, "end"] },
+  { name: "Victoria Point", lat: -27.584, lon: 153.294, a: [-20, 8, "end"] },
+  { name: "Redland Bay",    lat: -27.618, lon: 153.296, a: [-20, 8, "end"] },
+  { name: "Capalaba",       lat: -27.531, lon: 153.196, a: [-20, 8, "end"] },
+  { name: "Birkdale",       lat: -27.500, lon: 153.215, a: [-20, 30, "end"] },
+  { name: "Thorneside",     lat: -27.487, lon: 153.196, a: [-20, 0, "end"] },
+  { name: "Manly",          lat: -27.457, lon: 153.184, a: [20, 6, "start"] },
+  { name: "Wynnum",         lat: -27.442, lon: 153.168, a: [-20, 0, "end"] }
+];
+const pinsG = document.getElementById("pins");
+const H = P(HOME.lat, HOME.lon);
+const homeGlow = el("circle", { cx: H[0], cy: H[1], r: 60, fill: "url(#glow)" }, pinsG);
+const pins = SUBURBS.map(s => {
+  const [x, y] = P(s.lat, s.lon);
+  const g = el("g", {}, pinsG);
+  const ring = el("circle", { cx: x, cy: y, r: 16, fill: "none", stroke: "#FFD900", "stroke-width": 3, opacity: 0 }, g);
+  const dot = el("circle", { cx: x, cy: y, r: 8, fill: "#F7F6EF" }, g);
+  const t = el("text", { x: x + s.a[0], y: y + s.a[1], "text-anchor": s.a[2], class: "lbl", fill: "#F7F6EF" }, g);
+  t.textContent = s.name;
+  return { ...s, x, y, ring, dot, t };
+});
+el("circle", { cx: H[0], cy: H[1], r: 15, fill: "#FFD900", stroke: "#1d4405", "stroke-width": 4 }, pinsG);
+el("path", { d: `M${H[0]-7} ${H[1]+1} l7 -7 l7 7 v7 h-14 z`, fill: "#1d4405" }, pinsG);
+const homeLbl = el("text", { x: H[0] + 26, y: H[1] - 22, class: "home", fill: "#FFD900" }, pinsG);
+homeLbl.textContent = "WELLINGTON POINT";
+const homeSub = el("text", { x: H[0] + 26, y: H[1] + 4, class: "lbl", fill: "#F7F6EF", "fill-opacity": .8, style: "font-size:18px;font-weight:500" }, pinsG);
+homeSub.textContent = "home base";
+
+// Route: home -> each suburb in order -> home, as gentle quadratic curves.
+const stops = [H, ...pins.map(p => [p.x, p.y]), H];
+const segs = [];
+for (let i = 0; i < stops.length - 1; i++) {
+  const [x1, y1] = stops[i], [x2, y2] = stops[i + 1];
+  const mx = (x1 + x2) / 2, my = (y1 + y2) / 2, dx = x2 - x1, dy = y2 - y1;
+  const bend = (i % 2 ? 1 : -1) * 0.18;
+  segs.push({ x1, y1, cx: mx - dy * bend, cy: my + dx * bend, x2, y2 });
+}
+const segLen = s => { let L = 0, px = s.x1, py = s.y1; for (let k = 1; k <= 40; k++) { const [x, y] = qpt(s, k / 40); L += Math.hypot(x - px, y - py); px = x; py = y; } return L; };
+function qpt(s, t) { const u = 1 - t; return [u*u*s.x1 + 2*u*t*s.cx + t*t*s.x2, u*u*s.y1 + 2*u*t*s.cy + t*t*s.y2]; }
+const lens = segs.map(segLen), total = lens.reduce((a, b) => a + b, 0);
+
+// Ride-on mower, side view, facing right.
+const mowerG = document.getElementById("mower");
+mowerG.innerHTML = `
+ <g id="mw">
+  <ellipse cx="0" cy="22" rx="34" ry="6" fill="#000" opacity=".25"/>
+  <rect x="-30" y="-2" width="58" height="16" rx="6" fill="#FFD900" stroke="#1d4405" stroke-width="3"/>
+  <path d="M-22 -2 v-14 h14 l4 14" fill="#FFD900" stroke="#1d4405" stroke-width="3" stroke-linejoin="round"/>
+  <rect x="-26" y="-22" width="14" height="6" rx="3" fill="#1d4405"/>
+  <path d="M10 -2 l8 -18 h6" fill="none" stroke="#1d4405" stroke-width="3.5" stroke-linecap="round"/>
+  <rect x="-18" y="12" width="34" height="5" rx="2" fill="#1d4405"/>
+  <circle cx="-18" cy="16" r="9" fill="#1d4405"/><circle cx="-18" cy="16" r="3.5" fill="#F7F6EF"/>
+  <circle cx="20" cy="18" r="6.5" fill="#1d4405"/><circle cx="20" cy="18" r="2.5" fill="#F7F6EF"/>
+ </g>`;
+const mw = document.getElementById("mw");
+const trail = document.getElementById("trail");
+
+const DUR = 9, START = 0.35, TRAVEL_END = 8.0;
+const ease = t => t < .5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2) / 2;
+
+window.render = function (time) {
+  const t = ((time % DUR) + DUR) % DUR;
+  let prog = t <= START ? 0 : t >= TRAVEL_END ? 1 : (t - START) / (TRAVEL_END - START);
+  // Move at constant speed overall, dwelling a touch at each stop.
+  const n = segs.length, per = 1 / n;
+  const si = Math.min(n - 1, Math.floor(prog / per));
+  const local = prog >= 1 ? 1 : ease((prog - si * per) / per);
+  const [x, y] = qpt(segs[si], local);
+  const [ax, ay] = qpt(segs[si], Math.min(1, local + 0.02));
+  const [bx, by] = qpt(segs[si], Math.max(0, local - 0.02));
+  const facingLeft = (ax - bx) < -0.5;
+  mw.setAttribute("transform", `translate(${x.toFixed(1)} ${(y - 26).toFixed(1)}) scale(${facingLeft ? -1.15 : 1.15} 1.15)`);
+
+  // Trail: build path up to current point.
+  let d = `M${segs[0].x1} ${segs[0].y1}`;
+  for (let i = 0; i < si; i++) d += ` Q${segs[i].cx} ${segs[i].cy} ${segs[i].x2} ${segs[i].y2}`;
+  const steps = 24;
+  for (let k = 1; k <= steps; k++) { const [px, py] = qpt(segs[si], local * k / steps); d += ` L${px.toFixed(1)} ${py.toFixed(1)}`; }
+  trail.setAttribute("d", prog > 0 ? d : "");
+  const fade = t > TRAVEL_END ? Math.max(0, 1 - (t - TRAVEL_END) / (DUR - TRAVEL_END - 0.1)) : 1;
+  trail.setAttribute("opacity", (0.95 * fade).toFixed(3));
+  trail.setAttribute("stroke-dashoffset", (-t * 40).toFixed(1));
+
+  // Highlight each suburb once the mower has reached it.
+  pins.forEach((p, i) => {
+    const reachedAt = (i + 1) * per;
+    const since = prog >= reachedAt ? (prog - reachedAt) * (TRAVEL_END - START) : -1;
+    const on = since >= 0 ? fade : 0;
+    const pop = since >= 0 && since < .45 ? Math.sin(since / .45 * Math.PI) : 0;
+    p.dot.setAttribute("fill", on > .02 ? "#FFD900" : "#F7F6EF");
+    p.dot.setAttribute("r", (8 + 5 * pop + 2 * on).toFixed(2));
+    p.ring.setAttribute("opacity", (on * 0.9).toFixed(3));
+    p.ring.setAttribute("r", (16 + 14 * pop).toFixed(2));
+    p.t.setAttribute("fill", on > .5 ? "#FFD900" : "#F7F6EF");
+  });
+  const pulse = 0.5 + 0.5 * Math.sin(t / DUR * Math.PI * 2 * 3);
+  homeGlow.setAttribute("r", (54 + 18 * pulse).toFixed(1));
+};
+window.DUR = DUR;
+render(0);
+</script>
+</body>
+</html>

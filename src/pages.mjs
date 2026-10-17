@@ -182,13 +182,17 @@ const home = {
   </div>
 </section>
 
-<section class="section section--tight" aria-label="Google reviews">
+<section class="section section--tight" id="reviews" aria-label="Customer reviews">
   <div class="wrap">
     <div class="review-band" data-reveal>
       <div class="review-band__score">${SITE.rating}</div>
       <div>${stars()}<p><strong>Rated ${SITE.rating} out of 5 from ${SITE.reviews} Google reviews.</strong> See why locals rate Golden Cane Lawns for lawn care Wellington Point and across the Redlands on our Google Business Profile.</p></div>
       <a class="btn btn--green" href="${SITE.gbp}" target="_blank" rel="noopener">${icon("google")} Read our reviews</a>
     </div>
+    <div class="reviews-widget" data-reveal>
+      <iframe class="lc_reviews_widget" src="https://reputationhub.site/reputation/widgets/review_widget/yUrOct4VCa04M0LzfnqB" title="Golden Cane Lawns customer reviews" frameborder="0" scrolling="no" loading="lazy" style="min-width: 100%; width: 100%;"></iframe>
+    </div>
+    <script type="text/javascript" src="https://reputationhub.site/reputation/assets/review-widget.js" defer></script>
   </div>
 </section>
 

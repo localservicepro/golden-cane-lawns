@@ -25,7 +25,7 @@ async function newPage(viewport, mobile = false) {
   const ctx = await browser.newContext({ viewport, deviceScaleFactor: mobile ? 2 : 1, isMobile: mobile, hasTouch: mobile });
   await ctx.route("https://link.msgsndr.com/**", r => r.fulfill({ contentType: "application/javascript", body: TRACKER_STUB }));
   // Third-party hosts the sandbox can't reach: fail fast instead of hanging.
-  await ctx.route(/cloudfront\.net|google\.com\/maps/, r => r.abort());
+  await ctx.route(/cloudfront\.net|google\.com\/maps|reputationhub\.site/, r => r.abort());
   const page = await ctx.newPage();
   const errors = [];
   page.on("console", m => { if (m.type() === "error" && !/cloudfront|ERR_FAILED|net::/.test(m.text())) errors.push(m.text()); });
@@ -246,6 +246,22 @@ for (const [label, vp, mobile] of [["desktop", { width: 1440, height: 900 }, fal
   await page.goto(BASE + "/contact");
   log(await page.locator('iframe[src*="google.com/maps/embed"][loading="lazy"]').count() === 1, "contact page has lazy GBP map embed");
   log(await page.locator('a[href="https://maps.app.goo.gl/EN3i29DbcVP2TDBf9"]').count() > 0, "GBP short link used");
+  await ctx.close();
+}
+
+// Review widget embed present on the homepage reviews section
+{
+  const { ctx, page } = await newPage({ width: 1280, height: 900 });
+  await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+  const w = await page.evaluate(() => {
+    const f = document.querySelector("#reviews iframe.lc_reviews_widget");
+    const sc = document.querySelector('#reviews script[src*="reputationhub.site/reputation/assets/review-widget.js"]');
+    return { iframe: !!f && f.src.endsWith("/review_widget/yUrOct4VCa04M0LzfnqB"), lazy: f && f.loading, script: !!sc, title: f && f.title };
+  });
+  log(w.iframe && w.script && w.lazy === "lazy" && !!w.title, `review widget embedded in reviews section ${JSON.stringify(w)}`);
+  await page.locator("#reviews").scrollIntoViewIfNeeded();
+  await page.waitForTimeout(600);
+  await page.locator("#reviews").screenshot({ path: `${SHOTS}/desktop-reviews.png` });
   await ctx.close();
 }
 

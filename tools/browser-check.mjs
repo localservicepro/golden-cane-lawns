@@ -252,16 +252,18 @@ for (const [label, vp, mobile] of [["desktop", { width: 1440, height: 900 }, fal
 // Review widget embed present on the homepage reviews section
 {
   const { ctx, page } = await newPage({ width: 1280, height: 900 });
-  await page.goto(BASE + "/", { waitUntil: "domcontentloaded" });
+  for (const path of ["/", "/about"]) {
+  await page.goto(BASE + path, { waitUntil: "domcontentloaded" });
   const w = await page.evaluate(() => {
     const f = document.querySelector("#reviews iframe.lc_reviews_widget");
     const sc = document.querySelector('#reviews script[src*="reputationhub.site/reputation/assets/review-widget.js"]');
     return { iframe: !!f && f.src.endsWith("/review_widget/yUrOct4VCa04M0LzfnqB"), lazy: f && f.loading, script: !!sc, title: f && f.title };
   });
-  log(w.iframe && w.script && w.lazy === "lazy" && !!w.title, `review widget embedded in reviews section ${JSON.stringify(w)}`);
+  log(w.iframe && w.script && w.lazy === "lazy" && !!w.title, `${path} review widget embedded in reviews section ${JSON.stringify(w)}`);
   await page.locator("#reviews").scrollIntoViewIfNeeded();
   await page.waitForTimeout(600);
-  await page.locator("#reviews").screenshot({ path: `${SHOTS}/desktop-reviews.png` });
+  await page.locator("#reviews").screenshot({ path: `${SHOTS}/desktop-reviews${path === "/" ? "" : "-about"}.png` });
+  }
   await ctx.close();
 }
 

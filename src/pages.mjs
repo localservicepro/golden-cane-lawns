@@ -2,7 +2,7 @@
 // Step 1 SEO research report (keyword-to-page map, Phase 1 and Phase 4 tables).
 import {
   SITE, SUBURBS, SERVICES, suburbSentence, icon, stars, img, esc, crumbs, faqBlock, suburbList,
-  mapVideo, beforeAfter, quoteSection, ctaBand, faqSchema, serviceSchema, breadcrumbSchema, gbpMap,
+  mapVideo, beforeAfter, quoteSection, ctaBand, faqSchema, serviceSchema, breadcrumbSchema, gbpMap, reviewsSection,
 } from "./lib.mjs";
 import { AREA_PAGES } from "./area-pages.mjs";
 
@@ -182,19 +182,7 @@ const home = {
   </div>
 </section>
 
-<section class="section section--tight" id="reviews" aria-label="Customer reviews">
-  <div class="wrap">
-    <div class="review-band" data-reveal>
-      <div class="review-band__score">${SITE.rating}</div>
-      <div>${stars()}<p><strong>Rated ${SITE.rating} out of 5 from ${SITE.reviews} Google reviews.</strong> See why locals rate Golden Cane Lawns for lawn care Wellington Point and across the Redlands on our Google Business Profile.</p></div>
-      <a class="btn btn--green" href="${SITE.gbp}" target="_blank" rel="noopener">${icon("google")} Read our reviews</a>
-    </div>
-    <div class="reviews-widget" data-reveal>
-      <iframe class="lc_reviews_widget" src="https://reputationhub.site/reputation/widgets/review_widget/yUrOct4VCa04M0LzfnqB" title="Golden Cane Lawns customer reviews" frameborder="0" scrolling="no" loading="lazy" style="min-width: 100%; width: 100%;"></iframe>
-    </div>
-    <script type="text/javascript" src="https://reputationhub.site/reputation/assets/review-widget.js" defer></script>
-  </div>
-</section>
+${reviewsSection()}
 
 <section class="section section--white" id="faq" aria-labelledby="faq-title">
   <div class="wrap">
@@ -513,6 +501,7 @@ const about = {
     </div>
   </div>
 </section>
+${reviewsSection()}
 <section class="section section--white">
   <div class="wrap">
     <div class="sec-head">

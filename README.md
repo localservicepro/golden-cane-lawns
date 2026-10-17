@@ -14,11 +14,10 @@ Existing URLs are kept: `/`, `/mowing`, `/hedging`, `/gardening`, `/weed-control
 and `public/_redirects`, and for Vercel in `vercel.json`). New: `/about`,
 `/service-areas` (hub with the Google Maps embed), suburb pages for the client's
 target suburbs (`/lawn-mowing-capalaba`, `-cleveland`, `-alexandra-hills`,
-`-thornlands`, `-birkdale`; content in `src/suburbs.mjs`), `/blog` plus six posts,
+`-thornlands`, `-ormiston`, `-birkdale`; content in `src/suburbs.mjs`), `/blog` plus six posts,
 `/thank-you` (noindex) and `404`. Service area (updated Oct 2026): Wellington Point,
 Ormiston, Birkdale, Cleveland, Thornlands, Alexandra Hills and Capalaba, within 10 km.
-Wellington Point stays the homepage's keyword; Ormiston has no measured search
-volume and is covered by the hub and homepage. Whipper snipping is a section
+Wellington Point stays the homepage's keyword, so it has no separate suburb page. Whipper snipping is a section
 on `/mowing#whipper-snipping`, as the SEO plan recommends.
 
 ## Quote form → GoHighLevel

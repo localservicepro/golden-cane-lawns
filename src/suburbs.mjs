@@ -1,7 +1,6 @@
 // Suburb landing pages: the optional add-on from section 10 of the SEO report,
 // updated to the client's target suburbs (Oct 2026). Each targets "lawn mowing <suburb>" with unique local
-// copy. Wellington Point is the homepage's keyword; Ormiston has no measured
-// volume and is covered by the homepage, service pages and hub.
+// copy. Wellington Point is the homepage's keyword (no separate page).
 
 export const SUBURB_PAGES = [
   {
@@ -74,6 +73,24 @@ export const SUBURB_PAGES = [
       ["Do you do one-off mows for rentals in Thornlands?", "Yes. We do inspection, end-of-lease and pre-sale mows and tidy-ups, and can include hedging and weed spraying."],
       ["Do you mow larger blocks in Thornlands?", "Yes. Larger blocks are quoted on size, condition and access. Choose the property size in the form for an accurate quote."],
       ["Can you trim the front hedge when you mow?", "Yes. Many Thornlands customers add hedge trimming to their regular mow. See our hedge trimming Redlands page."],
+    ],
+  },
+  {
+    slug: "ormiston", name: "Ormiston", volume: 0, council: "Redland City Council",
+    nearby: ["Wellington Point", "Cleveland", "Alexandra Hills", "Birkdale"],
+    description: "Lawn mowing Ormiston from your Wellington Point neighbours. Regular or one-off mows with edging, whipper snipping and green waste removal. Free quotes.",
+    lead: "Lawn mowing for Ormiston's leafy streets and bayside homes, from a family-run team based right next door in Wellington Point.",
+    heroImg: "front-lawn-mowing-ormiston", heroAlt: "Lawn mowing Ormiston — freshly mowed front lawn and garden edges",
+    intro: `Golden Cane Lawns provides careful, reliable <strong>lawn mowing Ormiston</strong> homeowners can count on. Ormiston sits right between our home base in Wellington Point and Cleveland, so it's part of every regular round. We're family-run and independent with more than a decade of hands-on experience, every mow includes edging, whipper snipping, blow-down and green waste removal, and we're ABN registered and fully insured.`,
+    localTitle: "Leafy streets and bayside gardens in Ormiston",
+    local: `<p>Ormiston is one of the Redlands' most established suburbs, with quiet, tree-lined streets, generous blocks and homes running down towards the bay. It also has a fitting bit of history for a business called Golden Cane: historic Ormiston House is where Queensland's commercial sugar industry began, with the state's first sugar milled there in 1864.</p>
+<p>Today, Ormiston gardens tend to be well kept and well established: mature trees, hedges along the front boundary, and lawns that are on show to the street. That means a sharp edge along the footpath and driveway, careful whipper snipping around garden beds, and hedges kept dense and level. Big trees also mean shaded patches, so we lift the cut height where the grass is under canopy.</p>`,
+    extraImg: ["privacy-hedge-trimming-ormiston", "Tall privacy hedge trimmed square in Ormiston"],
+    ba: ["hedge-trimming-before-after-ormiston", "Front hedge reshape, Ormiston"],
+    faqs: [
+      ["Do you mow lawns in Ormiston regularly?", "Yes. Ormiston is right next to our Wellington Point base and part of every regular round, so it's easy to fit in fortnightly or monthly visits."],
+      ["Can you trim the front hedge when you mow in Ormiston?", "Yes. Many Ormiston customers add hedge trimming to their mow. See our hedge trimming Redlands page for details."],
+      ["My Ormiston lawn is patchy under big trees. What can you do?", "Shaded grass needs a higher cut and less wear. We'll mow it at the right height and can point out anything else that might help it recover."],
     ],
   },
   {

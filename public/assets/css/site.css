@@ -614,3 +614,4 @@ body.no-scroll{overflow:hidden}
 @media (max-width:760px){.area-cards{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:520px){.area-cards{grid-template-columns:1fr}}
 .area-card__body{display:flex;flex-direction:column;flex:1}.area-card__body .link-arrow{margin-top:auto}
+.area-cards{grid-template-columns:repeat(3,1fr)}@media (max-width:760px){.area-cards{grid-template-columns:repeat(2,1fr)}}@media (max-width:520px){.area-cards{grid-template-columns:1fr}}

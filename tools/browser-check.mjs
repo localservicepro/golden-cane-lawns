@@ -35,7 +35,7 @@ async function newPage(viewport, mobile = false) {
 
 const PAGES = ["/", "/mowing", "/hedging", "/weed-control", "/gardening", "/about", "/contact", "/service-areas",
   "/lawn-mowing-capalaba", "/lawn-mowing-cleveland", "/lawn-mowing-alexandra-hills",
-  "/lawn-mowing-thornlands", "/lawn-mowing-birkdale",
+  "/lawn-mowing-thornlands", "/lawn-mowing-ormiston", "/lawn-mowing-birkdale",
   "/blog", "/blog/lawn-mowing-cost-redlands", "/blog/how-often-should-you-mow-your-lawn", "/blog/brown-patches-in-lawn",
   "/blog/how-to-get-rid-of-bindii", "/thank-you", "/404"];
 

@@ -134,7 +134,7 @@ const hub = {
       </a>`).join("")}
     </div>
     <div class="svc-extra" style="margin-top:28px" data-reveal>
-      <p><strong>Wellington Point and Ormiston</strong> are on our doorstep and part of every regular round. See our <a href="/">Wellington Point lawn care</a> homepage.</p>
+      <p><strong>Wellington Point</strong> is our home base and part of every regular round. See our <a href="/">Wellington Point lawn care</a> homepage.</p>
       <a class="btn btn--sm" href="#quote">Get a quote ${icon("arrow")}</a>
     </div>
   </div>

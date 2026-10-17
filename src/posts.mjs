@@ -6,10 +6,10 @@ export const POSTS = [
     crumb: "Lawn mowing cost in the Redlands",
     title: "How Much Does Lawn Mowing Cost in the Redlands? (2026 Guide)",
     h1: "How Much Does Lawn Mowing Cost in the Redlands? (2026 Guide)",
-    description: "What affects lawn mowing prices in the Redlands and Brisbane bayside: block size, condition, access, frequency and extras. A local's honest 2026 guide.",
+    description: "What affects lawn mowing prices in the Redlands and Brisbane: block size, condition, access, frequency and extras. A local's honest 2026 guide.",
     excerpt: "Block size, grass condition, access and how often you mow all change the price. Here's how lawn mowing is priced in the Redlands, and how to keep it down.",
     date: "2026-10-16", dateLabel: "16 October 2026", read: 6,
-    img: "front-yard-mowing-victoria-point", imgAlt: "Lawn mowing cost Redlands — freshly mowed front yard in Victoria Point",
+    img: "front-yard-mowing-alexandra-hills", imgAlt: "Lawn mowing cost Redlands — freshly mowed front yard in Alexandra Hills",
     service: "Lawn Mowing",
     body: `
 <p class="lead">The honest answer to "how much does lawn mowing cost?" is: it depends on your lawn. Two houses on the same street in Wellington Point can have very different prices because of block size, slope, access and how long since the grass was last cut. This guide explains exactly what goes into a lawn mowing quote in the Redlands, so you know what you're paying for and how to keep the cost down.</p>
@@ -45,7 +45,7 @@ export const POSTS = [
 </ul>
 <h2>Why we don't publish a one-size price list</h2>
 <p>Because every lawn is different, a flat price list either overcharges people with small, easy lawns or undercharges for big, difficult ones and gets "adjusted" on the day. We'd rather give you an exact, free quote for your property up front. Send your address and a rough description through the form below, or call ${"0415 190 092"}, and we'll get back to you with a clear price.</p>
-<div class="callout"><p><strong>Golden Cane Lawns</strong> is a family-run, fully insured lawn care business based in Wellington Point, servicing Ormiston, Cleveland, Thornlands, Victoria Point, Redland Bay, Capalaba, Birkdale, Thorneside, Wynnum and Manly. See our <a href="/mowing">lawn mowing Redlands</a> page for what's included.</p></div>`,
+<div class="callout"><p><strong>Golden Cane Lawns</strong> is a family-run, fully insured lawn care business based in Wellington Point, servicing Ormiston, Birkdale, Cleveland, Thornlands, Alexandra Hills and Capalaba. See our <a href="/mowing">lawn mowing Redlands</a> page for what's included.</p></div>`,
     faqs: [
       ["Is it cheaper to mow fortnightly or monthly?", "Per visit, fortnightly is usually cheaper because the grass is shorter and quicker to cut with less green waste. Over a year the totals often end up similar, but the lawn is in much better condition on a regular schedule."],
       ["Does the price include taking the clippings away?", "With Golden Cane Lawns, yes. Edging, whipper snipping, blow-down and green waste removal are included in every mow. Always check what's included when comparing quotes."],
@@ -73,11 +73,11 @@ export const POSTS = [
     <tr><td>Sunday &amp; public holidays</td><td>8am – 7pm</td><td>Before 8am and after 7pm</td></tr>
   </tbody>
 </table>
-<p>These times come from the default noise standards for "regulated devices" under Queensland's <em>Environmental Protection Act 1994</em>. The same rules apply in Wellington Point, Cleveland, Capalaba and everywhere else in Redland City, and across the Brisbane City Council area including Wynnum and Manly.</p>
+<p>These times come from the default noise standards for "regulated devices" under Queensland's <em>Environmental Protection Act 1994</em>. The same rules apply in Wellington Point, Cleveland, Capalaba and everywhere else in Redland City, and they're the same across Brisbane and the rest of Queensland.</p>
 <h2>What counts as a "regulated device"?</h2>
 <p>The rule covers more than mowers. Regulated devices include lawn mowers, line trimmers (whipper snippers), edgers, leaf blowers, mulchers, chainsaws, compressors, generators and power tools. If it's a powered garden tool, assume the same hours apply.</p>
 <h2>What happens if you mow outside those hours?</h2>
-<p>Outside the permitted times the standard is "any audible noise" at an affected premises, so even a quiet electric mower can technically breach it if a neighbour can hear it. Complaints are handled by Redland City Council (or Brisbane City Council in Wynnum and Manly), which can issue a direction to stop and fines for repeat offences. In practice most issues are sorted out with a friendly conversation, but it's easier to avoid the problem altogether.</p>
+<p>Outside the permitted times the standard is "any audible noise" at an affected premises, so even a quiet electric mower can technically breach it if a neighbour can hear it. Complaints are handled by your local council (Redland City Council across Wellington Point, Cleveland, Capalaba and the rest of the Redlands), which can issue a direction to stop and fines for repeat offences. In practice most issues are sorted out with a friendly conversation, but it's easier to avoid the problem altogether.</p>
 <h2>The best time of day to mow in the Redlands</h2>
 <p>Legal and best aren't always the same thing. In a South-East Queensland summer:</p>
 <ul>
@@ -94,7 +94,7 @@ export const POSTS = [
       ["What time can I start mowing on a Saturday in Queensland?", "7am. On Saturdays the permitted hours for lawn mowers and other garden equipment are 7am to 7pm."],
       ["Can I mow on a Sunday in the Redlands?", "Yes, from 8am to 7pm on Sundays and public holidays."],
       ["Do the rules apply to electric mowers and leaf blowers?", "Yes. The rules apply to regulated devices including electric and petrol mowers, line trimmers, leaf blowers and power tools if they make audible noise at a neighbour's property outside the allowed hours."],
-      ["Who do I contact about a noisy neighbour mowing early?", "Try a friendly chat first. If that doesn't work, contact Redland City Council, or Brisbane City Council if you're in Wynnum or Manly."],
+      ["Who do I contact about a noisy neighbour mowing early?", "Try a friendly chat first. If that doesn't work, contact your local council: Redland City Council for Wellington Point, Cleveland, Capalaba and the rest of the Redlands."],
     ],
   },
   {

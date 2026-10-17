@@ -26,8 +26,8 @@ export const SITE = {
 
 // Service area in tour order, home base first.
 export const SUBURBS = [
-  "Wellington Point", "Ormiston", "Cleveland", "Thornlands", "Victoria Point",
-  "Redland Bay", "Capalaba", "Birkdale", "Thorneside", "Wynnum", "Manly",
+  "Wellington Point", "Ormiston", "Cleveland", "Thornlands", "Alexandra Hills",
+  "Capalaba", "Birkdale",
 ];
 export const suburbSentence = () =>
   SUBURBS.slice(0, -1).join(", ") + " and " + SUBURBS[SUBURBS.length - 1];
@@ -171,7 +171,7 @@ export function gbpMap(title = "Golden Cane Lawns on Google Maps") {
 
 export function mapVideo() {
   return `<div class="map-frame" data-reveal="zoom">
-    <video muted loop playsinline preload="none" data-lazy poster="/assets/video/service-area-map-poster.webp" width="900" height="900" aria-label="Animated map: a Golden Cane Lawns mower travels from Wellington Point to Ormiston, Cleveland, Thornlands, Victoria Point, Redland Bay, Capalaba, Birkdale, Thorneside, Manly and Wynnum">
+    <video muted loop playsinline preload="none" data-lazy poster="/assets/video/service-area-map-poster.webp" width="900" height="900" aria-label="Animated map: a Golden Cane Lawns mower travels from Wellington Point to Ormiston, Cleveland, Thornlands, Alexandra Hills, Capalaba and Birkdale">
       <source data-src="/assets/video/service-area-map.mp4" type="video/mp4">
       <source data-src="/assets/video/service-area-map.webm" type="video/webm">
     </video>

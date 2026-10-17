@@ -32,12 +32,12 @@ svg{display:block}
   <g id="pins"></g>
   <g id="mower"></g>
   <g id="frame">
-    <text class="title" x="540" y="1048" text-anchor="middle" fill="#F7F6EF" fill-opacity=".75">REDLANDS &amp; BAYSIDE · QLD</text>
+    <text class="title" x="540" y="1048" text-anchor="middle" fill="#F7F6EF" fill-opacity=".75">WELLINGTON POINT &amp; REDLANDS · QLD</text>
   </g>
 </svg>
 <script>
 // Simple equirectangular projection tuned to the Redlands bayside.
-const LON0 = 153.135, LON1 = 153.365, LAT0 = -27.415, LAT1 = -27.655;
+const LON0 = 153.128, LON1 = 153.352, LAT0 = -27.372, LAT1 = -27.606;
 const PAD = 40, SIZE = 1080 - PAD * 2;
 const kx = Math.cos(27.53 * Math.PI / 180);
 const spanX = (LON1 - LON0) * kx, spanY = LAT0 - LAT1;
@@ -55,11 +55,11 @@ const coast = [
   [-27.558,153.287],[-27.568,153.297],[-27.577,153.307],[-27.587,153.311],[-27.598,153.305],
   [-27.610,153.307],[-27.622,153.313],[-27.636,153.318],[-27.700,153.326]
 ];
-const landPts = [[-27.38,153.05], [-27.38,153.165], ...coast, [-27.72,153.33], [-27.72,153.05]].map(([a,b]) => P(a,b));
+const landPts = [[-27.30,153.05], [-27.30,153.162], ...coast, [-27.72,153.33], [-27.72,153.05]].map(([a,b]) => P(a,b));
 const islands = [
   [[-27.566,153.326],[-27.561,153.336],[-27.571,153.341],[-27.578,153.333]],          // Coochiemudlo
   [[-27.493,153.335],[-27.488,153.352],[-27.500,153.360],[-27.506,153.344]],          // Peel
-  [[-27.415,153.372],[-27.470,153.366],[-27.540,153.380],[-27.620,153.392],[-27.720,153.405],[-27.720,153.460],[-27.380,153.460],[-27.380,153.374]] // Straddie edge
+  [[-27.415,153.372],[-27.470,153.366],[-27.540,153.380],[-27.620,153.392],[-27.720,153.405],[-27.720,153.460],[-27.300,153.460],[-27.300,153.378]] // Straddie edge
 ];
 const svgNS = "http://www.w3.org/2000/svg";
 const el = (tag, attrs, parent) => { const n = document.createElementNS(svgNS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); parent && parent.appendChild(n); return n; };
@@ -81,19 +81,19 @@ roads.forEach(r => el("polyline", { points: r.map(([a,b]) => P(a,b).join(",")).j
 const HOME = { name: "Wellington Point", lat: -27.482, lon: 153.239 };
 // Tour order out from home and back; label anchor: [dx, dy, text-anchor]
 const SUBURBS = [
-  { name: "Ormiston",       lat: -27.514, lon: 153.254, a: [18, 8, "start"] },
-  { name: "Cleveland",      lat: -27.526, lon: 153.269, a: [20, 10, "start"] },
-  { name: "Thornlands",     lat: -27.558, lon: 153.263, a: [-20, 8, "end"] },
-  { name: "Victoria Point", lat: -27.584, lon: 153.294, a: [-20, 8, "end"] },
-  { name: "Redland Bay",    lat: -27.618, lon: 153.296, a: [-20, 8, "end"] },
-  { name: "Capalaba",       lat: -27.531, lon: 153.196, a: [-20, 8, "end"] },
-  { name: "Birkdale",       lat: -27.500, lon: 153.215, a: [-20, 30, "end"] },
-  { name: "Thorneside",     lat: -27.487, lon: 153.196, a: [-20, 0, "end"] },
-  { name: "Manly",          lat: -27.457, lon: 153.184, a: [20, 6, "start"] },
-  { name: "Wynnum",         lat: -27.442, lon: 153.168, a: [-20, 0, "end"] }
+  { name: "Ormiston",        lat: -27.514, lon: 153.254, a: [20, 8, "start"] },
+  { name: "Cleveland",       lat: -27.526, lon: 153.269, a: [20, 12, "start"] },
+  { name: "Thornlands",      lat: -27.558, lon: 153.263, a: [20, 10, "start"] },
+  { name: "Alexandra Hills", lat: -27.532, lon: 153.226, a: [0, 42, "middle"] },
+  { name: "Capalaba",        lat: -27.531, lon: 153.196, a: [-20, 8, "end"] },
+  { name: "Birkdale",        lat: -27.500, lon: 153.215, a: [-20, 2, "end"] }
 ];
 const pinsG = document.getElementById("pins");
 const H = P(HOME.lat, HOME.lon);
+const R10 = 0.08993 * scale; // 10 km in degrees of latitude, projected
+el("circle", { cx: H[0], cy: H[1], r: R10, fill: "#FFD900", "fill-opacity": .05, stroke: "#FFD900", "stroke-opacity": .55, "stroke-width": 3, "stroke-dasharray": "12 12" }, pinsG);
+const ringLbl = el("text", { x: H[0], y: H[1] - R10 - 14, "text-anchor": "middle", class: "lbl", fill: "#FFD900", style: "font-size:20px" }, pinsG);
+ringLbl.textContent = "10 km service radius";
 const homeGlow = el("circle", { cx: H[0], cy: H[1], r: 60, fill: "url(#glow)" }, pinsG);
 const pins = SUBURBS.map(s => {
   const [x, y] = P(s.lat, s.lon);

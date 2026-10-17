@@ -1,18 +1,18 @@
 // Suburb landing pages: the optional add-on from section 10 of the SEO report,
-// in its priority order. Each targets "lawn mowing <suburb>" with unique local
-// copy. Wellington Point is the homepage's keyword; Ormiston and Thorneside had
-// no measured volume and are covered by the homepage, service pages and hub.
+// updated to the client's target suburbs (Oct 2026). Each targets "lawn mowing <suburb>" with unique local
+// copy. Wellington Point is the homepage's keyword; Ormiston has no measured
+// volume and is covered by the homepage, service pages and hub.
 
 export const SUBURB_PAGES = [
   {
     slug: "capalaba", name: "Capalaba", volume: 30, council: "Redland City Council",
-    nearby: ["Birkdale", "Thorneside", "Wellington Point", "Thornlands"],
+    nearby: ["Alexandra Hills", "Birkdale", "Wellington Point", "Thornlands"],
     description: "Lawn mowing Capalaba homeowners rely on. Regular or one-off mows with edging, whipper snipping and green waste removal from a local, fully insured team.",
     lead: "Regular and one-off lawn mowing for Capalaba homes, rentals and larger blocks, from a family-run Redlands team just down the road in Wellington Point.",
     heroImg: "verge-mowing-capalaba", heroAlt: "Lawn mowing Capalaba — freshly mowed and edged street verge",
     intro: `Golden Cane Lawns provides reliable <strong>lawn mowing Capalaba</strong> residents can set their calendar by. We're based ten minutes away in Wellington Point, we're family-run and independent, and we've been mowing Redlands lawns for more than a decade. Every visit includes edging, whipper snipping, blow-down and green waste removal, and we're ABN registered and fully insured.`,
     localTitle: "Mowing Capalaba lawns",
-    local: `<p>Capalaba is the western gateway to the Redlands, and its lawns reflect that mix: established family homes on generous suburban blocks, newer infill housing with compact yards, and bigger lots out towards the bushland edges around Tingalpa Creek and Leslie Harrison Dam. Many older Capalaba lawns are a blend of couch and kikuyu, which grows hard through summer and needs mowing every week or two to stay even.</p>
+    local: `<p>Capalaba is the western gateway to the Redlands, and its lawns reflect that mix: established family homes on generous suburban blocks, newer infill housing with compact yards, and bigger lots out towards the bushland edges around Tingalpa Creek and Leslie Harrison Dam, with Alexandra Hills just next door. Many older Capalaba lawns are a blend of couch and kikuyu, which grows hard through summer and needs mowing every week or two to stay even.</p>
 <p>Bigger blocks are where a regular round pays off most. A large lawn that gets away for a month in January can take twice as long to bring back, with far more green waste to remove. We'll suggest a schedule that suits your block and the season, and we're happy to quote one-off catch-up cuts as well.</p>`,
     extraImg: ["shrub-shaping-garden-maintenance-capalaba", "Shrub shaping and a weed-free pebble garden bed in Capalaba"],
     ba: ["lawn-edging-before-after-capalaba", "Verge edging and whipper snipping, Capalaba"],
@@ -24,7 +24,7 @@ export const SUBURB_PAGES = [
   },
   {
     slug: "cleveland", name: "Cleveland", volume: 20, council: "Redland City Council",
-    nearby: ["Ormiston", "Thornlands", "Wellington Point", "Victoria Point"],
+    nearby: ["Thornlands", "Alexandra Hills", "Wellington Point", "Ormiston"],
     description: "Lawn mowing Cleveland QLD, from Raby Bay canal homes to Cleveland Point. Regular or one-off mows with edging and green waste removal. Free quotes.",
     lead: "Lawn mowing for Cleveland's canal-front, bayside and suburban homes. Crisp edges, a clean finish and every clipping taken away.",
     heroImg: "lawn-mowing-cleveland-canal-front", heroAlt: "Lawn mowing Cleveland QLD — canal-front lawn with clean edges",
@@ -41,62 +41,26 @@ export const SUBURB_PAGES = [
     ],
   },
   {
-    slug: "victoria-point", name: "Victoria Point", volume: 20, council: "Redland City Council",
-    nearby: ["Redland Bay", "Thornlands", "Cleveland"],
-    description: "Lawn mowing Victoria Point: regular or one-off mows with edging, whipper snipping and green waste removal from a local, family-run Redlands team.",
-    lead: "Regular and one-off lawn mowing for Victoria Point homes, from established bayside streets to the newer estates.",
-    heroImg: "front-yard-mowing-victoria-point", heroAlt: "Lawn mowing Victoria Point — freshly mowed front yard",
-    intro: `Golden Cane Lawns offers dependable <strong>lawn mowing Victoria Point</strong> residents can rely on all year. We're a family-run, independent Redlands business based in Wellington Point with more than a decade of hands-on experience. Every mow includes edging, whipper snipping, blow-down and green waste removal, and we're ABN registered and fully insured.`,
-    localTitle: "Mowing in Victoria Point",
-    local: `<p>Victoria Point has a bit of everything: established homes with big backyards in the older streets, waterfront properties looking across to Coochiemudlo Island, and newer estates where front lawns are compact and side access can be tight. Smaller lawns don't need less care; a neat edge along the driveway and footpath does most of the work of making a front yard look sharp.</p>
-<p>Many newer Victoria Point homes have buffalo or zoysia lawns that were laid when the house was built. Both look best mowed regularly at the right height. Cutting them too short in summer causes scalping and brown patches that take weeks to recover.</p>`,
-    extraImg: ["hedge-and-lawn-care-victoria-point", "Hedge and lawn care in Victoria Point"],
+    slug: "alexandra-hills", name: "Alexandra Hills", volume: 10, council: "Redland City Council",
+    nearby: ["Capalaba", "Birkdale", "Thornlands", "Cleveland"],
+    description: "Lawn mowing Alexandra Hills: regular or one-off mows for family homes and sloping blocks, with edging, whipper snipping and green waste removal. Free quotes.",
+    lead: "Lawn mowing for Alexandra Hills family homes, from big flat backyards to sloping blocks, by a local team ten minutes away.",
+    heroImg: "front-yard-mowing-alexandra-hills", heroAlt: "Lawn mowing Alexandra Hills — freshly mowed front yard and garden",
+    intro: `Golden Cane Lawns provides dependable <strong>lawn mowing Alexandra Hills</strong> families can count on. We're based just up the road in Wellington Point, we're family-run and independent, and we've been mowing Redlands lawns for more than a decade. Every visit includes edging, whipper snipping, blow-down and green waste removal, and we're ABN registered and fully insured.`,
+    localTitle: "Family blocks and sloping yards in Alexandra Hills",
+    local: `<p>Alexandra Hills sits in the middle of the Redlands between Capalaba, Birkdale, Cleveland and Thornlands. It's an established family suburb, and many homes sit on the generous suburban blocks that were standard when the area was built, with decent-sized front lawns and backyards made for kids and dogs.</p>
+<p>As the name suggests, plenty of Alexandra Hills streets aren't flat. Sloping lawns, banks and retaining walls are common, and they need a careful approach: an even cut across the slope, whipper snipping on banks too steep to mow safely, and a sharp edge along steps and walls. Big lawns grow fast in the Redlands summer, so a fortnightly round from September to April keeps them under control.</p>`,
+    extraImg: ["hedge-and-lawn-care-alexandra-hills", "Hedge and lawn care for an Alexandra Hills home"],
     ba: null,
     faqs: [
-      ["Do you mow small lawns in new Victoria Point estates?", "Yes. Small lawns are welcome. Regular mows of compact front and back yards are quick, and the edging and blow-down make a big visual difference."],
-      ["How short should I cut a buffalo lawn in Victoria Point?", "As a rule of thumb keep buffalo around 40–60 mm in summer and a little higher in shade. Cutting lower risks scalping in the heat."],
-      ["Do you service Victoria Point for one-off mows?", "Yes, including end-of-lease and pre-sale tidy-ups. We can add hedge trimming and weed spraying to the same visit."],
-    ],
-  },
-  {
-    slug: "redland-bay", name: "Redland Bay", volume: 20, council: "Redland City Council",
-    nearby: ["Victoria Point", "Thornlands", "Cleveland"],
-    description: "Lawn mowing Redland Bay, from bayside homes to newer estates and larger blocks. Regular or one-off mows with edging and green waste removal. Free quotes.",
-    lead: "Lawn mowing for Redland Bay's bayside homes, newer estates and larger blocks, from a family-run local team.",
-    heroImg: "large-lawn-mowing-redland-bay", heroAlt: "Lawn mowing Redland Bay — large freshly mowed lawn",
-    intro: `Golden Cane Lawns provides professional <strong>lawn mowing Redland Bay</strong> property owners count on, whether it's a bayside home near the foreshore, a new build in one of the growing estates, or a larger block on the edge of town. We're family-run and independent, based in Wellington Point, with over ten years of hands-on experience. Edging, whipper snipping, blow-down and green waste removal come with every mow, and we're ABN registered and fully insured.`,
-    localTitle: "Larger lawns and new estates in Redland Bay",
-    local: `<p>Redland Bay is one of the fastest-growing parts of the Redlands. New estates bring fresh turf that needs regular, careful mowing in its first year to thicken up, while the older bayside streets and the larger lots towards the rural fringe have big, established lawns that grow fast in the warm, wet months.</p>
-<p>Redland Bay's red volcanic soil grows grass well, which is good news for the lawn and means more mowing for you in summer. A fortnightly round from September to April keeps big lawns manageable and stops them going to seed. If you're on a larger block or acreage, mention it in the quote form so we can give you an accurate price.</p>`,
-    extraImg: ["waterfront-lawn-care-redlands", "Waterfront lawn care in the Redlands bayside"],
-    ba: null,
-    faqs: [
-      ["Do you mow larger blocks and acreage in Redland Bay?", "We mow larger Redland Bay blocks regularly. For very large properties or acreage, choose that option in the quote form or call 0415 190 092 and we'll confirm whether it suits our equipment and schedule."],
-      ["Can you look after new turf in a Redland Bay estate?", "Yes. New lawns need gentle, regular mowing at the right height to establish. We'll set a schedule that helps it thicken up."],
-      ["Do you do one-off mows for rentals in Redland Bay?", "Yes. We do end-of-lease, inspection and pre-sale mows and tidy-ups for tenants, landlords and property managers."],
-    ],
-  },
-  {
-    slug: "wynnum", name: "Wynnum", volume: 20, council: "Brisbane City Council",
-    nearby: ["Manly", "Thorneside", "Birkdale"],
-    description: "Lawn mowing Wynnum: regular or one-off mows for character homes and family yards, with edging, whipper snipping and green waste removal. Free quotes.",
-    lead: "Lawn mowing for Wynnum's character homes, family yards and bayside streets, from a local, family-run team.",
-    heroImg: "front-lawn-mowing-ormiston", heroAlt: "Freshly mowed front lawn and garden edges — lawn mowing for Wynnum homes",
-    intro: `Golden Cane Lawns brings professional <strong>lawn mowing Wynnum</strong> households can depend on, just across Tingalpa Creek from our Redlands base in Wellington Point. We're family-run and independent, with over a decade of hands-on experience, and every mow includes edging, whipper snipping, blow-down and green waste removal. ABN registered and fully insured.`,
-    localTitle: "Character homes and classic Wynnum blocks",
-    local: `<p>Wynnum is full of post-war cottages, Queenslanders and renovated character homes on classic Brisbane blocks, often around 400 to 600 m². These yards tend to have established couch or kikuyu lawns, fence lines on three sides, and garden beds, trees and clothes lines to work around. That makes whipper snipping and edging as important as the mow itself.</p>
-<p>Wynnum is in the Brisbane City Council area rather than Redland City, but the Queensland rules on mowing hours are the same: 7am to 7pm Monday to Saturday and 8am to 7pm on Sundays and public holidays. We mow on weekdays within those hours, so your weekends stay quiet.</p>`,
-    extraImg: ["lawn-mowing-poolside-ormiston", "Neatly mowed lawn beside a pool fence"],
-    ba: null,
-    faqs: [
-      ["Do you service Wynnum even though it's in Brisbane City?", "Yes. Wynnum and Manly are part of our regular service area, alongside the Redlands suburbs."],
-      ["Can you mow a small Wynnum backyard with tight side access?", "Yes. We regularly mow small and narrow-access yards and carry equipment through side gates where needed."],
-      ["What time can you mow in Wynnum?", "Queensland's rules apply: 7am–7pm Monday to Saturday and 8am–7pm on Sundays and public holidays."],
+      ["Do you mow sloping lawns in Alexandra Hills?", "Yes. We mow sloping lawns and whipper snip banks that are too steep to mow safely. Mention any steep areas in the quote form notes."],
+      ["How often should an Alexandra Hills lawn be mowed?", "Every 7–14 days from spring to autumn for most lawns, and every three to four weeks through winter."],
+      ["Do you do one-off mows for rentals in Alexandra Hills?", "Yes. We do end-of-lease, inspection and pre-sale mows and tidy-ups, and can add hedge trimming and weed spraying to the same visit."],
     ],
   },
   {
     slug: "thornlands", name: "Thornlands", volume: 10, council: "Redland City Council",
-    nearby: ["Cleveland", "Victoria Point", "Redland Bay", "Capalaba"],
+    nearby: ["Cleveland", "Alexandra Hills", "Capalaba"],
     description: "Lawn mowing Thornlands: regular or one-off mows for modern estates and larger blocks, with edging, whipper snipping and green waste removal. Free quotes.",
     lead: "Lawn mowing for Thornlands' modern estates and bigger blocks, with edging, whipper snipping and a full clean-up every visit.",
     heroImg: "lawn-mowing-thornlands-front-yard", heroAlt: "Lawn mowing Thornlands — freshly mowed front yard",
@@ -114,7 +78,7 @@ export const SUBURB_PAGES = [
   },
   {
     slug: "birkdale", name: "Birkdale", volume: 10, council: "Redland City Council",
-    nearby: ["Wellington Point", "Thorneside", "Capalaba"],
+    nearby: ["Wellington Point", "Capalaba", "Alexandra Hills"],
     description: "Lawn mowing Birkdale from your Wellington Point neighbours. Regular or one-off mows with edging, whipper snipping and green waste removal. Free quotes.",
     lead: "Lawn mowing for Birkdale homes from a family-run team based right next door in Wellington Point.",
     heroImg: "curved-lawn-edging-birkdale", heroAlt: "Lawn mowing Birkdale — curved lawn with crisp whipper snipped edges",
@@ -128,24 +92,6 @@ export const SUBURB_PAGES = [
       ["How quickly can you start mowing in Birkdale?", "Birkdale is right next to our base in Wellington Point, so we can usually fit new regular customers in quickly. Send the quote form or call 0415 190 092."],
       ["My Birkdale lawn is patchy under trees. Can you help?", "Shaded lawn needs a higher cut and less wear. We'll mow it at the right height and can advise on what else might help."],
       ["Do you remove leaves and clippings?", "Yes. We blow down paths and driveways and take the green waste away."],
-    ],
-  },
-  {
-    slug: "manly", name: "Manly", volume: 10, council: "Brisbane City Council",
-    nearby: ["Wynnum", "Thorneside", "Birkdale"],
-    description: "Lawn mowing Manly QLD: regular or one-off mows for hillside and bayside homes, with edging, whipper snipping and green waste removal. Free quotes.",
-    lead: "Lawn mowing for Manly's bayside and hillside homes, with careful whipper snipping on slopes and embankments.",
-    heroImg: "striped-lawn-mowing-wellington-point", heroAlt: "Freshly striped lawn — lawn mowing for Manly QLD homes",
-    intro: `Golden Cane Lawns provides professional <strong>lawn mowing Manly</strong> homeowners rely on, from the streets near the boat harbour to the hillside homes looking out over Moreton Bay. We're a family-run, independent business based in Wellington Point with over ten years of hands-on experience. Every mow includes edging, whipper snipping, blow-down and green waste removal, and we're ABN registered and fully insured.`,
-    localTitle: "Slopes, views and character homes in Manly",
-    local: `<p>Manly is one of the prettiest corners of the bayside, and many of its streets climb up from the waterfront. Sloping blocks, retaining walls and embankments are common, and they're where a lot of the work is: steep banks are often safer and neater with careful whipper snipping than with a mower, and the edges along steps and walls need a steady hand.</p>
-<p>Like Wynnum, Manly is in the Brisbane City Council area, and we include it in our regular rounds alongside the Redlands suburbs just across Tingalpa Creek.</p>`,
-    extraImg: ["privacy-hedge-trimming-ormiston", "Tall privacy hedge trimmed square"],
-    ba: null,
-    faqs: [
-      ["Can you mow steep or sloping lawns in Manly?", "Yes. We mow sloping lawns and use whipper snippers on banks that are too steep to mow safely. Mention steep areas in the quote form notes."],
-      ["Do you service Manly regularly?", "Yes. Manly and Wynnum are part of our regular service area, alongside Thorneside and Birkdale."],
-      ["Do you do hedges and weed spraying in Manly too?", "Yes. All our services are available in Manly: lawn mowing, hedge trimming, weed spraying, whipper snipping and garden maintenance."],
     ],
   },
 ];

@@ -188,48 +188,6 @@
    }
   ]
  },
- "front-yard-mowing-victoria-point": {
-  "w": 2048,
-  "h": 1536,
-  "files": [
-   {
-    "w": 480,
-    "h": 360,
-    "src": "front-yard-mowing-victoria-point-480.webp"
-   },
-   {
-    "w": 960,
-    "h": 720,
-    "src": "front-yard-mowing-victoria-point-960.webp"
-   },
-   {
-    "w": 1600,
-    "h": 1200,
-    "src": "front-yard-mowing-victoria-point-1600.webp"
-   }
-  ]
- },
- "large-lawn-mowing-redland-bay": {
-  "w": 1536,
-  "h": 2048,
-  "files": [
-   {
-    "w": 480,
-    "h": 640,
-    "src": "large-lawn-mowing-redland-bay-480.webp"
-   },
-   {
-    "w": 800,
-    "h": 1067,
-    "src": "large-lawn-mowing-redland-bay-800.webp"
-   },
-   {
-    "w": 1200,
-    "h": 1600,
-    "src": "large-lawn-mowing-redland-bay-1200.webp"
-   }
-  ]
- },
  "hedge-trimming-poolside-cleveland": {
   "w": 2048,
   "h": 1536,
@@ -398,22 +356,6 @@
    }
   ]
  },
- "street-hedge-trimming-thorneside": {
-  "w": 960,
-  "h": 720,
-  "files": [
-   {
-    "w": 480,
-    "h": 360,
-    "src": "street-hedge-trimming-thorneside-480.webp"
-   },
-   {
-    "w": 960,
-    "h": 720,
-    "src": "street-hedge-trimming-thorneside-960.webp"
-   }
-  ]
- },
  "hedge-trimming-wellington-point-team": {
   "w": 1290,
   "h": 619,
@@ -432,27 +374,6 @@
     "w": 1290,
     "h": 619,
     "src": "hedge-trimming-wellington-point-team-1290.webp"
-   }
-  ]
- },
- "hedge-and-lawn-care-victoria-point": {
-  "w": 2048,
-  "h": 1536,
-  "files": [
-   {
-    "w": 480,
-    "h": 360,
-    "src": "hedge-and-lawn-care-victoria-point-480.webp"
-   },
-   {
-    "w": 960,
-    "h": 720,
-    "src": "hedge-and-lawn-care-victoria-point-960.webp"
-   },
-   {
-    "w": 1600,
-    "h": 1200,
-    "src": "hedge-and-lawn-care-victoria-point-1600.webp"
    }
   ]
  },
@@ -721,6 +642,85 @@
     "w": 1400,
     "h": 1533,
     "src": "lawn-edging-before-after-capalaba-after-1400.webp"
+   }
+  ]
+ },
+ "front-yard-mowing-alexandra-hills": {
+  "w": 2048,
+  "h": 1536,
+  "files": [
+   {
+    "w": 480,
+    "h": 360,
+    "src": "front-yard-mowing-alexandra-hills-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 720,
+    "src": "front-yard-mowing-alexandra-hills-960.webp"
+   },
+   {
+    "w": 1600,
+    "h": 1200,
+    "src": "front-yard-mowing-alexandra-hills-1600.webp"
+   }
+  ]
+ },
+ "hedge-and-lawn-care-alexandra-hills": {
+  "w": 2048,
+  "h": 1536,
+  "files": [
+   {
+    "w": 480,
+    "h": 360,
+    "src": "hedge-and-lawn-care-alexandra-hills-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 720,
+    "src": "hedge-and-lawn-care-alexandra-hills-960.webp"
+   },
+   {
+    "w": 1600,
+    "h": 1200,
+    "src": "hedge-and-lawn-care-alexandra-hills-1600.webp"
+   }
+  ]
+ },
+ "large-lawn-mowing-thornlands": {
+  "w": 1536,
+  "h": 2048,
+  "files": [
+   {
+    "w": 480,
+    "h": 640,
+    "src": "large-lawn-mowing-thornlands-480.webp"
+   },
+   {
+    "w": 800,
+    "h": 1067,
+    "src": "large-lawn-mowing-thornlands-800.webp"
+   },
+   {
+    "w": 1200,
+    "h": 1600,
+    "src": "large-lawn-mowing-thornlands-1200.webp"
+   }
+  ]
+ },
+ "street-hedge-trimming-birkdale": {
+  "w": 960,
+  "h": 720,
+  "files": [
+   {
+    "w": 480,
+    "h": 360,
+    "src": "street-hedge-trimming-birkdale-480.webp"
+   },
+   {
+    "w": 960,
+    "h": 720,
+    "src": "street-hedge-trimming-birkdale-960.webp"
    }
   ]
  }

@@ -12,12 +12,13 @@ report (titles, H1s, meta descriptions, keyword-to-page map, schema, blog plan).
 Existing URLs are kept: `/`, `/mowing`, `/hedging`, `/gardening`, `/weed-control`,
 `/contact`. `/home` 301-redirects to `/` (configured for Netlify in `netlify.toml`
 and `public/_redirects`, and for Vercel in `vercel.json`). New: `/about`,
-`/service-areas` (hub with the Google Maps embed), eight suburb pages from the SEO
-report's priority list (`/lawn-mowing-capalaba`, `-cleveland`, `-victoria-point`,
-`-redland-bay`, `-wynnum`, `-thornlands`, `-birkdale`, `-manly`; content in
-`src/suburbs.mjs`), `/blog` plus six posts, `/thank-you` (noindex) and `404`.
-Wellington Point stays the homepage's keyword; Ormiston and Thorneside had no
-measured volume and are covered by the hub and homepage. Whipper snipping is a section
+`/service-areas` (hub with the Google Maps embed), suburb pages for the client's
+target suburbs (`/lawn-mowing-capalaba`, `-cleveland`, `-alexandra-hills`,
+`-thornlands`, `-birkdale`; content in `src/suburbs.mjs`), `/blog` plus six posts,
+`/thank-you` (noindex) and `404`. Service area (updated Oct 2026): Wellington Point,
+Ormiston, Birkdale, Cleveland, Thornlands, Alexandra Hills and Capalaba, within 10 km.
+Wellington Point stays the homepage's keyword; Ormiston has no measured search
+volume and is covered by the hub and homepage. Whipper snipping is a section
 on `/mowing#whipper-snipping`, as the SEO plan recommends.
 
 ## Quote form → GoHighLevel

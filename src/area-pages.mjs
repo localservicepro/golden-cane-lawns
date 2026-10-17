@@ -86,7 +86,7 @@ function suburbPage(s) {
   </div>
 </section>
 <section class="section section--white section--tight"><div class="wrap">${ctaBand(`Book your next ${s.name} mow`, "Regular rounds or a one-off cut. Free quotes from a local, fully insured team.")}</div></section>
-${quoteSection({ title: `Get a free lawn mowing quote in ${s.name}`, service: "Lawn Mowing", intro: `Family-run and Redlands local. We mow lawns in ${s.name} and right across the Redlands bayside.` })}
+${quoteSection({ title: `Get a free lawn mowing quote in ${s.name}`, service: "Lawn Mowing", intro: `Family-run and Redlands local. We mow lawns in ${s.name} and across our local Redlands service area.` })}
 `,
   };
 }
@@ -94,8 +94,8 @@ ${quoteSection({ title: `Get a free lawn mowing quote in ${s.name}`, service: "L
 const hubTrail = [["Home", "/"], ["Service Areas", "/service-areas"]];
 const hub = {
   path: "/service-areas", file: "service-areas.html",
-  title: "Service Areas | Lawn Care Redlands & Bayside | Golden Cane Lawns",
-  description: "Golden Cane Lawns mows lawns and maintains gardens across Wellington Point, Cleveland, Capalaba, Victoria Point, Redland Bay, Wynnum, Manly and more.",
+  title: "Service Areas | Lawn Care Wellington Point & Redlands | Golden Cane Lawns",
+  description: "Golden Cane Lawns mows lawns and maintains gardens within 10 km of Wellington Point: Ormiston, Birkdale, Cleveland, Thornlands, Alexandra Hills and Capalaba.",
   schema: [breadcrumbSchema(hubTrail), {
     "@type": "ItemList", name: "Golden Cane Lawns service areas",
     itemListElement: SUBURB_PAGES.map((s, i) => ({ "@type": "ListItem", position: i + 1, name: `Lawn Mowing ${s.name}`, url: `${SITE.url}/lawn-mowing-${s.slug}` })),
@@ -105,8 +105,8 @@ const hub = {
   <div class="wrap" style="padding-block:clamp(40px,7vw,80px)">
     ${crumbs(hubTrail)}
     <span class="eyebrow" style="color:var(--yellow)">Service areas</span>
-    <h1>Lawn Care Service Areas Across the Redlands &amp; Bayside</h1>
-    <p class="lead">From our home base in Wellington Point we mow lawns, trim hedges, spray weeds and look after gardens in eleven Redlands and bayside suburbs.</p>
+    <h1>Lawn Care Service Areas Within 10 km of Wellington Point</h1>
+    <p class="lead">From our home base in Wellington Point we mow lawns, trim hedges, spray weeds and look after gardens in seven local Redlands suburbs, all within about 10 km.</p>
   </div>
 </section>
 <section class="section section--deep">
@@ -114,7 +114,7 @@ const hub = {
     ${mapVideo()}
     <div data-reveal="right">
       <span class="eyebrow">Where we work</span>
-      <h2>Eleven suburbs, one local team</h2>
+      <h2>Seven suburbs, one local team</h2>
       <p class="lead">Tap a suburb for local lawn mowing details. Don't see yours? Ask anyway and we'll let you know if we can fit you in.</p>
       ${suburbList()}
     </div>
@@ -130,11 +130,11 @@ const hub = {
       ${SUBURB_PAGES.map((s, i) => `
       <a class="area-card" href="/lawn-mowing-${s.slug}" data-reveal style="--d:${(i % 4) * 0.06}s">
         <div class="area-card__img">${img(s.heroImg, s.heroAlt, { sizes: "(max-width: 520px) 100vw, (max-width: 1060px) 50vw, 25vw" })}</div>
-        <div class="area-card__body"><h3>Lawn Mowing ${s.name}</h3><p>${s.lead.split(". ")[0].replace(/\.$/, "")}.</p><span class="link-arrow">View ${s.name} ${icon("arrow")}</span></div>
+        <div class="area-card__body"><h3>Lawn Mowing ${s.name}</h3><p>${s.lead.split(". ")[0].replace(/\.$/, "")}.</p><span class="link-arrow">View suburb ${icon("arrow")}</span></div>
       </a>`).join("")}
     </div>
     <div class="svc-extra" style="margin-top:28px" data-reveal>
-      <p><strong>Wellington Point, Ormiston and Thorneside</strong> are on our doorstep and part of every regular round. See our <a href="/">Wellington Point lawn care</a> homepage.</p>
+      <p><strong>Wellington Point and Ormiston</strong> are on our doorstep and part of every regular round. See our <a href="/">Wellington Point lawn care</a> homepage.</p>
       <a class="btn btn--sm" href="#quote">Get a quote ${icon("arrow")}</a>
     </div>
   </div>

@@ -34,8 +34,8 @@ async function newPage(viewport, mobile = false) {
 }
 
 const PAGES = ["/", "/mowing", "/hedging", "/weed-control", "/gardening", "/about", "/contact", "/service-areas",
-  "/lawn-mowing-capalaba", "/lawn-mowing-cleveland", "/lawn-mowing-victoria-point", "/lawn-mowing-redland-bay",
-  "/lawn-mowing-wynnum", "/lawn-mowing-thornlands", "/lawn-mowing-birkdale", "/lawn-mowing-manly",
+  "/lawn-mowing-capalaba", "/lawn-mowing-cleveland", "/lawn-mowing-alexandra-hills",
+  "/lawn-mowing-thornlands", "/lawn-mowing-birkdale",
   "/blog", "/blog/lawn-mowing-cost-redlands", "/blog/how-often-should-you-mow-your-lawn", "/blog/brown-patches-in-lawn",
   "/blog/how-to-get-rid-of-bindii", "/thank-you", "/404"];
 
@@ -227,7 +227,7 @@ for (const [label, vp, mobile] of [["desktop", { width: 1440, height: 900 }, fal
   const v2 = await page.evaluate(() => { const v = document.querySelector("#service-areas video"); return { paused: v.paused, t: v.currentTime }; });
   log(!v2.paused && v2.t < v1.dur, `map video looped past its ${v1.dur?.toFixed?.(1)}s end and kept playing (t=${v2.t.toFixed(2)})`);
   const crawlable = await page.locator("#service-areas .suburbs li").allTextContents();
-  log(crawlable.length === 11, `11 suburbs listed as crawlable text: ${crawlable.map(s => s.replace(/\s+·.*/, "").trim()).join(", ")}`);
+  log(crawlable.length === 7, `7 suburbs listed as crawlable text: ${crawlable.map(s => s.replace(/\s+·.*/, "").trim()).join(", ")}`);
   await page.locator("#service-areas").screenshot({ path: `${SHOTS}/desktop-home-map-section.png` });
   await ctx.close();
 }
@@ -256,7 +256,8 @@ for (const [label, vp, mobile] of [["desktop", { width: 1440, height: 900 }, fal
   const ld = await page.evaluate(() => JSON.parse(document.querySelector('script[type="application/ld+json"]').textContent));
   const biz = ld["@graph"].find(n => Array.isArray(n["@type"]) && n["@type"].includes("LocalBusiness"));
   log(biz && !biz.address.streetAddress && biz.address.addressLocality === "Wellington Point" && biz.address.postalCode === "4160", "LocalBusiness address has suburb/postcode only, no street address");
-  log(biz.areaServed.length === 11 && biz.serviceArea.geoRadius === "10000", "areaServed lists 11 suburbs + 10 km GeoCircle");
+  log(biz.areaServed.length === 7 && biz.serviceArea.geoRadius === "10000", "areaServed lists the 7 target suburbs + 10 km GeoCircle");
+  log(!/Victoria Point|Redland Bay|Thorneside|Wynnum|Manly/.test(await page.content()), "no dropped suburbs mentioned on homepage");
   log(ld["@graph"].some(n => n["@type"] === "FAQPage"), "FAQPage schema present on homepage");
   const html = await page.content();
   log(!/Toowoomba|Mackay|Banora|Shaun Lawson/i.test(html), "no leftover foreign template tags");

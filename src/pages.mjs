@@ -24,16 +24,16 @@ const areaCopy = `${suburbSentence()}`;
 const homeFaqs = [
   ["How much does lawn mowing cost in Wellington Point and the Redlands?",
    "Every lawn is different, so we price on the size of the block, the condition of the grass, access and how often you want us there. Regular mows on a two or three-weekly schedule cost less per visit than one-off cuts of overgrown lawns because there is less to cut and less green waste to remove. Quotes are free and there's no obligation, so the easiest way to get an exact price is to send us your address through the quote form or call 0415 190 092."],
-  ["Do you mow lawns in Cleveland, Capalaba and Victoria Point?",
-   `Yes. We're based in Wellington Point and mow lawns right across the Redlands and bayside, including ${areaCopy}. If you're just outside those suburbs, ask anyway and we'll let you know if we can fit you in.`],
+  ["Do you mow lawns in Cleveland, Capalaba and Alexandra Hills?",
+   `Yes. We're based in Wellington Point and mow lawns within about 10 km of home, including ${areaCopy}. If you're just outside those suburbs, ask anyway and we'll let you know if we can fit you in.`],
   ["How often should I trim hedges in the Redlands climate?",
    "In the warm, wet Redlands growing season (roughly September to April) most hedges need a trim every four to eight weeks to stay dense and sharp. Through the cooler months growth slows and every eight to twelve weeks is usually enough. Fast growers like murraya and lilly pilly sit at the shorter end of that range."],
   ["Is weed spraying safe for pets and kids on Redlands lawns?",
    "We use registered herbicides applied strictly to the label directions, and we spot-spray the weeds themselves rather than blanket-spraying where we can. We'll let you know before we start, and we recommend keeping pets and children off treated areas until the spray has completely dried and for any longer period the product label specifies."],
-  ["Do you do one-off mows for rentals in Redland Bay and Thornlands?",
-   "Yes. We regularly do one-off mows and tidy-ups for tenants, landlords and property managers in Redland Bay, Thornlands and the rest of the Redlands, including end-of-lease, pre-inspection and pre-sale jobs. Mowing, edging, whipper snipping, hedge trimming and green waste removal can all be done in the one visit."],
-  ["Do you service the bayside suburbs of Wynnum and Manly?",
-   "Yes. Wynnum and Manly are part of our regular service area, along with Thorneside and Birkdale on the way through. We offer the same regular and one-off mowing, hedging, weed spraying and whipper snipping there as we do in Wellington Point."],
+  ["Do you do one-off mows for rentals in Thornlands and Alexandra Hills?",
+   "Yes. We regularly do one-off mows and tidy-ups for tenants, landlords and property managers in Thornlands, Alexandra Hills and the rest of our service area, including end-of-lease, pre-inspection and pre-sale jobs. Mowing, edging, whipper snipping, hedge trimming and green waste removal can all be done in the one visit."],
+  ["How far do you travel from Wellington Point?",
+   "We keep our rounds within about 10 km of our Wellington Point base, which covers Ormiston, Birkdale, Cleveland, Thornlands, Alexandra Hills and Capalaba. Staying close to home means reliable visits and more time on the tools. If you're just outside that area, ask anyway and we'll let you know if we can fit you in."],
 ];
 
 const home = {
@@ -124,7 +124,7 @@ const home = {
       <div class="stat" data-reveal><strong data-count="10" data-suffix="+">10+</strong><span>Years of hands-on experience</span></div>
       <div class="stat" data-reveal style="--d:.08s"><strong data-count="4.9" data-suffix="★">4.9★</strong><span>Average Google rating</span></div>
       <div class="stat" data-reveal style="--d:.16s"><strong data-count="54">54</strong><span>Google reviews from locals</span></div>
-      <div class="stat" data-reveal style="--d:.24s"><strong data-count="11">11</strong><span>Redlands &amp; bayside suburbs</span></div>
+      <div class="stat" data-reveal style="--d:.24s"><strong data-count="7">7</strong><span>Local Redlands suburbs</span></div>
     </div>
   </div>
 </section>
@@ -169,8 +169,8 @@ const home = {
     ${mapVideo()}
     <div data-reveal="right">
       <span class="eyebrow">Service areas</span>
-      <h2 id="areas-title">Lawn care across Wellington Point and the Redlands bayside</h2>
-      <p class="lead">We're based in Wellington Point and look after lawns and gardens in eleven Redlands and bayside suburbs within roughly 10 km of home.</p>
+      <h2 id="areas-title">Lawn care within 10 km of Wellington Point</h2>
+      <p class="lead">We're based in Wellington Point and keep our rounds close to home: seven Redlands suburbs within about 10 km, so we're always nearby and on time.</p>
       ${suburbList()}
       <div class="hero__ctas" style="margin:0">
         <a class="btn" href="/service-areas">All service areas ${icon("arrow")}</a>
@@ -284,12 +284,12 @@ const mowing = servicePage({
   lead: "Regular and one-off lawn mowing Redlands homeowners, landlords and property managers rely on. Every mow includes edging, whipper snipping, blow-down and green waste removal.",
   heroImg: "lawn-mowing-thornlands-front-yard", heroAlt: "Lawn mowing Redlands — freshly mowed front yard in Thornlands",
   formService: "Lawn Mowing",
-  areaIntro: `Our lawn mowing rounds start in Wellington Point and cover the whole Redlands and bayside: ${areaCopy}.`,
+  areaIntro: `Our lawn mowing rounds start in Wellington Point and stay within about 10 km of home: ${areaCopy}.`,
   faqTitle: "Lawn mowing FAQs",
   ctaTitle: "Book your next mow", ctaText: "Regular rounds or a one-off cut. Free quotes from a local, fully insured team.",
   quoteTitle: "Get a free lawn mowing quote",
   content: `
-      <p class="lead">Golden Cane Lawns provides professional <strong>lawn mowing Redlands</strong> wide, from our home base in Wellington Point out to Capalaba, Victoria Point and Redland Bay. We're a family-run, independent local business with more than ten years of hands-on experience, ABN registered and fully insured.</p>
+      <p class="lead">Golden Cane Lawns provides professional <strong>lawn mowing Redlands</strong> wide, from our home base in Wellington Point out to Cleveland, Alexandra Hills and Capalaba. We're a family-run, independent local business with more than ten years of hands-on experience, ABN registered and fully insured.</p>
       <p>Whether you want your lawn looked after every fortnight through summer or need a one-off cut before an inspection, you get the same careful finish: an even cut at the right height for your grass, crisp edges along paths and driveways, and every clipping blown off hard surfaces or taken away.</p>
       <h2>What's included in every mow</h2>
       <div class="feature-grid">
@@ -304,14 +304,14 @@ const mowing = servicePage({
       <h2>Regular lawn mowing rounds</h2>
       <p>Most Redlands lawns grow hard from September to April. A regular round keeps the grass at a consistent height, which means a healthier, denser lawn, fewer weeds and a lower cost per visit than letting it get away and paying for a big catch-up cut. Through summer most customers choose a fortnightly mow; through winter, every three to four weeks is usually plenty.</p>
       <h2>One-off mows for rentals, sales and catch-ups</h2>
-      <p>We also do one-off lawn mowing for tenants, landlords and property managers in Redland Bay, Thornlands, Cleveland and the rest of the Redlands: end-of-lease cleans, routine inspections, pre-sale tidy-ups and overgrown lawns that need bringing back under control. Add hedge trimming, weed spraying or a garden tidy-up to the same visit to get the whole property presentation-ready.</p>
+      <p>We also do one-off lawn mowing for tenants, landlords and property managers in Thornlands, Cleveland, Alexandra Hills and the rest of our service area: end-of-lease cleans, routine inspections, pre-sale tidy-ups and overgrown lawns that need bringing back under control. Add hedge trimming, weed spraying or a garden tidy-up to the same visit to get the whole property presentation-ready.</p>
       <h2 id="whipper-snipping">Whipper snipping</h2>
       <p>Whipper snipping (line trimming) is what makes a mowed lawn look finished. We trim along fence lines, around trees, posts, letterboxes and garden edges, along verges and down the side of the house where a mower can't get in. It's included with every mow, and we also do whipper snipping on its own for verges, nature strips, embankments and overgrown side paths across the Redlands.</p>
       ${figure("curved-lawn-edging-birkdale", "Whipper snipping and lawn edging along a curved garden edge in Birkdale", "Whipper snipped edges along a curved lawn in Birkdale")}
       <div class="callout"><p><strong>Overgrown block or a verge the council won't touch?</strong> Send us a photo through the quote form notes or call ${SITE.phone} and we'll tell you what it'll take.</p></div>
       <h2>Lawn mowing photos from around the Redlands</h2>
       <div class="gallery">
-        ${[["lawn-mowing-cleveland-canal-front", "Lawn mowing Cleveland — canal-front lawn"], ["front-yard-mowing-victoria-point", "Front yard lawn mowing Victoria Point"], ["verge-mowing-capalaba", "Verge mowing and edging in Capalaba"], ["large-lawn-mowing-redland-bay", "Large lawn mowing Redland Bay"]]
+        ${[["lawn-mowing-cleveland-canal-front", "Lawn mowing Cleveland — canal-front lawn"], ["front-yard-mowing-alexandra-hills", "Front yard lawn mowing Alexandra Hills"], ["verge-mowing-capalaba", "Verge mowing and edging in Capalaba"], ["large-lawn-mowing-thornlands", "Large lawn mowing Thornlands"]]
           .map(([s, a]) => `<figure data-reveal>${img(s, a, { sizes: "(max-width: 600px) 100vw, 30vw" })}<figcaption>${a}</figcaption></figure>`).join("")}
       </div>
       <p>Also see our <a href="/hedging">hedge trimming</a>, <a href="/weed-control">weed spraying</a> and <a href="/gardening">garden maintenance</a> services, or read <a href="/blog/how-often-should-you-mow-your-lawn">how often you should mow your lawn</a> and <a href="/blog/what-time-can-you-mow-your-lawn-queensland">what time you can mow in Queensland</a>.</p>`,
@@ -319,7 +319,7 @@ const mowing = servicePage({
     ["How often should my lawn be mowed in the Redlands?", "From September to April most Redlands lawns need mowing every one to two weeks; through the cooler months every three to four weeks is usually enough. We'll recommend a schedule based on your grass type and how quickly it grows."],
     ["Do you take the clippings away?", "Yes. Green waste removal is included, and we blow down your paths, driveway and patio before we leave."],
     ["Is whipper snipping and edging included?", "Yes. Every mow includes edging along hard surfaces and whipper snipping around fences, trees and garden edges."],
-    ["Do you mow lawns in Capalaba and Victoria Point?", `Yes. We mow lawns right across the Redlands including Capalaba and Victoria Point, as well as ${SUBURBS.filter(s => s !== "Capalaba" && s !== "Victoria Point").join(", ")}.`],
+    ["Do you mow lawns in Capalaba and Alexandra Hills?", `Yes. We mow lawns in Capalaba and Alexandra Hills, as well as ${SUBURBS.filter(s => s !== "Capalaba" && s !== "Alexandra Hills").join(", ")}.`],
     ["Can you do a one-off mow for an overgrown lawn or rental?", "Yes. We do one-off mows for overgrown lawns, end-of-lease cleans, inspections and pre-sale tidy-ups. Overgrown lawns take longer, so they're quoted separately from a regular mow."],
   ],
 });
@@ -333,12 +333,12 @@ const hedging = servicePage({
   lead: "Sharp lines, healthy growth and a full clean-up. Hedge trimming Redlands homeowners and body corporates book again and again.",
   heroImg: "hedge-trimming-driveway-wellington-point", heroAlt: "Hedge trimming Redlands — neatly trimmed driveway hedge in Wellington Point",
   formService: "Hedge Trimming",
-  areaIntro: `We trim hedges from Wellington Point across the Redlands and bayside: ${areaCopy}.`,
+  areaIntro: `We trim hedges within about 10 km of Wellington Point: ${areaCopy}.`,
   faqTitle: "Hedge trimming FAQs",
   ctaTitle: "Get your hedges back in shape", ctaText: "One-off reshapes or regular trims, with every clipping cleaned up.",
   quoteTitle: "Get a free hedge trimming quote",
   content: `
-      <p class="lead">Golden Cane Lawns offers professional <strong>hedge trimming Redlands</strong> wide, based in Wellington Point and working across Cleveland, Thornlands, Ormiston and the bayside. We're a family-run, independent business with over a decade of hands-on experience, and we're ABN registered and fully insured.</p>
+      <p class="lead">Golden Cane Lawns offers professional <strong>hedge trimming Redlands</strong> wide, based in Wellington Point and working across Cleveland, Thornlands, Ormiston, Birkdale, Alexandra Hills and Capalaba. We're a family-run, independent business with over a decade of hands-on experience, and we're ABN registered and fully insured.</p>
       <p>A well-kept hedge does a lot of work: privacy from the street and the neighbours, shelter from wind, and a clean frame for the rest of your garden. Left alone through a Redlands summer it can get leggy, patchy and out of control quickly. We trim to keep hedges dense, even and the size you want them.</p>
       <h2>Hedges and shrubs we trim</h2>
       <div class="feature-grid">
@@ -358,7 +358,7 @@ const hedging = servicePage({
         ${beforeAfter("hedge-trimming-before-after-ormiston", "Front hedge reshape, Ormiston", { d: .08 })}
       </div>
       <div class="gallery" style="margin-top:20px">
-        ${[["privacy-hedge-trimming-ormiston", "Privacy hedge trimming Ormiston"], ["box-hedge-trimming-waterfront-redlands", "Box hedge trimming on a Redlands waterfront"], ["hedge-trimming-front-garden-birkdale", "Front garden hedge trimming Birkdale"], ["street-hedge-trimming-thorneside", "Street-front hedge trimming Thorneside"]]
+        ${[["privacy-hedge-trimming-ormiston", "Privacy hedge trimming Ormiston"], ["box-hedge-trimming-waterfront-redlands", "Box hedge trimming on a Redlands waterfront"], ["hedge-trimming-front-garden-birkdale", "Front garden hedge trimming Birkdale"], ["street-hedge-trimming-birkdale", "Street-front hedge trimming Birkdale"]]
           .map(([s, a]) => `<figure data-reveal>${img(s, a, { sizes: "(max-width: 600px) 100vw, 30vw" })}<figcaption>${a}</figcaption></figure>`).join("")}
       </div>`,
   faqs: [
@@ -384,7 +384,7 @@ const weeds = servicePage({
   ctaTitle: "Get on top of the weeds", ctaText: "Targeted spraying for lawns, garden beds and paths, from a local, insured team.",
   quoteTitle: "Get a free weed spraying quote",
   content: `
-      <p class="lead">Golden Cane Lawns provides targeted <strong>weed spraying Redlands</strong> wide, from Wellington Point across Cleveland, Capalaba, Thornlands and the bayside. We're family-run and independent with over ten years of hands-on experience, ABN registered and fully insured.</p>
+      <p class="lead">Golden Cane Lawns provides targeted <strong>weed spraying Redlands</strong> wide, from Wellington Point across Cleveland, Capalaba, Thornlands, Alexandra Hills, Birkdale and Ormiston. We're family-run and independent with over ten years of hands-on experience, ABN registered and fully insured.</p>
       <p>Weeds compete with your lawn for water and nutrients, spread fast through the warm, humid Redlands summer, and the prickly ones like bindii make the yard unpleasant for kids and pets. We identify what's growing and treat it with the right product, applied to label directions, so you get results without damaging the lawn or garden you're trying to protect.</p>
       <h2>Weeds we treat</h2>
       <div class="feature-grid">
@@ -418,7 +418,7 @@ const gardening = servicePage({
   eyebrow: "Tidy-ups, pruning & ongoing care",
   h1: "Garden Maintenance Cleveland &amp; the Redlands",
   lead: "Garden tidy-ups, pruning, mulching and ongoing care for homes, rentals and properties heading to market, from a local, family-run team.",
-  heroImg: "hedge-and-lawn-care-victoria-point", heroAlt: "Garden maintenance Cleveland and the Redlands — tidy hedge and lawn",
+  heroImg: "hedge-and-lawn-care-alexandra-hills", heroAlt: "Garden maintenance Cleveland and the Redlands — tidy hedge and lawn",
   formService: "Other",
   areaIntro: `Garden maintenance is available across ${areaCopy}.`,
   faqTitle: "Garden maintenance FAQs",
@@ -527,8 +527,8 @@ const about = {
     ${mapVideo()}
     <div data-reveal="right">
       <span class="eyebrow">Where we work</span>
-      <h2>Proudly servicing the Redlands bayside</h2>
-      <p class="lead">From our home base in Wellington Point we look after lawns and gardens across eleven local suburbs.</p>
+      <h2>Proudly servicing our local Redlands suburbs</h2>
+      <p class="lead">From our home base in Wellington Point we look after lawns and gardens across seven local suburbs, all within about 10 km.</p>
       ${suburbList()}
     </div>
   </div>
@@ -562,7 +562,7 @@ ${quoteSection({ title: "Request a free quote", intro: "Fill in the form and we'
     <div data-reveal="right">
       <span class="eyebrow">Service areas</span>
       <h2>Where we work</h2>
-      <p class="lead">Based in ${SITE.locality} ${SITE.region} ${SITE.postcode}. We travel to customers across the Redlands bayside.</p>
+      <p class="lead">Based in ${SITE.locality} ${SITE.region} ${SITE.postcode}. We look after customers within about 10 km of home.</p>
       ${suburbList()}
       <ul class="ticks">
         <li>${icon("phone")}<span><a href="tel:${SITE.phoneIntl}">${SITE.phone}</a></span></li>

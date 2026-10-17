@@ -22,6 +22,8 @@ const areaCopy = `${suburbSentence()}`;
 
 /* ------------------------------------------------------------------ HOME */
 const homeFaqs = [
+  ["What does your lawn care Wellington Point service include?",
+   "Our lawn care Wellington Point service covers regular or one-off lawn mowing, edging, whipper snipping, hedge trimming, weed spraying and garden tidy-ups, with every clipping blown off paths and taken away. We're a family-run, fully insured local business, and we also look after Ormiston, Birkdale, Cleveland, Thornlands, Alexandra Hills and Capalaba."],
   ["How much does lawn mowing cost in Wellington Point and the Redlands?",
    "Every lawn is different, so we price on the size of the block, the condition of the grass, access and how often you want us there. Regular mows on a two or three-weekly schedule cost less per visit than one-off cuts of overgrown lawns because there is less to cut and less green waste to remove. Quotes are free and there's no obligation, so the easiest way to get an exact price is to send us your address through the quote form or call 0415 190 092."],
   ["Do you mow lawns in Cleveland, Capalaba and Alexandra Hills?",
@@ -53,7 +55,7 @@ const home = {
     <div class="hero__content">
       <span class="eyebrow" style="color:var(--yellow)">Redlands local · Family-run</span>
       <h1 id="hero-title">Lawn Care Wellington Point <span class="hl">&amp; Redlands</span> Garden Maintenance</h1>
-      <p class="hero__lead">Independent, family-run lawn and garden care from a Redlands local with over a decade of hands-on experience. Mowing, hedge trimming, weed spraying and whipper snipping, done properly. ABN registered and fully insured.</p>
+      <p class="hero__lead">Independent, family-run lawn care Wellington Point locals trust, with over a decade of hands-on experience. Mowing, hedge trimming, weed spraying and whipper snipping, done properly. ABN registered and fully insured.</p>
       <div class="hero__ctas">
         <a class="btn" href="#quote">Get a free quote ${icon("arrow")}</a>
         <a class="btn btn--ghost" href="tel:${SITE.phoneIntl}">${icon("phone")} ${SITE.phone}</a>
@@ -83,9 +85,9 @@ const home = {
     <div class="sec-head">
       <div>
         <span class="eyebrow" data-reveal>Our services</span>
-        <h2 id="services-title" data-reveal>Lawn mowing, hedging &amp; weed spraying across the Redlands</h2>
+        <h2 id="services-title" data-reveal>Lawn care Wellington Point &amp; Redlands services</h2>
       </div>
-      <p class="lead" data-reveal>One local team for the whole yard. Book a regular service and keep it looking sharp all year, or call us in for a one-off tidy-up.</p>
+      <p class="lead" data-reveal>One local team for the whole yard, from regular lawn mowing Wellington Point families book week in, week out, to hedging, weed spraying and one-off tidy-ups.</p>
     </div>
     <div class="services">
       ${SERVICES.map((s, i) => `
@@ -111,7 +113,7 @@ const home = {
       <div data-reveal="right">
         <span class="eyebrow">Why locals choose us</span>
         <h2 id="about-title">Family-run, Redlands local and on the tools for over a decade</h2>
-        <p class="lead">Golden Cane Lawns is an independent, family-run lawn and garden maintenance business based in Wellington Point. Owner Levi Engstrom has more than ten years of hands-on experience, and he still turns up to do the work himself.</p>
+        <p class="lead">Golden Cane Lawns is the independent, family-run name behind lawn care Wellington Point residents have relied on for over a decade. Owner Levi Engstrom has more than ten years of hands-on experience, and he still turns up to do the work himself.</p>
         <ul class="ticks">
           <li>${icon("check")}<span><strong>Local and reliable.</strong> We live in the Redlands, so we're never far away and we turn up when we say we will.</span></li>
           <li>${icon("check")}<span><strong>Professional finish.</strong> Sharp edges, tidy hedges and every clipping blown down or taken away.</span></li>
@@ -136,7 +138,7 @@ const home = {
         <span class="eyebrow" data-reveal>Our work</span>
         <h2 id="ba-title" data-reveal>Real Redlands jobs, before &amp; after</h2>
       </div>
-      <p class="lead" data-reveal>Drag the handle to compare. Every photo here is one of our own jobs, not stock imagery.</p>
+      <p class="lead" data-reveal>Drag the handle to compare. Every photo here is one of our own local jobs, not stock imagery.</p>
     </div>
     <div class="ba-grid ba-grid--feature">
       ${beforeAfter("hedge-trimming-before-after-wellington-point", "Hedge trimming, Wellington Point", { first: true })}
@@ -169,8 +171,8 @@ const home = {
     ${mapVideo()}
     <div data-reveal="right">
       <span class="eyebrow">Service areas</span>
-      <h2 id="areas-title">Lawn care within 10 km of Wellington Point</h2>
-      <p class="lead">We're based in Wellington Point and keep our rounds close to home: seven Redlands suburbs within about 10 km, so we're always nearby and on time.</p>
+      <h2 id="areas-title">Lawn care Wellington Point &amp; nearby suburbs</h2>
+      <p class="lead">We're based in Wellington Point and keep our rounds close to home: seven Redlands suburbs within about 10 km, so we're always nearby and on time for every lawn mowing Wellington Point and local visit.</p>
       ${suburbList()}
       <div class="hero__ctas" style="margin:0">
         <a class="btn" href="/service-areas">All service areas ${icon("arrow")}</a>
@@ -184,7 +186,7 @@ const home = {
   <div class="wrap">
     <div class="review-band" data-reveal>
       <div class="review-band__score">${SITE.rating}</div>
-      <div>${stars()}<p><strong>Rated ${SITE.rating} out of 5 from ${SITE.reviews} Google reviews.</strong> Read what Redlands locals say about Golden Cane Lawns on our Google Business Profile.</p></div>
+      <div>${stars()}<p><strong>Rated ${SITE.rating} out of 5 from ${SITE.reviews} Google reviews.</strong> See why locals rate Golden Cane Lawns for lawn care Wellington Point and across the Redlands on our Google Business Profile.</p></div>
       <a class="btn btn--green" href="${SITE.gbp}" target="_blank" rel="noopener">${icon("google")} Read our reviews</a>
     </div>
   </div>
@@ -194,13 +196,13 @@ const home = {
   <div class="wrap">
     <div class="center" style="margin-bottom:clamp(32px,5vw,48px)">
       <span class="eyebrow" data-reveal>FAQ</span>
-      <h2 id="faq-title" data-reveal>Lawn care questions from Redlands locals</h2>
+      <h2 id="faq-title" data-reveal>Lawn care Wellington Point FAQs</h2>
     </div>
     ${faqBlock(homeFaqs)}
   </div>
 </section>
 
-${quoteSection()}
+${quoteSection({ title: "Get a free lawn care Wellington Point quote" })}
 `,
 };
 

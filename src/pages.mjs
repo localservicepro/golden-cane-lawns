@@ -15,9 +15,9 @@ const LOCAL_HERO = ["webm", "mp4"]
   .map(ext => ({ src: `/assets/video/hero-lawn-mowing-wellington-point.${ext}`, type: `video/${ext}` }))
   .filter(s => existsSync(new URL(`../public${s.src}`, import.meta.url)));
 const HERO_VIDEO = LOCAL_HERO.length ? LOCAL_HERO : [
-  // Client-supplied site video (GoHighLevel media CDN, ~104 MB). Streams in after
-  // page load on all devices except data-saver / 2G-3G; see site.js.
-  { src: "https://assets.cdn.filesafe.space/yUrOct4VCa04M0LzfnqB/media/69ab82105e05eeb703c8b094.mp4", type: "video/mp4" },
+  // Higgsfield hero video generated from the owner's own mowing photo. Streams in
+  // after page load on all devices except data-saver / 2G-3G; see site.js.
+  { src: "https://d8j0ntlcm91z4.cloudfront.net/user_3EWpoiN6nlg900Jz4gzZzRlxgtK/hf_20261016_142312_d42b87b0-8bc4-45d0-886d-8173c9f454a4.mp4", type: "video/mp4" },
 ];
 
 const areaCopy = `${suburbSentence()}`;

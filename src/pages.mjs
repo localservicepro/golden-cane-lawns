@@ -484,7 +484,7 @@ const about = {
       </ul>
     </div>
     <div class="split__media" data-reveal="right">
-      <div class="frame">${img("golden-cane-lawns-family-redlands", "The Engstrom family behind Golden Cane Lawns, a family-run Redlands lawn care business", { sizes: "(max-width: 860px) 100vw, 50vw" })}</div>
+      <div class="frame frame--portrait">${img("golden-cane-lawns-family-wellington-point", "Levi Engstrom and family on the beach, the local family behind Golden Cane Lawns in Wellington Point", { sizes: "(max-width: 860px) 100vw, 50vw" })}</div>
       <div class="split__badge"><strong>100%</strong><span>local &amp; family-run</span></div>
     </div>
   </div>

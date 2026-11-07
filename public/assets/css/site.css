@@ -620,3 +620,4 @@ body.no-scroll{overflow:hidden}
 .reviews-widget iframe{display:block;border:0;min-height:240px}
 /* Hero video plays unmirrored (the container is mirrored for the photo) */
 .hero__media video{transform:scaleX(-1);object-position:50% 50%}
+.split__media .frame--portrait{aspect-ratio:4/5;max-width:480px;margin-inline:auto}

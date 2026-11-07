@@ -36,7 +36,9 @@ PHOTOS = {
     "hedge-and-lawn-care-alexandra-hills": ("1iGkAW", None, [480, 960, 1600]),
     "weed-spraying-redlands-garden-bed": ("1aHoqz", None, [480, 800, 1200]),
     "whipper-snipping-redlands-edges": ("158hw3", (0, 0.06, 1, 0.94), [480, 800]),
-    "golden-cane-lawns-family-redlands": ("13zII1", (0, 0.02, 1, 0.80), [480, 800, 1200]),
+    # Family beach photo uploaded by the client via onboarding (Nov 2026); save it in
+    # RAW as upload_family-beach*.jpg. Cropped to 4:5 around the family.
+    "golden-cane-lawns-family-wellington-point": ("upload_family-beach", (0, 0.10, 1, 0.933), [480, 800, 1200]),
 }
 BEFORE_AFTER = {
     "hedge-trimming-before-after-wellington-point": "ba1",

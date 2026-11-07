@@ -414,27 +414,6 @@
    }
   ]
  },
- "golden-cane-lawns-family-redlands": {
-  "w": 1536,
-  "h": 1598,
-  "files": [
-   {
-    "w": 480,
-    "h": 499,
-    "src": "golden-cane-lawns-family-redlands-480.webp"
-   },
-   {
-    "w": 800,
-    "h": 832,
-    "src": "golden-cane-lawns-family-redlands-800.webp"
-   },
-   {
-    "w": 1200,
-    "h": 1248,
-    "src": "golden-cane-lawns-family-redlands-1200.webp"
-   }
-  ]
- },
  "hedge-trimming-before-after-wellington-point-before": {
   "w": 1566,
   "h": 1165,
@@ -721,6 +700,27 @@
     "w": 960,
     "h": 720,
     "src": "street-hedge-trimming-birkdale-960.webp"
+   }
+  ]
+ },
+ "golden-cane-lawns-family-wellington-point": {
+  "w": 1333,
+  "h": 1666,
+  "files": [
+   {
+    "w": 480,
+    "h": 600,
+    "src": "golden-cane-lawns-family-wellington-point-480.webp"
+   },
+   {
+    "w": 800,
+    "h": 1000,
+    "src": "golden-cane-lawns-family-wellington-point-800.webp"
+   },
+   {
+    "w": 1200,
+    "h": 1500,
+    "src": "golden-cane-lawns-family-wellington-point-1200.webp"
    }
   ]
  }

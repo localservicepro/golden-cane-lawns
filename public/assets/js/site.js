@@ -104,11 +104,13 @@
 
   /* Hero video: poster image paints first (LCP), video streams in after load */
   var heroVideo = document.querySelector(".hero__media video[data-src]");
-  // The site video is large, so phones and slow connections keep the photo.
+  // The site video is large, so data-saver and slow (2G/3G) connections keep the photo.
   var conn = navigator.connection || {};
   var slowNet = /(^|-)2g$|^3g$/.test(conn.effectiveType || "");
-  var wideScreen = window.matchMedia("(min-width: 761px)").matches;
-  if (heroVideo && !reduceMotion && !saveData && !slowNet && wideScreen) {
+  if (heroVideo && !reduceMotion && !saveData && !slowNet) {
+    // iOS only autoplays inline video that is muted and playsinline as properties too.
+    heroVideo.muted = true; heroVideo.defaultMuted = true; heroVideo.playsInline = true;
+    heroVideo.setAttribute("muted", ""); heroVideo.setAttribute("playsinline", ""); heroVideo.setAttribute("webkit-playsinline", "");
     window.addEventListener("load", function () {
       setTimeout(function () {
         var sources = JSON.parse(heroVideo.getAttribute("data-src"));

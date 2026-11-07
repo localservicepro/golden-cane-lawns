@@ -15,8 +15,8 @@ const LOCAL_HERO = ["webm", "mp4"]
   .map(ext => ({ src: `/assets/video/hero-lawn-mowing-wellington-point.${ext}`, type: `video/${ext}` }))
   .filter(s => existsSync(new URL(`../public${s.src}`, import.meta.url)));
 const HERO_VIDEO = LOCAL_HERO.length ? LOCAL_HERO : [
-  // Client-supplied site video (GoHighLevel media CDN). ~104 MB, so it only
-  // loads on desktop with a fast connection; see site.js.
+  // Client-supplied site video (GoHighLevel media CDN, ~104 MB). Streams in after
+  // page load on all devices except data-saver / 2G-3G; see site.js.
   { src: "https://assets.cdn.filesafe.space/yUrOct4VCa04M0LzfnqB/media/69ab82105e05eeb703c8b094.mp4", type: "video/mp4" },
 ];
 

@@ -255,8 +255,9 @@ for (const [label, vp, mobile] of [["desktop", { width: 1440, height: 900 }, fal
   await page.goto(BASE + "/", { waitUntil: "load" });
   await page.waitForTimeout(1200);
   const srcs = await page.evaluate(() => [...document.querySelectorAll(".hero__media video source")].map(s => s.src));
-  const ok = mobile ? srcs.length === 0 : srcs.some(u => u.includes("assets.cdn.filesafe.space/yUrOct4VCa04M0LzfnqB/media/69ab82105e05eeb703c8b094.mp4"));
-  log(ok, `${label}: hero video ${mobile ? "skipped on mobile (photo stays)" : "uses the client site video"} ${JSON.stringify(srcs)}`);
+  const v = await page.evaluate(() => { const el = document.querySelector(".hero__media video"); return { muted: el.muted, inline: el.playsInline, attr: el.hasAttribute("playsinline") }; });
+  const ok = srcs.some(u => u.includes("assets.cdn.filesafe.space/yUrOct4VCa04M0LzfnqB/media/69ab82105e05eeb703c8b094.mp4")) && v.muted && v.inline && v.attr;
+  log(ok, `${label}: hero uses the client site video, muted + playsinline ${JSON.stringify({ srcs, ...v })}`);
   await ctx.close();
 }
 

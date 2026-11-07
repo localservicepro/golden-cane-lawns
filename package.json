@@ -1,0 +1,13 @@
+{
+  "name": "golden-cane-lawns",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "serve": "npx serve public",
+    "render:map": "node tools/service-area-map/render.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.1"
+  }
+}

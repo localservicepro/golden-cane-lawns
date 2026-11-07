@@ -25,7 +25,7 @@ async function newPage(viewport, mobile = false) {
   const ctx = await browser.newContext({ viewport, deviceScaleFactor: mobile ? 2 : 1, isMobile: mobile, hasTouch: mobile });
   await ctx.route("https://link.msgsndr.com/**", r => r.fulfill({ contentType: "application/javascript", body: TRACKER_STUB }));
   // Third-party hosts the sandbox can't reach: fail fast instead of hanging.
-  await ctx.route(/cloudfront\.net|google\.com\/maps|reputationhub\.site/, r => r.abort());
+  await ctx.route(/cloudfront\.net|filesafe\.space|google\.com\/maps|reputationhub\.site/, r => r.abort());
   const page = await ctx.newPage();
   const errors = [];
   page.on("console", m => { if (m.type() === "error" && !/cloudfront|ERR_FAILED|net::/.test(m.text())) errors.push(m.text()); });
@@ -246,6 +246,17 @@ for (const [label, vp, mobile] of [["desktop", { width: 1440, height: 900 }, fal
   await page.goto(BASE + "/contact");
   log(await page.locator('iframe[src*="google.com/maps/embed"][loading="lazy"]').count() === 1, "contact page has lazy GBP map embed");
   log(await page.locator('a[href="https://maps.app.goo.gl/EN3i29DbcVP2TDBf9"]').count() > 0, "GBP short link used");
+  await ctx.close();
+}
+
+// Hero site video: desktop attaches the client video after load; phones keep the photo
+for (const [label, vp, mobile] of [["desktop", { width: 1440, height: 900 }, false], ["mobile", { width: 390, height: 844 }, true]]) {
+  const { ctx, page } = await newPage(vp, mobile);
+  await page.goto(BASE + "/", { waitUntil: "load" });
+  await page.waitForTimeout(1200);
+  const srcs = await page.evaluate(() => [...document.querySelectorAll(".hero__media video source")].map(s => s.src));
+  const ok = mobile ? srcs.length === 0 : srcs.some(u => u.includes("assets.cdn.filesafe.space/yUrOct4VCa04M0LzfnqB/media/69ab82105e05eeb703c8b094.mp4"));
+  log(ok, `${label}: hero video ${mobile ? "skipped on mobile (photo stays)" : "uses the client site video"} ${JSON.stringify(srcs)}`);
   await ctx.close();
 }
 

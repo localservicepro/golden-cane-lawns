@@ -618,3 +618,5 @@ body.no-scroll{overflow:hidden}
 /* Review widget (reputationhub): the widget script sizes the iframe height */
 .reviews-widget{margin-top:24px;border-radius:var(--radius-lg);overflow:hidden;background:var(--white);box-shadow:var(--shadow-sm);min-height:240px}
 .reviews-widget iframe{display:block;border:0;min-height:240px}
+/* Hero video plays unmirrored (the container is mirrored for the photo) */
+.hero__media video{transform:scaleX(-1);object-position:50% 50%}

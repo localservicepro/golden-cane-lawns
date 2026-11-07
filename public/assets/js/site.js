@@ -104,7 +104,11 @@
 
   /* Hero video: poster image paints first (LCP), video streams in after load */
   var heroVideo = document.querySelector(".hero__media video[data-src]");
-  if (heroVideo && !reduceMotion && !saveData) {
+  // The site video is large, so phones and slow connections keep the photo.
+  var conn = navigator.connection || {};
+  var slowNet = /(^|-)2g$|^3g$/.test(conn.effectiveType || "");
+  var wideScreen = window.matchMedia("(min-width: 761px)").matches;
+  if (heroVideo && !reduceMotion && !saveData && !slowNet && wideScreen) {
     window.addEventListener("load", function () {
       setTimeout(function () {
         var sources = JSON.parse(heroVideo.getAttribute("data-src"));

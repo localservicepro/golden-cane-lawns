@@ -9,12 +9,19 @@ const results = [];
 const log = (ok, msg) => { results.push({ ok, msg }); console.log(`${ok ? "PASS" : "FAIL"}  ${msg}`); };
 
 // Stand-in for link.msgsndr.com/js/external-tracking.js (blocked in this sandbox):
-// records submissions the same way, from a document-level submit listener.
+// records submissions from a document-level submit listener, and like GHL's
+// tracker it never captures hidden, password, disabled or file fields
+// (GHL help: "Password, payment, and hidden fields are never captured").
 const TRACKER_STUB = `
   window.__tracked = [];
   document.addEventListener("submit", function (e) {
-    var fd = new FormData(e.target), o = {};
-    fd.forEach(function (v, k) { o[k] = v; });
+    var o = {};
+    Array.prototype.forEach.call(e.target.elements, function (el) {
+      if (!el.name || el.disabled) return;
+      var t = (el.type || "").toLowerCase();
+      if (t === "hidden" || t === "password" || t === "file" || t === "submit" || t === "button") return;
+      o[el.name] = el.value;
+    });
     window.__tracked.push(o);
     try { sessionStorage.setItem("__tracked", JSON.stringify(window.__tracked)); } catch (x) {}
   });`;

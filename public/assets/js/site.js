@@ -197,9 +197,11 @@
 
   /* Photo uploads on quote forms
      Each photo is resized in the browser (max 1600px JPEG), uploaded to
-     /api/upload (Vercel Blob), and its public URL is written into the hidden
-     `add_photos` field, which the GHL tracker sends to {{contact.add_photos}}.
-     The file input itself has no name, so files are never sent to the tracker. */
+     /api/upload (Vercel Blob), and its public URL is written into the
+     `add_photos` text field, which the GHL tracker sends to {{contact.add_photos}}.
+     That field is a normal text input tucked out of sight with clipping: GHL's
+     tracker never captures type="hidden" or disabled fields. The file input has
+     no name, so files themselves are never sent to the tracker. */
   var UPLOAD_URL = "/api/upload", MAX_PHOTOS = 5;
   function resizePhoto(file) {
     return new Promise(function (resolve) {
@@ -218,7 +220,7 @@
   }
   document.querySelectorAll(".field--photos").forEach(function (wrap) {
     var input = wrap.querySelector(".photo-input"), list = wrap.querySelector(".photo-list");
-    var hidden = wrap.querySelector('input[name="add_photos"]'), form = wrap.closest("form");
+    var hidden = wrap.querySelector('[name="add_photos"]'), form = wrap.closest("form");
     var items = [];
     function sync() {
       hidden.value = items.filter(function (i) { return i.url; }).map(function (i) { return i.url; }).join(", ");

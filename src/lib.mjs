@@ -246,7 +246,10 @@ export function quoteForm({ heading = "Get a free quote", id = "quote-form", ser
           <input id="${id}-photos" class="photo-input" type="file" accept="image/*" multiple aria-labelledby="${id}-photos-label">
           <label class="photo-drop" for="${id}-photos">${icon("camera")}<span>Add photos of the job</span></label>
           <ul class="photo-list" aria-live="polite"></ul>
-          <input type="hidden" name="add_photos" value="">
+          <div class="photo-links" aria-hidden="true">
+            <label for="${id}-add-photos">Add Photos</label>
+            <input id="${id}-add-photos" class="photo-links__input" name="add_photos" type="text" value="" tabindex="-1" autocomplete="off">
+          </div>
           <span class="err">Some photos didn't upload. Remove them or try again.</span>
         </div>
         <div class="hp-field" aria-hidden="true">

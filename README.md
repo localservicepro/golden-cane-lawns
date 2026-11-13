@@ -56,6 +56,7 @@ Vercel environment variables:
 | `GHL_PIT_TOKEN` | GHL Private Integration Token (mark **Sensitive**). Scopes: `contacts.write`, `forms.write`, `locations/customFields.readonly` |
 | `GHL_LOCATION_ID` | GHL sub-account (location) ID |
 | `GHL_QUOTE_TAG` | optional, defaults to `website-quote` |
+| `GHL_PHOTOS_FIELD_ID` | optional: `add_photos` field ID, only needed if the token lacks the custom-fields scope |
 
 Submission flow (`public/assets/js/site.js`): honeypot and validation run first; if
 photos are still uploading the form waits, then sends. On success the page goes to

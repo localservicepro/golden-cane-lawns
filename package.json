@@ -7,7 +7,7 @@
     "serve": "npx serve public",
     "render:map": "node tools/service-area-map/render.mjs",
     "test:upload": "node tools/upload-api-test.mjs",
-    "test:attach": "node tools/attach-photos-test.mjs"
+    "test:quote": "node tools/quote-api-test.mjs"
   },
   "devDependencies": {
     "playwright": "^1.56.1"

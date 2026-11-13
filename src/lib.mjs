@@ -21,7 +21,6 @@ export const SITE = {
   gbpEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3538.6451050331375!2d153.2333207!3d-27.511410599999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x24ce2e4c69e9f177%3A0x74012e7fe7c04b6f!2sGolden%20Cane%20lawns!5e0!3m2!1sen!2sph!4v1792164036558!5m2!1sen!2sph",
   rating: "4.9",
   reviews: 54,
-  trackingId: "tk_d4d7db7b0f0649dbbb4d49fa5cd5cc8e",
 };
 
 // Service area in tour order, home base first.
@@ -255,6 +254,7 @@ export function quoteForm({ heading = "Get a free quote", id = "quote-form", ser
       </div>
       <div class="form-foot">
         <button class="btn btn--block" type="submit"><span>Request my free quote</span>${icon("arrow")}</button>
+        <p class="form-error" role="alert" hidden>Sorry, your request didn't go through. Please try again or call Levi on <a href="tel:${SITE.phoneIntl}">${SITE.phone}</a>.</p>
         <small>No spam. Your details are only used to contact you about your quote.</small>
       </div>
     </form>
@@ -493,10 +493,6 @@ ${footer()}
 ${page.noModal ? "" : quoteModal(page.formService)}
 <dialog class="lightbox" id="lightbox" aria-label="Photo viewer"><button type="button" aria-label="Close">${icon("x")}</button><img alt=""><p></p></dialog>
 <script src="/assets/js/site.js?v=${page.v}" defer></script>
-<script
-  src="https://link.msgsndr.com/js/external-tracking.js"
-  data-tracking-id="${SITE.trackingId}">
-</script>
 </body>
 </html>
 `;

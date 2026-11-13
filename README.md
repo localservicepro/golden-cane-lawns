@@ -22,46 +22,50 @@ on `/mowing#whipper-snipping`, as the SEO plan recommends.
 
 ## Quote form → GoHighLevel
 
-Every page loads the GHL external tracking script (`tk_d4d7db7b0f0649dbbb4d49fa5cd5cc8e`).
-Form fields are named to match the CRM keys:
+No GHL tracking script. Forms post JSON to `api/quote.js`, which uses the GHL API
+with a Private Integration Token, in this order:
+
+1. upserts the contact (matched by email/phone) with name, email, phone (as +61…),
+   source "Website quote form" and the custom fields below;
+2. attaches any photos to the **File Upload** field `{{contact.add_photos}}`
+   (`POST /forms/upload-custom-files`);
+3. adds the tag **`website-quote`** last, so a workflow triggered by "Contact Tag
+   added: website-quote" already sees every field and photo. The workflow removes
+   the tag after sending the confirmation, so repeat customers trigger it again.
 
 | Field | `name` | GHL |
 |---|---|---|
-| Name | `full_name` | `{{contact.full_name}}` |
+| Name | `full_name` | `{{contact.name}}` / first + last name |
 | Email | `email` | `{{contact.email}}` |
 | Phone | `phone` | `{{contact.phone}}` |
 | Property address | `property_address` | `{{contact.property_address}}` |
 | Property size | `property_size` | `{{contact.property_size}}` |
 | Service needed | `service_needed` | `{{contact.service_needed}}` |
 | Job notes | `job_notes` | `{{contact.job_notes}}` |
+| Photos (up to 5) | n/a | `{{contact.add_photos}}` (File Upload) |
 
-**Photos:** each form has an optional photo field (up to 5). Photos are resized in
-the browser and uploaded to Vercel Blob by `api/upload.js` (images only, max 4 MB, site
-origins only). After the tracker records the lead, the browser sends the photo links
-with the name/email/phone to `api/attach-photos.js`, which uses the GHL API to upsert the
-contact (matching the one the tracker created) and attach the photos to the **File
-Upload** custom field `{{contact.add_photos}}` (`POST /forms/upload-custom-files`).
+The custom fields must exist in the GHL location with those exact keys. Photos are
+resized in the browser and uploaded to Vercel Blob first by `api/upload.js` (images
+only, max 4 MB, site origins only).
 
-Vercel environment variables needed:
+Vercel environment variables:
 
 | Variable | Value |
 |---|---|
 | `BLOB_READ_WRITE_TOKEN` | set automatically by the connected Blob store |
 | `GHL_PIT_TOKEN` | GHL Private Integration Token (mark **Sensitive**). Scopes: `contacts.write`, `forms.write`, `locations/customFields.readonly` |
 | `GHL_LOCATION_ID` | GHL sub-account (location) ID |
-| `GHL_PHOTOS_FIELD_ID` | optional: the field's ID, skips the lookup |
+| `GHL_QUOTE_TAG` | optional, defaults to `website-quote` |
 
-Tests: `npm run test:upload` and `npm run test:attach` (stand-in APIs, no network).
-Failures are logged in Vercel's runtime logs as `attach-photos: ...`.
+Submission flow (`public/assets/js/site.js`): honeypot and validation run first; if
+photos are still uploading the form waits, then sends. On success the page goes to
+`/thank-you`; if the API fails the visitor sees an error with the phone number and
+keeps their details. The honeypot (`gcl_hp_check`) has a non-semantic name,
+`autocomplete="off"`, is off-screen and isn't required; bots that fill it are sent
+to `/thank-you` with nothing sent (the API also drops them).
 
-`property_address`, `property_size`, `service_needed` and `job_notes` must exist as
-custom fields in the GHL location with those exact keys; `add_photos` must be a File Upload field.
-
-Submission flow (`public/assets/js/site.js`): validation and the honeypot run first,
-then the tracker records the submission, then the page redirects to `/thank-you`
-after 1.5 s. The honeypot (`gcl_hp_check`) has a non-semantic name, `autocomplete="off"`,
-is off-screen, isn't required, and is disabled before tracking so it never
-reaches the CRM. Bots that fill it are redirected without being tracked.
+Tests: `npm run test:quote` and `npm run test:upload` (stand-in APIs, no network).
+Failures show in Vercel's runtime logs as `quote: ...`.
 
 ## Media
 
@@ -79,5 +83,5 @@ reaches the CRM. Bots that fill it are redirected without being tracked.
 `node tools/browser-check.mjs http://localhost:4173 <screenshot-dir>` (with
 `npx serve public -l 4173` running) checks every page on desktop and mobile:
 status codes, one H1 per page, alt text, no horizontal overflow, no console errors,
-the form flow (valid/invalid/honeypot) against a stand-in tracker, the
+the form flow (valid/invalid/honeypot/API error) against a stand-in `/api/quote`, the
 service-area video looping, and the LocalBusiness schema.

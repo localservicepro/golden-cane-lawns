@@ -197,10 +197,8 @@
 
   /* Photo uploads on quote forms
      Each photo is resized in the browser (max 1600px JPEG) and uploaded to
-     /api/upload (Vercel Blob). The links are kept on the form; after the GHL
-     tracker has recorded the lead, /api/attach-photos attaches the photos to the
-     contact's File Upload field {{contact.add_photos}} through the GHL API.
-     The file input has no name, so the tracker never sees the files. */
+     /api/upload (Vercel Blob). The links are kept on the form and sent with the
+     lead to /api/quote, which attaches the photos to {{contact.add_photos}}. */
   var UPLOAD_URL = "/api/upload", MAX_PHOTOS = 5;
   function resizePhoto(file) {
     return new Promise(function (resolve) {
@@ -231,7 +229,7 @@
       if (!failed) wrap.classList.remove("is-invalid");
       if (!uploading && form.dataset.pendingSubmit) {
         delete form.dataset.pendingSubmit;
-        if (typeof form.requestSubmit === "function") form.requestSubmit(); else form.submit();
+        if (typeof form.requestSubmit === "function") form.requestSubmit(); else sendQuote(form);
       }
     }
     function add(file) {
@@ -260,30 +258,11 @@
   });
 
   /* Quote forms
-     The GoHighLevel external tracking script captures native form submissions,
-     so the form never posts anywhere itself. Order of operations:
-       1. window capture phase (runs before any other listener): honeypot and
-          validation. Bots and invalid forms are stopped here so they are never
-          tracked. The honeypot input is then disabled so it is not sent.
-       2. the tracking script's own submit listener records the lead.
-       3. window bubble phase (runs last): prevent the default navigation and
-          redirect to /thank-you once the tracker has had time to send. */
-  var THANK_YOU = "/thank-you";
-  // Hands the uploaded photo links to /api/attach-photos, which finds the contact
-  // (by email/phone) and attaches the photos to {{contact.add_photos}}.
-  // keepalive lets the request finish while the page moves to /thank-you.
-  function attachPhotos(form) {
-    var photos = [];
-    try { photos = JSON.parse(form.dataset.photos || "[]"); } catch (err) {}
-    if (!photos.length) return;
-    var val = function (n) { var el = form.querySelector("[name=" + n + "]"); return el ? el.value.trim() : ""; };
-    try {
-      fetch("/api/attach-photos", {
-        method: "POST", keepalive: true, headers: { "content-type": "application/json" },
-        body: JSON.stringify({ name: val("full_name"), email: val("email"), phone: val("phone"), photos: photos })
-      }).catch(function () {});
-    } catch (err) { /* fetch unavailable */ }
-  }
+     Submissions go to /api/quote, which creates/updates the GHL contact with
+     every field and photo, then adds the "website-quote" tag (the workflow
+     trigger). Honeypot and validation run first; bots are quietly sent to the
+     thank-you page without anything being sent. */
+  var THANK_YOU = "/thank-you", QUOTE_URL = "/api/quote";
   function fieldWrap(input) { return input.closest(".field"); }
   function validate(form) {
     var ok = true, first = null;
@@ -299,50 +278,61 @@
     if (first) first.focus();
     return ok;
   }
+  function setBusy(form, text) {
+    var btn = form.querySelector("[type=submit]");
+    if (!btn) return;
+    var label = btn.querySelector("span");
+    if (!btn.dataset.label) btn.dataset.label = label.textContent;
+    if (text) { btn.setAttribute("aria-busy", "true"); btn.disabled = true; label.textContent = text; }
+    else { btn.removeAttribute("aria-busy"); btn.disabled = false; label.textContent = btn.dataset.label; }
+  }
+  function sendQuote(form) {
+    var data = {};
+    ["full_name", "email", "phone", "property_address", "property_size", "service_needed", "job_notes", "gcl_hp_check"].forEach(function (n) {
+      var el = form.querySelector("[name=" + n + "]"); data[n] = el ? el.value.trim() : "";
+    });
+    try { data.photos = JSON.parse(form.dataset.photos || "[]"); } catch (err) { data.photos = []; }
+    var errBox = form.querySelector(".form-error");
+    if (errBox) errBox.hidden = true;
+    form.dataset.sending = "1";
+    setBusy(form, "Sending…");
+    fetch(QUOTE_URL, { method: "POST", keepalive: true, headers: { "content-type": "application/json" }, body: JSON.stringify(data) })
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); })
+      .then(function () {
+        try { sessionStorage.setItem("gcl_first_name", data.full_name.split(/\s+/)[0] || ""); } catch (err) {}
+        window.location.href = THANK_YOU;
+      })
+      .catch(function () {
+        delete form.dataset.sending;
+        setBusy(form, "");
+        if (errBox) errBox.hidden = false;
+      });
+  }
   document.querySelectorAll("form.js-quote").forEach(function (form) {
     form.addEventListener("input", function (e) {
       var w = fieldWrap(e.target);
       if (w && w.classList.contains("is-invalid")) { w.classList.remove("is-invalid"); e.target.setAttribute("aria-invalid", "false"); }
     });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (form.dataset.sending) return;
+      setBusy(form, "");
+      var hp = form.querySelector(".hp-field input");
+      if (hp && hp.value.trim() !== "") { window.location.href = THANK_YOU; return; } // bot: send nothing
+      if (!validate(form)) return;
+      if (form.dataset.photoErrors) {
+        var pw = form.querySelector(".field--photos"); if (pw) pw.classList.add("is-invalid");
+        return;
+      }
+      if (form.dataset.uploading) {
+        // Wait for photos to finish; the uploader re-submits the form when done.
+        form.dataset.pendingSubmit = "1";
+        setBusy(form, "Uploading photos…");
+        return;
+      }
+      sendQuote(form);
+    });
   });
-  window.addEventListener("submit", function (e) {
-    var form = e.target;
-    if (!form.classList || !form.classList.contains("js-quote")) return;
-    var hp = form.querySelector(".hp-field input");
-    if (hp && hp.value.trim() !== "") {
-      // Bot: swallow silently and behave as if it worked.
-      e.preventDefault(); e.stopImmediatePropagation();
-      window.location.href = THANK_YOU;
-      return;
-    }
-    if (!validate(form)) { e.preventDefault(); e.stopImmediatePropagation(); return; }
-    var btn = form.querySelector("[type=submit]");
-    if (form.dataset.photoErrors) {
-      e.preventDefault(); e.stopImmediatePropagation();
-      var pw = form.querySelector(".field--photos"); if (pw) pw.classList.add("is-invalid");
-      return;
-    }
-    if (form.dataset.uploading) {
-      // Wait for photos to finish; the uploader re-submits the form when done.
-      e.preventDefault(); e.stopImmediatePropagation();
-      form.dataset.pendingSubmit = "1";
-      if (btn) { btn.setAttribute("aria-busy", "true"); btn.querySelector("span").textContent = "Uploading photos…"; }
-      return;
-    }
-    if (hp) hp.disabled = true;
-    if (btn) { btn.setAttribute("aria-busy", "true"); btn.querySelector("span").textContent = "Sending…"; }
-    try {
-      var name = (form.querySelector("[name=full_name]") || {}).value || "";
-      sessionStorage.setItem("gcl_first_name", name.trim().split(/\s+/)[0] || "");
-    } catch (err) { /* storage unavailable */ }
-  }, true);
-  window.addEventListener("submit", function (e) {
-    var form = e.target;
-    if (!form.classList || !form.classList.contains("js-quote")) return;
-    e.preventDefault();
-    attachPhotos(form);
-    setTimeout(function () { window.location.href = THANK_YOU; }, 1500);
-  }, false);
 
   /* Thank-you personalisation */
   var thanksName = document.querySelector("[data-first-name]");

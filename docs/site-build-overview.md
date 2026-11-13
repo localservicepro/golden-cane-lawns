@@ -44,7 +44,7 @@ mobile.
 | SEO research report (HTML) | Step 1 report | Titles, H1s, metas, keyword map, schema, blog topics |
 | GBP short link + embed iframe **[param]** | maps.app.goo.gl link + embed | Links, `sameAs`, Contact/hub map |
 | Facebook, Instagram **[param]** | URLs | Footer, `sameAs` |
-| GHL tracking script ID + field keys **[param]** | `tk_…`, `full_name`, `email`, … | Form `name` attributes and tracking |
+| GHL PIT token, location ID + field keys **[param]** | env vars, `full_name`, `email`, … | Form `name` attributes and `/api/quote` |
 | Review widget embed (optional) **[param]** | reputationhub iframe | Homepage + About review section |
 
 ---
@@ -212,17 +212,20 @@ Re-rendering for a new suburb list takes about a minute.
 `service_needed` (select: the services plus "Other"), `job_notes`. The client
 must create the custom fields in GHL with those exact keys.
 
-**Tracking:** the GHL external tracking script goes on every page and captures
-native form submissions; no endpoint is needed.
+**Sending leads (no tracking script):** the form posts JSON to a Vercel function
+(`api/quote.js`) that calls the GHL API with a Private Integration Token
+(`GHL_PIT_TOKEN`, `GHL_LOCATION_ID` env vars; scopes `contacts.write`,
+`forms.write`, `locations/customFields.readonly`):
+1. upsert the contact with every field (custom fields sent by ID, looked up from
+   `/locations/{id}/customFields` and cached; AU phones normalised to +61);
+2. attach photos (uploaded to Vercel Blob first) to the File Upload field via
+   `/forms/upload-custom-files`;
+3. add the `website-quote` tag **last**: it's the workflow trigger, so the
+   workflow sees all fields and photos. The workflow removes the tag after the
+   confirmation so repeat customers re-trigger.
 
-**Submission flow** (three listeners, order matters):
-1. **`window` capture phase** (runs before every other listener): honeypot and
-   validation run here. Bots and invalid forms are stopped with
-   `preventDefault` + `stopImmediatePropagation`, so they're never tracked.
-   Then the honeypot input is **disabled** so it isn't sent to the CRM.
-2. **The tracker's own listener** records the submission.
-3. **`window` bubble phase** (runs last): `preventDefault`, then redirect to
-   `/thank-you` after 1.5 s so the tracker has time to send.
+Client: honeypot + validation, wait for photo uploads, POST, redirect to
+`/thank-you` on success, or show an error with the phone number on failure.
 
 **Honeypot fix:** the usual bug is browsers autofilling a honeypot named
 `website` or `company`, which silently drops real leads. Use a non-semantic name
@@ -234,10 +237,10 @@ sheet on mobile), preselecting the page's service. Contact has no popup, so its
 quote links scroll to the in-page form. Pages with no quote section point to
 `/contact#quote` so links still work without JS.
 
-**Testing:** the tracker host is blocked in the sandbox, so QA stubs it with a
-document-level submit listener that records `FormData`. That verifies field
-names, honeypot exclusion and the redirect, but **a live GHL test after deploy
-is still needed**.
+**Testing:** the GHL API is unreachable from the sandbox, so the function's
+logic is tested with a stand-in `fetch` (call order, tag last, field mapping,
+failures), and browser QA stubs `/api/quote`. **A live GHL test after deploy is
+still needed.**
 
 ---
 

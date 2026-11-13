@@ -410,6 +410,9 @@ body.no-scroll{overflow:hidden}
 .field.is-invalid input,.field.is-invalid select{border-color:#B3261E;background:#FFF7F6}
 .field .err{display:none;font-size:.84rem;color:#B3261E;font-weight:600}
 .field.is-invalid .err{display:block}
+.form-error{margin:.6rem 0 0;padding:.6rem .8rem;border-radius:8px;background:#FDECEA;color:#8C1D18;font-size:.9rem;font-weight:600}
+.form-error a{color:#8C1D18;text-decoration:underline}
+.form-error[hidden]{display:none}
 .hp-field{position:absolute!important;left:-10000px!important;top:auto!important;width:1px!important;height:1px!important;overflow:hidden!important}
 .form-foot{margin-top:18px;display:grid;gap:12px}
 .form-foot small{color:var(--grey-500);font-size:.84rem;text-align:center}

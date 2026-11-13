@@ -8,29 +8,13 @@ const SHOTS = process.argv[3] || "shots";
 const results = [];
 const log = (ok, msg) => { results.push({ ok, msg }); console.log(`${ok ? "PASS" : "FAIL"}  ${msg}`); };
 
-// Stand-in for link.msgsndr.com/js/external-tracking.js (blocked in this sandbox):
-// records submissions from a document-level submit listener, and like GHL's
-// tracker it never captures hidden, password, disabled or file fields
-// (GHL help: "Password, payment, and hidden fields are never captured").
-const TRACKER_STUB = `
-  window.__tracked = [];
-  document.addEventListener("submit", function (e) {
-    var o = {};
-    Array.prototype.forEach.call(e.target.elements, function (el) {
-      if (!el.name || el.disabled) return;
-      var t = (el.type || "").toLowerCase();
-      if (t === "hidden" || t === "password" || t === "file" || t === "submit" || t === "button") return;
-      o[el.name] = el.value;
-    });
-    window.__tracked.push(o);
-    try { sessionStorage.setItem("__tracked", JSON.stringify(window.__tracked)); } catch (x) {}
-  });`;
-
 const browser = await chromium.launch();
 
 async function newPage(viewport, mobile = false) {
   const ctx = await browser.newContext({ viewport, deviceScaleFactor: mobile ? 2 : 1, isMobile: mobile, hasTouch: mobile });
-  await ctx.route("https://link.msgsndr.com/**", r => r.fulfill({ contentType: "application/javascript", body: TRACKER_STUB }));
+  // Stand-in for /api/quote (the real one calls the GHL API): records what the form sends.
+  ctx.quotes = [];
+  await ctx.route("**/api/quote", r => { ctx.quotes.push(r.request().postDataJSON()); r.fulfill({ status: ctx.quoteStatus || 200, contentType: "application/json", body: '{"ok":true}' }); });
   // Third-party hosts the sandbox can't reach: fail fast instead of hanging.
   await ctx.route(/cloudfront\.net|filesafe\.space|google\.com\/maps|reputationhub\.site/, r => r.abort());
   const page = await ctx.newPage();
@@ -142,7 +126,7 @@ for (const [label, vp, mobile] of [["desktop", { width: 1440, height: 900 }, fal
   await f.locator("[name=email]").fill("popup@example.com");
   await f.locator("[name=property_address]").fill("2 Test St, Cleveland");
   await Promise.all([page.waitForURL(/\/thank-you$/, { timeout: 8000 }), f.locator("[type=submit]").click()]);
-  const tracked = await page.evaluate(() => JSON.parse(sessionStorage.getItem("__tracked") || "[]"));
+  const tracked = ctx.quotes;
   log(tracked.length === 1 && tracked[0].service_needed === "Hedge Trimming" && tracked[0].full_name === "Popup Tester", `${label}: popup submission tracked and redirected ${JSON.stringify(tracked[0] || {})}`);
   await ctx.close();
 }
@@ -173,13 +157,33 @@ for (const [label, vp, mobile] of [["desktop", { width: 1440, height: 900 }, fal
   log(JSON.stringify(opts) === JSON.stringify(["Select a service…", "Lawn Mowing", "Hedge Trimming", "Weed Spraying", "Whipper Snipping", "Other"]), `service dropdown options ${JSON.stringify(opts)}`);
   await Promise.all([page.waitForURL(/\/thank-you$/, { timeout: 8000 }), f.locator("[type=submit]").click()]);
   log(true, "valid submission redirected to /thank-you");
-  const tracked = await page.evaluate(() => JSON.parse(sessionStorage.getItem("__tracked") || "[]"));
+  const tracked = ctx.quotes;
   const t = tracked[0] || {};
   const keys = ["full_name", "email", "phone", "property_address", "property_size", "service_needed", "job_notes"];
-  log(tracked.length === 1 && keys.every(k => t[k]), `tracker saw one submission with all GHL fields: ${JSON.stringify(t)}`);
-  log(!("gcl_hp_check" in t), "honeypot field not sent to tracker");
+  log(tracked.length === 1 && keys.every(k => t[k]), `/api/quote got one submission with all GHL fields: ${JSON.stringify(t)}`);
+  log(t.gcl_hp_check === "", "honeypot left empty in the payload");
   log((await page.locator("h1").textContent()).includes("Test"), "thank-you page personalised with first name");
   await page.screenshot({ path: `${SHOTS}/desktop-thank-you-after-submit.png` });
+  await ctx.close();
+}
+
+// Form: if /api/quote fails, the visitor sees an error (with the phone number) and keeps their details
+{
+  const { ctx, page } = await newPage({ width: 1280, height: 900 });
+  ctx.quoteStatus = 502;
+  await page.goto(BASE + "/contact", { waitUntil: "networkidle" });
+  log(await page.locator('script[src*="msgsndr"]').count() === 0, "GHL tracking script removed");
+  const f = page.locator("form.js-quote").first();
+  for (const [k, v] of [["full_name", "Err Tester"], ["phone", "0400 000 000"], ["email", "err@example.com"], ["property_address", "1 Test St"]]) await f.locator(`[name=${k}]`).fill(v);
+  await f.locator("[name=service_needed]").selectOption("Lawn Mowing");
+  await f.locator("[type=submit]").click();
+  await f.locator(".form-error").waitFor({ state: "visible", timeout: 5000 });
+  const st = { url: page.url(), name: await f.locator("[name=full_name]").inputValue(), btn: await f.locator("[type=submit] span").textContent(), dis: await f.locator("[type=submit]").isDisabled(), tel: await f.locator(".form-error a[href^='tel:']").count() };
+  log(!st.url.includes("thank-you") && st.name === "Err Tester" && !st.dis && !st.btn.includes("Sending") && st.tel === 1, `API failure: error shown, details kept, button re-enabled ${JSON.stringify(st)}`);
+  await f.scrollIntoViewIfNeeded(); await page.screenshot({ path: `${SHOTS}/desktop-form-api-error.png` });
+  ctx.quoteStatus = 200;
+  await Promise.all([page.waitForURL(/\/thank-you$/, { timeout: 8000 }), f.locator("[type=submit]").click()]);
+  log(ctx.quotes.length === 2, "retry after failure succeeds and redirects");
   await ctx.close();
 }
 
@@ -193,7 +197,7 @@ for (const [label, vp, mobile] of [["desktop", { width: 1440, height: 900 }, fal
   await page.waitForTimeout(2000);
   log(!page.url().includes("thank-you"), "invalid submission stays on page");
   log(await f.locator(".field.is-invalid").count() >= 3, "invalid fields are flagged");
-  log((await page.evaluate(() => (window.__tracked || []).length)) === 0, "invalid submission not tracked");
+  log(ctx.quotes.length === 0, "invalid submission not tracked");
   await f.scrollIntoViewIfNeeded();
   await page.screenshot({ path: `${SHOTS}/desktop-form-validation.png` });
   await ctx.close();
@@ -208,7 +212,7 @@ for (const [label, vp, mobile] of [["desktop", { width: 1440, height: 900 }, fal
   await f.locator("[name=service_needed]").selectOption("Other");
   await f.locator("[name=gcl_hp_check]").evaluate(el => { el.value = "http://spam"; });
   await Promise.all([page.waitForURL(/\/thank-you$/, { timeout: 8000 }), f.locator("[type=submit]").click()]);
-  const tracked = await page.evaluate(() => JSON.parse(sessionStorage.getItem("__tracked") || "[]"));
+  const tracked = ctx.quotes;
   log(tracked.length === 0, "honeypot submission not tracked (bot dropped)");
   await ctx.close();
 }
@@ -299,12 +303,11 @@ for (const [w, h, mobile] of [[1440, 900, false], [1280, 720, false], [390, 844,
   await ctx.close();
 }
 
-// Photo uploads: links go to /api/attach-photos (GHL File Upload field) after tracking; submit waits for uploads; failures block
+// Photo uploads: links are sent with the lead to /api/quote; submit waits for uploads; failures block
 const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==", "base64");
 for (const [label, mode] of [["upload ok", "ok"], ["submit while uploading", "slow"], ["upload fails", "fail"]]) {
   const { ctx, page } = await newPage({ width: 1280, height: 900 });
-  let n = 0; const attach = [];
-  await ctx.route("**/api/attach-photos", r => { attach.push({ body: r.request().postDataJSON(), keepalive: true }); r.fulfill({ status: 200, contentType: "application/json", body: '{"ok":true}' }); });
+  let n = 0;
   await ctx.route("**/api/upload**", async r => {
     if (mode === "fail") return r.fulfill({ status: 500, contentType: "application/json", body: '{"error":"x"}' });
     if (mode === "slow") await new Promise(res => setTimeout(res, 2500));
@@ -319,17 +322,15 @@ for (const [label, mode] of [["upload ok", "ok"], ["submit while uploading", "sl
   if (mode === "ok") {
     await page.waitForFunction(() => document.querySelectorAll(".photo-list li.is-done").length === 2);
     await Promise.all([page.waitForURL(/\/thank-you$/, { timeout: 8000 }), f.locator("[type=submit]").click()]);
-    const t = (await page.evaluate(() => JSON.parse(sessionStorage.getItem("__tracked") || "[]")))[0] || {};
-    log(!("add_photos" in t) && t.email === "photo@example.com" && !Object.values(t).some(x => typeof x !== "string"), `tracker got the lead without photo data: ${Object.keys(t).join(",")}`);
-    const b = (attach[0] || {}).body || {};
-    log(attach.length === 1 && b.email === "photo@example.com" && b.phone === "0400 000 000" && b.name === "Photo Tester" && (b.photos || []).length === 2 && b.photos.every(u => /quote-photos\/p\d\.png$/.test(u)), `attach-photos called once with contact + 2 links: ${JSON.stringify(b)}`);
+    const b = ctx.quotes[0] || {};
+    log(ctx.quotes.length === 1 && b.email === "photo@example.com" && b.full_name === "Photo Tester" && (b.photos || []).length === 2 && b.photos.every(u => /quote-photos\/p\d\.png$/.test(u)), `lead sent once with 2 photo links: ${JSON.stringify(b)}`);
   } else if (mode === "slow") {
     await f.locator("[type=submit]").click();
     await page.waitForTimeout(400);
     const busy = await f.locator("[type=submit] span").textContent();
     await page.waitForURL(/\/thank-you$/, { timeout: 12000 });
-    const t = await page.evaluate(() => JSON.parse(sessionStorage.getItem("__tracked") || "[]"));
-    log(busy.includes("Uploading") && t.length === 1 && attach.length === 1 && (attach[0].body.photos || []).length === 2, `submit waited for uploads ("${busy}") then sent once and attached both photos`);
+    const t = ctx.quotes;
+    log(busy.includes("Uploading") && t.length === 1 && (t[0].photos || []).length === 2, `submit waited for uploads ("${busy}") then sent once and attached both photos`);
   } else {
     await page.waitForFunction(() => document.querySelectorAll(".photo-list li.is-error").length === 2);
     await f.locator("[type=submit]").click();
@@ -337,7 +338,7 @@ for (const [label, mode] of [["upload ok", "ok"], ["submit while uploading", "sl
     const blocked = !page.url().includes("thank-you") && await f.locator(".field--photos.is-invalid").count() === 1;
     await f.locator(".photo-list button").first().click(); await f.locator(".photo-list button").first().click();
     await Promise.all([page.waitForURL(/\/thank-you$/, { timeout: 8000 }), f.locator("[type=submit]").click()]);
-    log(blocked && attach.length === 0, "failed uploads block submit until removed, then the form sends (no attach call)");
+    log(blocked && ctx.quotes.length === 1 && ctx.quotes[0].photos.length === 0, "failed uploads block submit until removed, then the form sends without photos");
   }
   await ctx.close();
 }

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+  xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="x-apple-disable-message-reformatting">
+  <title>New Quote Request — {{contact.full_name}}</title>
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+  <style>
+    body,
+    table,
+    td,
+    a {
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    table,
+    td {
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+
+    img {
+      -ms-interpolation-mode: bicubic;
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100% !important;
+      height: 100% !important;
+      background-color: #F7F6EF;
+    }
+
+    a {
+      color: #2E6709;
+    }
+
+    @media screen and (max-width: 600px) {
+      .container {
+        width: 100% !important;
+      }
+
+      .px {
+        padding-left: 24px !important;
+        padding-right: 24px !important;
+      }
+
+      .stack {
+        display: block !important;
+        width: 100% !important;
+      }
+
+      .stack-label {
+        padding-bottom: 2px !important;
+      }
+
+      .stack-value {
+        padding-bottom: 14px !important;
+      }
+
+      .btn-cell {
+        display: block !important;
+        width: 100% !important;
+        padding: 0 0 10px 0 !important;
+      }
+    }
+  </style>
+  <!-- outlook-fixes-applied -->
+</head>
+
+<body style="margin:0; padding:0; background-color:#F7F6EF;">
+
+  <!-- Preheader (hidden) -->
+  <div
+    style="display:none; font-size:1px; color:#F7F6EF; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;">
+    {{contact.full_name}} requested a {{contact.service_needed}} quote at {{contact.property_address}} — call back within
+    the hour.
+  </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F7F6EF;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <!-- Card -->
+        <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" border="0"
+          style="width:600px; max-width:600px; background-color:#ffffff; border-radius:14px; overflow:hidden; box-shadow:0 4px 18px rgba(24,58,4,0.14);">
+
+          <!-- Header -->
+          <tr>
+            <td align="center" style="background-color:#2E6709; padding:28px 24px 24px 24px;">
+              <p
+                style="margin:0 0 12px 0; font-family:'Segoe UI', Arial, sans-serif; font-size:20px; line-height:1.3; color:#FFD900; font-weight:700; letter-spacing:3px; text-transform:uppercase;">
+                {{location.name}}
+              </p>
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td
+                    style="background-color:#FFD900; border-radius:20px; padding:6px 16px; font-family:'Segoe UI', Arial, sans-serif; font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:#183A04;">
+                    🔔 New Quote Request
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Accent bar -->
+          <tr>
+            <td style="height:4px; background-color:#FFD900; font-size:0; line-height:0;">&nbsp;</td>
+          </tr>
+
+          <!-- Headline -->
+          <tr>
+            <td class="px" style="padding:32px 40px 6px 40px; background-color:#ffffff;">
+              <h1
+                style="margin:0 0 8px 0; font-family:'Segoe UI', Arial, sans-serif; font-size:24px; line-height:1.3; color:#183A04; font-weight:700;">
+                {{contact.full_name}} wants a quote for {{contact.service_needed}}
+              </h1>
+              <p
+                style="margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:15px; line-height:1.55; color:#45463F;">
+                A new enquiry just came in through the website quote form.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Quick actions -->
+          <tr>
+            <td class="px" style="padding:20px 40px 0 40px; background-color:#ffffff;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td class="btn-cell" width="50%" style="padding:0 6px 0 0;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td align="center" bgcolor="#FFD900"
+                          style="background-color:#FFD900; border-radius:24px; padding:13px 18px; font-family:'Segoe UI', Arial, sans-serif; font-size:15px; font-weight:700;">
+                          <a href="tel:{{contact.phone}}"
+                            style="color:#183A04; text-decoration:none; display:block; mso-style-textfill-fill-color:#183A04;"><!--[if mso]><font color="#183A04"><![endif]-->📞 Call {{contact.first_name}}<!--[if mso]></font><![endif]--></a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td class="btn-cell" width="50%" style="padding:0 0 0 6px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td align="center" bgcolor="#2E6709"
+                          style="background-color:#2E6709; border-radius:24px; padding:13px 18px; font-family:'Segoe UI', Arial, sans-serif; font-size:15px; font-weight:700;">
+                          <a href="mailto:{{contact.email}}"
+                            style="color:#ffffff; text-decoration:none; display:block; mso-style-textfill-fill-color:#ffffff;"><!--[if mso]><font color="#ffffff"><![endif]-->✉️ Email {{contact.first_name}}<!--[if mso]></font><![endif]--></a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Section: Contact -->
+          <tr>
+            <td class="px" style="padding:24px 40px 0 40px; background-color:#ffffff;">
+              <p
+                style="margin:0 0 10px 0; font-family:'Segoe UI', Arial, sans-serif; font-size:12px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:#2E6709;">
+                Contact Details
+              </p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                style="background-color:#F7F6EF; border:1px solid #E7E7E3; border-radius:10px;">
+                <tr>
+                  <td style="padding:18px 24px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                      style="font-family:'Segoe UI', Arial, sans-serif;">
+
+                      <tr>
+                        <td class="stack stack-label" width="38%"
+                          style="padding:6px 8px 6px 0; font-size:13px; color:#2E6709; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; vertical-align:top;">
+                          Full Name</td>
+                        <td class="stack stack-value"
+                          style="padding:6px 0; font-size:15px; color:#1B1C18; vertical-align:top; font-weight:700;">
+                          {{contact.full_name}}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="border-top:1px solid #E7E7E3; font-size:0; line-height:0;">&nbsp;</td>
+                      </tr>
+
+                      <tr>
+                        <td class="stack stack-label" width="38%"
+                          style="padding:6px 8px 6px 0; font-size:13px; color:#2E6709; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; vertical-align:top;">
+                          Phone</td>
+                        <td class="stack stack-value"
+                          style="padding:6px 0; font-size:15px; color:#1B1C18; vertical-align:top;">
+                          <a href="tel:{{contact.phone}}" style="color:#2E6709; text-decoration:underline; mso-style-textfill-fill-color:#2E6709;"><!--[if mso]><font color="#2E6709"><![endif]-->{{contact.phone}}<!--[if mso]></font><![endif]--></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="border-top:1px solid #E7E7E3; font-size:0; line-height:0;">&nbsp;</td>
+                      </tr>
+
+                      <tr>
+                        <td class="stack stack-label" width="38%"
+                          style="padding:6px 8px 6px 0; font-size:13px; color:#2E6709; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; vertical-align:top;">
+                          Email</td>
+                        <td class="stack stack-value"
+                          style="padding:6px 0; font-size:15px; color:#1B1C18; vertical-align:top; word-break:break-word;">
+                          <a href="mailto:{{contact.email}}" style="color:#2E6709; text-decoration:underline; mso-style-textfill-fill-color:#2E6709;"><!--[if mso]><font color="#2E6709"><![endif]-->{{contact.email}}<!--[if mso]></font><![endif]--></a>
+                        </td>
+                      </tr>
+
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Section: Job -->
+          <tr>
+            <td class="px" style="padding:22px 40px 0 40px; background-color:#ffffff;">
+              <p
+                style="margin:0 0 10px 0; font-family:'Segoe UI', Arial, sans-serif; font-size:12px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:#2E6709;">
+                Job Details
+              </p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                style="background-color:#F7F6EF; border:1px solid #E7E7E3; border-radius:10px;">
+                <tr>
+                  <td style="padding:18px 24px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                      style="font-family:'Segoe UI', Arial, sans-serif;">
+
+                      <tr>
+                        <td class="stack stack-label" width="38%"
+                          style="padding:6px 8px 6px 0; font-size:13px; color:#2E6709; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; vertical-align:top;">
+                          Service Needed</td>
+                        <td class="stack stack-value"
+                          style="padding:6px 0; font-size:15px; color:#1B1C18; vertical-align:top; font-weight:700;">
+                          {{contact.service_needed}}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="border-top:1px solid #E7E7E3; font-size:0; line-height:0;">&nbsp;</td>
+                      </tr>
+
+                      <tr>
+                        <td class="stack stack-label" width="38%"
+                          style="padding:6px 8px 6px 0; font-size:13px; color:#2E6709; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; vertical-align:top;">
+                          Property Address</td>
+                        <td class="stack stack-value"
+                          style="padding:6px 0; font-size:15px; color:#1B1C18; vertical-align:top;">
+                          {{contact.property_address}}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="border-top:1px solid #E7E7E3; font-size:0; line-height:0;">&nbsp;</td>
+                      </tr>
+
+                      <tr>
+                        <td class="stack stack-label" width="38%"
+                          style="padding:6px 8px 6px 0; font-size:13px; color:#2E6709; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; vertical-align:top;">
+                          Property Size</td>
+                        <td class="stack stack-value"
+                          style="padding:6px 0; font-size:15px; color:#1B1C18; vertical-align:top;">
+                          {{contact.property_size}}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="border-top:1px solid #E7E7E3; font-size:0; line-height:0;">&nbsp;</td>
+                      </tr>
+
+                      <tr>
+                        <td class="stack stack-label" width="38%"
+                          style="padding:6px 8px 6px 0; font-size:13px; color:#2E6709; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; vertical-align:top;">
+                          Job Notes</td>
+                        <td class="stack stack-value"
+                          style="padding:6px 0; font-size:15px; line-height:1.55; color:#1B1C18; vertical-align:top;">
+                          {{contact.job_notes}}</td>
+                      </tr>
+
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Next steps -->
+          <tr>
+            <td class="px" style="padding:24px 40px 32px 40px; background-color:#ffffff;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                style="background-color:#F7F6EF; border-left:4px solid #FFD900; border-radius:8px;">
+                <tr>
+                  <td
+                    style="padding:16px 20px; font-family:'Segoe UI', Arial, sans-serif; font-size:14px; line-height:1.6; color:#45463F;">
+                    <strong style="color:#183A04;">Next steps</strong><br>
+                    1. Call {{contact.first_name}} within the hour — leads answered fast convert best.<br>
+                    2. Confirm the address, block size, access and any pets before pricing.<br>
+                    3. Send the quote or book a time to take a look.<br>
+                    4. Update the pipeline stage once contacted.
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td align="center" style="background-color:#183A04; padding:22px 40px;">
+              <p
+                style="margin:0 0 6px 0; font-family:'Segoe UI', Arial, sans-serif; font-size:13px; color:#FFD900; font-weight:700;">
+                Internal notification — {{location.name}}
+              </p>
+              <p
+                style="margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:12px; line-height:1.6; color:#C9D6BC;">
+                Sent automatically when a quote request is submitted on the website. Do not forward to the customer.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        <!-- /Card -->
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+
+</html>

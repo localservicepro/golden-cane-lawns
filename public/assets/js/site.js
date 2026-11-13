@@ -195,6 +195,69 @@
     });
   }
 
+  /* Photo uploads on quote forms
+     Each photo is resized in the browser (max 1600px JPEG), uploaded to
+     /api/upload (Vercel Blob), and its public URL is written into the hidden
+     `add_photos` field, which the GHL tracker sends to {{contact.add_photos}}.
+     The file input itself has no name, so files are never sent to the tracker. */
+  var UPLOAD_URL = "/api/upload", MAX_PHOTOS = 5;
+  function resizePhoto(file) {
+    return new Promise(function (resolve) {
+      var url = URL.createObjectURL(file), img = new Image();
+      img.onload = function () {
+        var scale = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+        var c = document.createElement("canvas");
+        c.width = Math.round(img.naturalWidth * scale); c.height = Math.round(img.naturalHeight * scale);
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url);
+        c.toBlob(function (b) { resolve(b && b.size < file.size ? b : file); }, "image/jpeg", 0.82);
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); resolve(file); }; // e.g. HEIC on non-Apple browsers
+      img.src = url;
+    });
+  }
+  document.querySelectorAll(".field--photos").forEach(function (wrap) {
+    var input = wrap.querySelector(".photo-input"), list = wrap.querySelector(".photo-list");
+    var hidden = wrap.querySelector('input[name="add_photos"]'), form = wrap.closest("form");
+    var items = [];
+    function sync() {
+      hidden.value = items.filter(function (i) { return i.url; }).map(function (i) { return i.url; }).join(", ");
+      var uploading = items.some(function (i) { return i.status === "uploading"; });
+      var failed = items.some(function (i) { return i.status === "error"; });
+      form.dataset.uploading = uploading ? "1" : "";
+      form.dataset.photoErrors = failed ? "1" : "";
+      wrap.classList.toggle("is-full", items.length >= MAX_PHOTOS);
+      if (!failed) wrap.classList.remove("is-invalid");
+      if (!uploading && form.dataset.pendingSubmit) {
+        delete form.dataset.pendingSubmit;
+        if (typeof form.requestSubmit === "function") form.requestSubmit(); else form.submit();
+      }
+    }
+    function add(file) {
+      var item = { status: "uploading", url: "" }, li = document.createElement("li"), thumb = new Image(), rm = document.createElement("button");
+      li.className = "is-uploading";
+      thumb.alt = ""; thumb.src = URL.createObjectURL(file);
+      rm.type = "button"; rm.setAttribute("aria-label", "Remove photo"); rm.textContent = "×";
+      rm.addEventListener("click", function () { items.splice(items.indexOf(item), 1); li.remove(); sync(); });
+      li.appendChild(thumb); li.appendChild(rm); list.appendChild(li);
+      items.push(item); sync();
+      resizePhoto(file).then(function (blob) {
+        var name = (file.name || "photo").replace(/\.[^.]*$/, "") + (blob.type === "image/jpeg" ? ".jpg" : "");
+        return fetch(UPLOAD_URL + "?name=" + encodeURIComponent(name), { method: "POST", headers: { "content-type": blob.type || "image/jpeg" }, body: blob });
+      }).then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); }).then(function (d) {
+        item.url = d.url; item.status = "done"; li.className = "is-done";
+      }).catch(function () {
+        item.status = "error"; li.className = "is-error";
+      }).then(sync);
+    }
+    input.addEventListener("change", function () {
+      Array.prototype.slice.call(input.files || [], 0, MAX_PHOTOS - items.length)
+        .filter(function (f) { return /^image\//.test(f.type) || /\.(heic|heif)$/i.test(f.name); })
+        .forEach(add);
+      input.value = "";
+    });
+  });
+
   /* Quote forms
      The GoHighLevel external tracking script captures native form submissions,
      so the form never posts anywhere itself. Order of operations:
@@ -237,8 +300,20 @@
       return;
     }
     if (!validate(form)) { e.preventDefault(); e.stopImmediatePropagation(); return; }
-    if (hp) hp.disabled = true;
     var btn = form.querySelector("[type=submit]");
+    if (form.dataset.photoErrors) {
+      e.preventDefault(); e.stopImmediatePropagation();
+      var pw = form.querySelector(".field--photos"); if (pw) pw.classList.add("is-invalid");
+      return;
+    }
+    if (form.dataset.uploading) {
+      // Wait for photos to finish; the uploader re-submits the form when done.
+      e.preventDefault(); e.stopImmediatePropagation();
+      form.dataset.pendingSubmit = "1";
+      if (btn) { btn.setAttribute("aria-busy", "true"); btn.querySelector("span").textContent = "Uploading photos…"; }
+      return;
+    }
+    if (hp) hp.disabled = true;
     if (btn) { btn.setAttribute("aria-busy", "true"); btn.querySelector("span").textContent = "Sending…"; }
     try {
       var name = (form.querySelector("[name=full_name]") || {}).value || "";

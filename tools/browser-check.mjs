@@ -261,6 +261,79 @@ for (const [label, vp, mobile] of [["desktop", { width: 1440, height: 900 }, fal
   await ctx.close();
 }
 
+// Thank-you page text is readable on the green background
+{
+  const { ctx, page } = await newPage({ width: 1280, height: 900 });
+  await page.goto(BASE + "/thank-you", { waitUntil: "networkidle" });
+  const c = await page.evaluate(() => {
+    const lum = rgb => { const [r, g, b] = rgb.match(/\d+/g).slice(0, 3).map(v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }); return .2126 * r + .7152 * g + .0722 * b; };
+    const bg = lum(getComputedStyle(document.querySelector(".notice")).backgroundColor);
+    const ratio = el => { const l = lum(getComputedStyle(el).color); return +((Math.max(l, bg) + .05) / (Math.min(l, bg) + .05)).toFixed(2); };
+    const btn = [...document.querySelectorAll(".notice .btn")].map(b => { const l = lum(getComputedStyle(b).color), bl = lum(getComputedStyle(b).backgroundColor === "rgba(0, 0, 0, 0)" ? getComputedStyle(document.querySelector(".notice")).backgroundColor : getComputedStyle(b).backgroundColor); return +((Math.max(l, bl) + .05) / (Math.min(l, bl) + .05)).toFixed(2); });
+    return { lead: ratio(document.querySelector(".notice .lead")), eyebrow: ratio(document.querySelector(".notice .eyebrow")), eyebrowText: document.querySelector(".notice .eyebrow").textContent.trim(), btn };
+  });
+  log(c.lead >= 4.5 && c.eyebrow >= 4.5 && c.btn.every(r => r >= 4.5), `thank-you text contrast on green: lead ${c.lead}:1, "${c.eyebrowText}" ${c.eyebrow}:1, buttons ${c.btn.join(", ")} (need 4.5)`);
+  await page.screenshot({ path: `${SHOTS}/thank-you-fold.png` });
+  await ctx.close();
+}
+
+// Quote popup fits without scrolling (desktop and phones)
+for (const [w, h, mobile] of [[1440, 900, false], [1280, 720, false], [390, 844, true], [375, 667, true], [360, 740, true]]) {
+  const { ctx, page } = await newPage({ width: w, height: h }, mobile);
+  await page.goto(BASE + "/hedging", { waitUntil: "networkidle" });
+  await page.locator(".header-cta .btn").click();
+  await page.waitForTimeout(600);
+  const m = await page.evaluate(() => {
+    const d = document.getElementById("quote-modal"), c = d.querySelector(".form-card"), r = d.getBoundingClientRect();
+    return { open: d.open, cardScroll: c.scrollHeight - c.clientHeight, top: Math.round(r.top), bottom: Math.round(r.bottom), vh: innerHeight, photos: !!d.querySelector(".field--photos") };
+  });
+  log(m.open && m.cardScroll <= 1 && m.top >= 0 && m.bottom <= m.vh && m.photos, `${w}x${h}: quote popup fits without scrolling ${JSON.stringify(m)}`);
+  if (w === 390 || w === 1440 || w === 375) await page.screenshot({ path: `${SHOTS}/popup-${w}x${h}.png` });
+  await ctx.close();
+}
+
+// Photo uploads: links land in add_photos and reach the tracker; submit waits for uploads; failures block
+const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==", "base64");
+for (const [label, mode] of [["upload ok", "ok"], ["submit while uploading", "slow"], ["upload fails", "fail"]]) {
+  const { ctx, page } = await newPage({ width: 1280, height: 900 });
+  let n = 0;
+  await ctx.route("**/api/upload**", async r => {
+    if (mode === "fail") return r.fulfill({ status: 500, contentType: "application/json", body: '{"error":"x"}' });
+    if (mode === "slow") await new Promise(res => setTimeout(res, 2500));
+    n++;
+    r.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ url: `https://blob.example/quote-photos/p${n}.png` }) });
+  });
+  await page.goto(BASE + "/contact", { waitUntil: "networkidle" });
+  const f = page.locator("form.js-quote").first();
+  for (const [k, v] of [["full_name", "Photo Tester"], ["phone", "0400 000 000"], ["email", "photo@example.com"], ["property_address", "1 Test St, Ormiston"]]) await f.locator(`[name=${k}]`).fill(v);
+  await f.locator("[name=service_needed]").selectOption("Lawn Mowing");
+  await f.locator(".photo-input").setInputFiles([{ name: "yard-1.png", mimeType: "image/png", buffer: PNG }, { name: "yard-2.png", mimeType: "image/png", buffer: PNG }]);
+  if (mode === "ok") {
+    await page.waitForFunction(() => document.querySelectorAll(".photo-list li.is-done").length === 2);
+    const v = await f.locator("[name=add_photos]").inputValue();
+    log(v === "https://blob.example/quote-photos/p1.png, https://blob.example/quote-photos/p2.png" || v.split(", ").length === 2, `photos uploaded, add_photos = "${v}"`);
+    await Promise.all([page.waitForURL(/\/thank-you$/, { timeout: 8000 }), f.locator("[type=submit]").click()]);
+    const t = (await page.evaluate(() => JSON.parse(sessionStorage.getItem("__tracked") || "[]")))[0] || {};
+    log(/blob\.example\/quote-photos\/p\d\.png, https:\/\/blob\.example/.test(t.add_photos || "") && !Object.values(t).some(x => typeof x !== "string"), `tracker received add_photos (text only, no file data): ${t.add_photos}`);
+  } else if (mode === "slow") {
+    await f.locator("[type=submit]").click();
+    await page.waitForTimeout(400);
+    const busy = await f.locator("[type=submit] span").textContent();
+    await page.waitForURL(/\/thank-you$/, { timeout: 12000 });
+    const t = await page.evaluate(() => JSON.parse(sessionStorage.getItem("__tracked") || "[]"));
+    log(busy.includes("Uploading") && t.length === 1 && (t[0].add_photos || "").split(", ").length === 2, `submit waited for uploads ("${busy}") then sent once with both links`);
+  } else {
+    await page.waitForFunction(() => document.querySelectorAll(".photo-list li.is-error").length === 2);
+    await f.locator("[type=submit]").click();
+    await page.waitForTimeout(1800);
+    const blocked = !page.url().includes("thank-you") && await f.locator(".field--photos.is-invalid").count() === 1;
+    await f.locator(".photo-list button").first().click(); await f.locator(".photo-list button").first().click();
+    await Promise.all([page.waitForURL(/\/thank-you$/, { timeout: 8000 }), f.locator("[type=submit]").click()]);
+    log(blocked, "failed uploads block submit until removed, then the form sends");
+  }
+  await ctx.close();
+}
+
 // Review widget embed present on the homepage reviews section
 {
   const { ctx, page } = await newPage({ width: 1280, height: 900 });

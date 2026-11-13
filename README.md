@@ -35,7 +35,13 @@ Form fields are named to match the CRM keys:
 | Service needed | `service_needed` | `{{contact.service_needed}}` |
 | Job notes | `job_notes` | `{{contact.job_notes}}` |
 
-`property_address`, `property_size`, `service_needed` and `job_notes` must exist as
+**Photos:** each form has an optional photo field (up to 5). Photos are resized in
+the browser, uploaded to Vercel Blob by `api/upload.js` (images only, max 4 MB, site
+origins only), and their public links go into the hidden `add_photos` field, which
+the tracker sends to `{{contact.add_photos}}`. Needs a Blob store connected to the
+Vercel project. Test the API logic with `npm run test:upload`.
+
+`property_address`, `property_size`, `service_needed`, `job_notes` and `add_photos` must exist as
 custom fields in the GHL location with those exact keys.
 
 Submission flow (`public/assets/js/site.js`): validation and the honeypot run first,

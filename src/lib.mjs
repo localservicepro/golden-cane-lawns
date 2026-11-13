@@ -79,6 +79,7 @@ const ICONS = {
   google: '<path d="M20.9 12.2c0-.6-.1-1.2-.2-1.8H12v3.5h5a4.3 4.3 0 0 1-1.9 2.8v2.3h3c1.8-1.6 2.8-4 2.8-6.8z"/><path d="M12 21c2.5 0 4.6-.8 6.1-2.2l-3-2.3c-.8.6-1.9.9-3.1.9-2.4 0-4.4-1.6-5.1-3.8H3.8v2.4A9 9 0 0 0 12 21z"/><path d="M6.9 13.6a5.4 5.4 0 0 1 0-3.4V7.8H3.8a9 9 0 0 0 0 8.2z"/><path d="M12 6.6c1.3 0 2.5.5 3.5 1.4l2.6-2.6A9 9 0 0 0 3.8 7.8l3.1 2.4C7.6 8.1 9.6 6.6 12 6.6z"/>',
   chevrons: '<path d="m9 18-6-6 6-6"/><path d="m15 6 6 6-6 6"/>',
   chevron: '<path d="m9 18 6-6-6-6"/>',
+  camera: '<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/>',
 };
 export const icon = (name, extra = "") =>
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"${extra}>${ICONS[name]}</svg>`;
@@ -190,11 +191,11 @@ export function beforeAfter(slug, caption, { first = false, d = 0 } = {}) {
   </figure>`;
 }
 
-export function quoteForm({ heading = "Get a free quote", id = "quote-form", service = "", reveal = true } = {}) {
+export function quoteForm({ heading = "Get a free quote", id = "quote-form", service = "", reveal = true, compact = false } = {}) {
   const opt = (v) => `<option value="${v}"${v === service ? " selected" : ""}>${v}</option>`;
-  return `<div class="form-card"${reveal ? ' data-reveal="right"' : ""}>
+  return `<div class="form-card${compact ? " form-card--compact" : ""}"${reveal ? ' data-reveal="right"' : ""}>
     <h3${reveal ? "" : ' id="quote-modal-title"'}>${heading}</h3>
-    <p>Tell us a little about the job and we'll get back to you with a free, no-obligation quote.</p>
+    <p>${compact ? "Free, no-obligation quote. We'll get back to you shortly." : "Tell us a little about the job and we'll get back to you with a free, no-obligation quote."}</p>
     <form class="js-quote" id="${id}" name="quote" method="post" action="/thank-you" novalidate>
       <div class="form-grid">
         <div class="field">
@@ -207,12 +208,12 @@ export function quoteForm({ heading = "Get a free quote", id = "quote-form", ser
           <input id="${id}-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" data-required>
           <span class="err">Please enter a valid phone number.</span>
         </div>
-        <div class="field field--full">
+        <div class="field field--full field--pair">
           <label for="${id}-email">Email <span class="req">*</span></label>
           <input id="${id}-email" name="email" type="email" inputmode="email" autocomplete="email" data-required>
           <span class="err">Please enter a valid email address.</span>
         </div>
-        <div class="field field--full">
+        <div class="field field--full field--pair">
           <label for="${id}-address">Property address <span class="req">*</span></label>
           <input id="${id}-address" name="property_address" type="text" autocomplete="street-address" placeholder="Street and suburb" data-required>
           <span class="err">Please enter the property address.</span>
@@ -238,7 +239,15 @@ export function quoteForm({ heading = "Get a free quote", id = "quote-form", ser
         </div>
         <div class="field field--full">
           <label for="${id}-notes">Job notes</label>
-          <textarea id="${id}-notes" name="job_notes" rows="4" placeholder="How often, access, pets, anything we should know"></textarea>
+          <textarea id="${id}-notes" name="job_notes" rows="${compact ? 2 : 4}" placeholder="How often, access, pets, anything we should know"></textarea>
+        </div>
+        <div class="field field--full field--photos">
+          <span class="field__label" id="${id}-photos-label">Photos <small>(optional, up to 5)</small></span>
+          <input id="${id}-photos" class="photo-input" type="file" accept="image/*" multiple aria-labelledby="${id}-photos-label">
+          <label class="photo-drop" for="${id}-photos">${icon("camera")}<span>Add photos of the job</span></label>
+          <ul class="photo-list" aria-live="polite"></ul>
+          <input type="hidden" name="add_photos" value="">
+          <span class="err">Some photos didn't upload. Remove them or try again.</span>
         </div>
         <div class="hp-field" aria-hidden="true">
           <label for="${id}-hp">Leave this field empty</label>
@@ -308,7 +317,7 @@ export function ctaBand(title = "Ready for a lawn you're proud of?", text = "Boo
 function quoteModal(service = "") {
   return `<dialog class="quote-modal" id="quote-modal" aria-labelledby="quote-modal-title">
   <button class="quote-modal__close" type="button" data-modal-close aria-label="Close quote form">${icon("x")}</button>
-  ${quoteForm({ id: "modal-quote-form", service, reveal: false })}
+  ${quoteForm({ id: "modal-quote-form", service, reveal: false, compact: true })}
   <ul class="quote-modal__trust">
     <li>${icon("shield")}Fully insured</li><li>${icon("users")}Family-run</li><li>${icon("star")}${SITE.rating}★ Google</li>
   </ul>

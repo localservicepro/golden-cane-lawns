@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="x-apple-disable-message-reformatting">
-  <title>New Quote Request — {{contact.full_name}}</title>
+  <title>New Quote Request — {{contact.name}}</title>
   <!--[if mso]>
   <noscript>
     <xml>
@@ -85,7 +85,7 @@
   <!-- Preheader (hidden) -->
   <div
     style="display:none; font-size:1px; color:#F7F6EF; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;">
-    {{contact.full_name}} requested a {{contact.service_needed}} quote at {{contact.property_address}} — call back within
+    {{contact.name}} requested a {{contact.service_needed}} quote at {{contact.property_address}} — call back within
     the hour.
   </div>
 
@@ -125,7 +125,7 @@
             <td class="px" style="padding:32px 40px 6px 40px; background-color:#ffffff;">
               <h1
                 style="margin:0 0 8px 0; font-family:'Segoe UI', Arial, sans-serif; font-size:24px; line-height:1.3; color:#183A04; font-weight:700;">
-                {{contact.full_name}} wants a quote for {{contact.service_needed}}
+                {{contact.name}} wants a quote for {{contact.service_needed}}
               </h1>
               <p
                 style="margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:15px; line-height:1.55; color:#45463F;">
@@ -154,7 +154,7 @@
                           Full Name</td>
                         <td class="stack stack-value"
                           style="padding:6px 0; font-size:15px; color:#1B1C18; vertical-align:top; font-weight:700;">
-                          {{contact.full_name}}</td>
+                          {{contact.name}}</td>
                       </tr>
                       <tr>
                         <td colspan="2" style="border-top:1px solid #E7E7E3; font-size:0; line-height:0;">&nbsp;</td>
@@ -247,6 +247,18 @@
                         <td class="stack stack-value"
                           style="padding:6px 0; font-size:15px; line-height:1.55; color:#1B1C18; vertical-align:top;">
                           {{contact.job_notes}}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" style="border-top:1px solid #E7E7E3; font-size:0; line-height:0;">&nbsp;</td>
+                      </tr>
+
+                      <tr>
+                        <td class="stack stack-label" width="38%"
+                          style="padding:6px 8px 6px 0; font-size:13px; color:#2E6709; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; vertical-align:top;">
+                          Photos</td>
+                        <td class="stack stack-value"
+                          style="padding:6px 0; font-size:14px; line-height:1.55; color:#1B1C18; vertical-align:top; word-break:break-all;">
+                          {{contact.add_photos}}</td>
                       </tr>
 
                     </table>

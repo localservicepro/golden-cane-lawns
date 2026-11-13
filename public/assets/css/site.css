@@ -621,3 +621,68 @@ body.no-scroll{overflow:hidden}
 /* Hero video plays unmirrored (the container is mirrored for the photo) */
 .hero__media video{transform:scaleX(-1);object-position:50% 50%}
 .split__media .frame--portrait{aspect-ratio:4/5;max-width:480px;margin-inline:auto}
+
+/* Photo upload field (all quote forms) */
+.field__label{font-weight:700;font-size:.9rem;color:var(--green-800)}
+.field__label small{font-weight:500;color:var(--grey-500)}
+.photo-input{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
+.photo-drop{display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:10px 14px;border:1.5px dashed var(--green);border-radius:12px;background:var(--off);color:var(--green-800);font-weight:700;cursor:pointer;transition:background-color .2s,border-color .2s}
+.photo-drop:hover{background:#EEF3E6}
+.photo-drop svg{width:22px;height:22px;color:var(--green)}
+.photo-input:focus-visible + .photo-drop{outline:3px solid var(--yellow);outline-offset:2px}
+.field--photos.is-full .photo-drop{display:none}
+.photo-list{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.photo-list:empty{display:none}
+.photo-list li{position:relative;width:56px;height:56px;border-radius:10px;overflow:hidden;background:var(--grey-100);box-shadow:var(--shadow-sm)}
+.photo-list img{width:100%;height:100%;object-fit:cover}
+.photo-list li::after{content:"";position:absolute;inset:0;background:rgba(16,40,3,.45);transition:opacity .3s}
+.photo-list li.is-uploading::before{content:"";position:absolute;z-index:1;left:50%;top:50%;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;border:2.5px solid #fff;border-right-color:transparent;animation:spin .8s linear infinite}
+.photo-list li.is-done::after{opacity:0}
+.photo-list li.is-error::after{background:rgba(179,38,30,.6)}
+.photo-list button{position:absolute;z-index:2;top:3px;right:3px;width:22px;height:22px;border-radius:50%;border:0;background:rgba(16,40,3,.8);color:#fff;font-size:14px;line-height:22px;padding:0;cursor:pointer}
+.field--photos.is-invalid .photo-drop{border-color:#B3261E}
+
+/* Compact quote popup: fits the screen without scrolling */
+.quote-modal{width:min(680px,calc(100vw - 24px))}
+.form-card--compact{padding:22px 26px 20px}
+.quote-modal .form-card.form-card--compact{padding-bottom:20px}
+.form-card--compact h3{font-size:1.15rem;margin-bottom:.15em}
+.form-card--compact > p{font-size:.9rem;margin:0 0 .9em}
+.form-card--compact .form-grid{gap:10px 12px}
+.form-card--compact .field{gap:4px}
+.form-card--compact .field label,.form-card--compact .field__label{font-size:.8rem}
+.form-card--compact .field input,.form-card--compact .field select{min-height:42px;padding:8px 12px;border-radius:10px;font-size:16px}
+.form-card--compact .field select{padding-right:38px;background-position:right 10px center}
+.form-card--compact .field textarea{min-height:56px;height:56px;padding:8px 12px;border-radius:10px;font-size:16px;resize:none}
+.form-card--compact .field .err{font-size:.76rem}
+.form-card--compact .photo-drop{min-height:42px;padding:6px 12px;border-radius:10px;font-size:.9rem}
+.form-card--compact .photo-list li{width:44px;height:44px;border-radius:8px}
+.form-card--compact .form-foot{margin-top:12px;gap:0}
+.form-card--compact .form-foot small{display:none}
+.form-card--compact .btn{min-height:48px}
+.quote-modal__trust{padding:10px 14px;font-size:.8rem}
+@media (min-width:561px){.form-card--compact .field--pair{grid-column:auto}}
+@media (max-width:560px){
+  .form-card--compact .form-grid{grid-template-columns:1fr 1fr;gap:8px 10px}
+  .quote-modal .form-card.form-card--compact{padding:18px 16px 16px}
+  .form-card--compact h3{font-size:1.05rem;padding-right:44px}
+  .form-card--compact > p{font-size:.85rem;margin-bottom:.7em}
+  .quote-modal__close{top:10px;right:10px;width:38px;height:38px}
+  .quote-modal__trust{gap:4px 12px;padding:9px 10px;font-size:.76rem}
+}
+/* Thank-you / 404: text on the green panel must use light colours */
+.notice .lead{color:rgba(247,246,239,.92)}
+.notice .eyebrow{color:var(--yellow)}
+.notice p a:not(.btn){color:var(--yellow);font-weight:700}
+
+/* Quote popup on short screens (e.g. iPhone SE): drop the intro line and trust strip */
+@media (max-height:700px){
+  .form-card--compact > p{display:none}
+  .form-card--compact h3{margin-bottom:.5em}
+  .form-card--compact .form-grid{gap:7px 10px}
+  .form-card--compact .field input,.form-card--compact .field select{min-height:40px;padding-top:6px;padding-bottom:6px}
+  .form-card--compact .field textarea{min-height:46px;height:46px}
+  .form-card--compact .photo-drop{min-height:40px}
+  .form-card--compact .form-foot{margin-top:10px}
+  .quote-modal__trust{display:none}
+}

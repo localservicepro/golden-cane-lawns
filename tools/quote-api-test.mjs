@@ -14,13 +14,13 @@ const FIELDS = [
   { id: "f_photos", fieldKey: "contact.add_photos" },
 ];
 
-function fakeGhl({ upsert = 201, isNew = true, fields = FIELDS, upload = 200, photo = 200, tag = 201 } = {}) {
+function fakeGhl({ upsert = 201, isNew = true, fields = FIELDS, fieldsStatus = 200, upload = 200, photo = 200, tag = 201 } = {}) {
   const calls = [];
   const fetch = async (url, opts = {}) => {
     url = String(url); calls.push({ url, opts });
     const j = (s, b) => new Response(JSON.stringify(b), { status: s, headers: { "content-type": "application/json" } });
     if (url === `${API}/contacts/upsert`) return upsert < 300 ? j(upsert, { new: isNew, contact: { id: "c42" } }) : j(upsert, { message: "nope" });
-    if (url.startsWith(`${API}/locations/loc123/customFields`)) return j(200, { customFields: fields });
+    if (url.startsWith(`${API}/locations/loc123/customFields`)) return fieldsStatus === 200 ? j(200, { customFields: fields }) : j(fieldsStatus, { message: "The token is not authorized for this scope." });
     if (url.startsWith(`${API}/forms/upload-custom-files`)) return upload < 300 ? j(upload, { id: "c42" }) : j(upload, { message: "bad" });
     if (url === `${API}/contacts/c42/tags`) return opts.method === "DELETE" ? j(200, { tags: [] }) : tag < 300 ? j(tag, { tags: ["website-quote"] }) : j(tag, { message: "x" });
     if (url.includes("blob.vercel-storage.com")) return photo < 300 ? new Response(new Blob([new Uint8Array([255, 216, 255])], { type: "image/jpeg" }), { status: 200 }) : new Response("", { status: photo });
@@ -81,6 +81,17 @@ ok(toE164("0415 190 092") === "+61415190092" && toE164("+61 415 190 092") === "+
 { const g = fakeGhl({ fields: FIELDS.filter(f => f.fieldKey !== "contact.job_notes") }); const r = await make(g)(req(lead)); ok(r.status === 200, "missing custom field is logged, lead still saved"); }
 { const g = fakeGhl(); await make(g, { ...ENV, GHL_QUOTE_TAG: "other-tag" })(req(lead)); ok(JSON.parse(g.calls.at(-1).opts.body).tags[0] === "other-tag", "GHL_QUOTE_TAG overrides the tag"); }
 { const g = fakeGhl(); const many = Array.from({ length: 9 }, (_, i) => PHOTO.replace("yard-1", `y${i}`)); const d = await (await make(g)(req({ ...lead, photos: many }))).json(); ok(d.photos === 5, "caps at 5 photos"); }
+
+{
+  const g = fakeGhl({ fieldsStatus: 401 }); const r = await make(g)(req(lead)); const d = await r.json();
+  const ub = JSON.parse(g.calls.find(c => c.url.endsWith("/upsert")).opts.body);
+  const keys = Object.fromEntries(ub.customFields.map(f => [f.key, f.field_value]));
+  ok(r.status === 200 && keys.property_address === "1 Main St, Ormiston" && keys.service_needed === "Lawn Mowing" && keys.job_notes === "Dog in yard" && d.photos === 0 && g.calls.at(-1).url.endsWith("/tags"), `field lookup 401 (missing scope): lead saved with fields by key and tagged ${JSON.stringify(keys)}`);
+}
+{
+  const g = fakeGhl({ fieldsStatus: 401 }); const r = await make(g, { ...ENV, GHL_PHOTOS_FIELD_ID: "envfld" })(req(lead)); const d = await r.json();
+  ok(d.photos === 2 && [...g.calls.find(c => c.url.includes("upload-custom-files")).opts.body.keys()][0].startsWith("envfld_"), "field lookup 401 + GHL_PHOTOS_FIELD_ID: photos still attached");
+}
 
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

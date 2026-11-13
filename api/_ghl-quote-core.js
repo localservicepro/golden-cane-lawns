@@ -81,16 +81,23 @@ export function createQuoteHandler({ fetch, env, uuid = () => crypto.randomUUID(
     // Custom field ids by key (cached for a few minutes per warm instance)
     if (!fieldCache || now() - fieldCacheAt > FIELDS_TTL) {
       const cf = await fetch(`${API}/locations/${encodeURIComponent(loc)}/customFields?model=contact`, { headers });
-      if (!cf.ok) { await logFail("custom field lookup", cf); return json(502, { error: "Could not reach the CRM." }); }
-      fieldCache = Object.fromEntries(((await cf.json())?.customFields || []).map(f => [f.fieldKey, f.id]));
-      fieldCacheAt = now();
+      if (cf.ok) {
+        fieldCache = Object.fromEntries(((await cf.json())?.customFields || []).map(f => [f.fieldKey, f.id]));
+        fieldCacheAt = now();
+      } else {
+        // Don't lose the lead: fall back to sending fields by key (and the photo
+        // field id from GHL_PHOTOS_FIELD_ID). Usually a missing token scope.
+        await logFail("custom field lookup (needs locations/customFields.readonly scope; falling back to keys)", cf);
+      }
     }
+    const ids = fieldCache || {};
     const customFields = [];
     for (const [formName, key] of Object.entries(CUSTOM_FIELDS)) {
       const value = clean(body[formName], formName === "job_notes" ? 3000 : 300);
       if (!value) continue;
-      if (fieldCache[key]) customFields.push({ id: fieldCache[key], field_value: value });
-      else console.error(`quote: no custom field with key ${key}`);
+      if (ids[key]) customFields.push({ id: ids[key], field_value: value });
+      else if (fieldCache) console.error(`quote: no custom field with key ${key}`);
+      else customFields.push({ key: key.replace(/^contact\./, ""), field_value: value });
     }
 
     // 1. contact
@@ -105,7 +112,7 @@ export function createQuoteHandler({ fetch, env, uuid = () => crypto.randomUUID(
     // 2. photos (a failure here doesn't lose the lead)
     let attached = 0;
     if (photos.length) {
-      const fieldId = fieldCache[PHOTOS_KEY];
+      const fieldId = ids[PHOTOS_KEY] || env.GHL_PHOTOS_FIELD_ID;
       if (!fieldId) console.error(`quote: no custom field with key ${PHOTOS_KEY}`);
       else {
         const form = new FormData();

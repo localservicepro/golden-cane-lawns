@@ -299,11 +299,12 @@ for (const [w, h, mobile] of [[1440, 900, false], [1280, 720, false], [390, 844,
   await ctx.close();
 }
 
-// Photo uploads: links land in add_photos and reach the tracker; submit waits for uploads; failures block
+// Photo uploads: links go to /api/attach-photos (GHL File Upload field) after tracking; submit waits for uploads; failures block
 const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==", "base64");
 for (const [label, mode] of [["upload ok", "ok"], ["submit while uploading", "slow"], ["upload fails", "fail"]]) {
   const { ctx, page } = await newPage({ width: 1280, height: 900 });
-  let n = 0;
+  let n = 0; const attach = [];
+  await ctx.route("**/api/attach-photos", r => { attach.push({ body: r.request().postDataJSON(), keepalive: true }); r.fulfill({ status: 200, contentType: "application/json", body: '{"ok":true}' }); });
   await ctx.route("**/api/upload**", async r => {
     if (mode === "fail") return r.fulfill({ status: 500, contentType: "application/json", body: '{"error":"x"}' });
     if (mode === "slow") await new Promise(res => setTimeout(res, 2500));
@@ -317,18 +318,18 @@ for (const [label, mode] of [["upload ok", "ok"], ["submit while uploading", "sl
   await f.locator(".photo-input").setInputFiles([{ name: "yard-1.png", mimeType: "image/png", buffer: PNG }, { name: "yard-2.png", mimeType: "image/png", buffer: PNG }]);
   if (mode === "ok") {
     await page.waitForFunction(() => document.querySelectorAll(".photo-list li.is-done").length === 2);
-    const v = await f.locator("[name=add_photos]").inputValue();
-    log(v === "https://blob.example/quote-photos/p1.png, https://blob.example/quote-photos/p2.png" || v.split(", ").length === 2, `photos uploaded, add_photos = "${v}"`);
     await Promise.all([page.waitForURL(/\/thank-you$/, { timeout: 8000 }), f.locator("[type=submit]").click()]);
     const t = (await page.evaluate(() => JSON.parse(sessionStorage.getItem("__tracked") || "[]")))[0] || {};
-    log(/blob\.example\/quote-photos\/p\d\.png, https:\/\/blob\.example/.test(t.add_photos || "") && !Object.values(t).some(x => typeof x !== "string"), `tracker received add_photos (text only, no file data): ${t.add_photos}`);
+    log(!("add_photos" in t) && t.email === "photo@example.com" && !Object.values(t).some(x => typeof x !== "string"), `tracker got the lead without photo data: ${Object.keys(t).join(",")}`);
+    const b = (attach[0] || {}).body || {};
+    log(attach.length === 1 && b.email === "photo@example.com" && b.phone === "0400 000 000" && b.name === "Photo Tester" && (b.photos || []).length === 2 && b.photos.every(u => /quote-photos\/p\d\.png$/.test(u)), `attach-photos called once with contact + 2 links: ${JSON.stringify(b)}`);
   } else if (mode === "slow") {
     await f.locator("[type=submit]").click();
     await page.waitForTimeout(400);
     const busy = await f.locator("[type=submit] span").textContent();
     await page.waitForURL(/\/thank-you$/, { timeout: 12000 });
     const t = await page.evaluate(() => JSON.parse(sessionStorage.getItem("__tracked") || "[]"));
-    log(busy.includes("Uploading") && t.length === 1 && (t[0].add_photos || "").split(", ").length === 2, `submit waited for uploads ("${busy}") then sent once with both links`);
+    log(busy.includes("Uploading") && t.length === 1 && attach.length === 1 && (attach[0].body.photos || []).length === 2, `submit waited for uploads ("${busy}") then sent once and attached both photos`);
   } else {
     await page.waitForFunction(() => document.querySelectorAll(".photo-list li.is-error").length === 2);
     await f.locator("[type=submit]").click();
@@ -336,7 +337,7 @@ for (const [label, mode] of [["upload ok", "ok"], ["submit while uploading", "sl
     const blocked = !page.url().includes("thank-you") && await f.locator(".field--photos.is-invalid").count() === 1;
     await f.locator(".photo-list button").first().click(); await f.locator(".photo-list button").first().click();
     await Promise.all([page.waitForURL(/\/thank-you$/, { timeout: 8000 }), f.locator("[type=submit]").click()]);
-    log(blocked, "failed uploads block submit until removed, then the form sends");
+    log(blocked && attach.length === 0, "failed uploads block submit until removed, then the form sends (no attach call)");
   }
   await ctx.close();
 }

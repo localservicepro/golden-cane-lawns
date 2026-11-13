@@ -6,7 +6,7 @@ export const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/he
 const EXT = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/heic": "heic", "image/heif": "heif" };
 
 // Only the live site, Vercel preview deployments and local development may upload.
-const ORIGIN_OK = /^(https:\/\/(www\.)?goldencanelawns\.com\.au|https:\/\/[a-z0-9-]+\.vercel\.app|http:\/\/localhost(:\d+)?)$/;
+export const ORIGIN_OK = /^(https:\/\/(www\.)?goldencanelawns\.com\.au|https:\/\/[a-z0-9-]+\.vercel\.app|http:\/\/localhost(:\d+)?)$/;
 
 const json = (status, body) =>
   new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json", "cache-control": "no-store" } });

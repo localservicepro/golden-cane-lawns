@@ -196,12 +196,11 @@
   }
 
   /* Photo uploads on quote forms
-     Each photo is resized in the browser (max 1600px JPEG), uploaded to
-     /api/upload (Vercel Blob), and its public URL is written into the
-     `add_photos` text field, which the GHL tracker sends to {{contact.add_photos}}.
-     That field is a normal text input tucked out of sight with clipping: GHL's
-     tracker never captures type="hidden" or disabled fields. The file input has
-     no name, so files themselves are never sent to the tracker. */
+     Each photo is resized in the browser (max 1600px JPEG) and uploaded to
+     /api/upload (Vercel Blob). The links are kept on the form; after the GHL
+     tracker has recorded the lead, /api/attach-photos attaches the photos to the
+     contact's File Upload field {{contact.add_photos}} through the GHL API.
+     The file input has no name, so the tracker never sees the files. */
   var UPLOAD_URL = "/api/upload", MAX_PHOTOS = 5;
   function resizePhoto(file) {
     return new Promise(function (resolve) {
@@ -220,10 +219,10 @@
   }
   document.querySelectorAll(".field--photos").forEach(function (wrap) {
     var input = wrap.querySelector(".photo-input"), list = wrap.querySelector(".photo-list");
-    var hidden = wrap.querySelector('[name="add_photos"]'), form = wrap.closest("form");
+    var form = wrap.closest("form");
     var items = [];
     function sync() {
-      hidden.value = items.filter(function (i) { return i.url; }).map(function (i) { return i.url; }).join(", ");
+      form.dataset.photos = JSON.stringify(items.filter(function (i) { return i.url; }).map(function (i) { return i.url; }));
       var uploading = items.some(function (i) { return i.status === "uploading"; });
       var failed = items.some(function (i) { return i.status === "error"; });
       form.dataset.uploading = uploading ? "1" : "";
@@ -270,6 +269,21 @@
        3. window bubble phase (runs last): prevent the default navigation and
           redirect to /thank-you once the tracker has had time to send. */
   var THANK_YOU = "/thank-you";
+  // Hands the uploaded photo links to /api/attach-photos, which finds the contact
+  // (by email/phone) and attaches the photos to {{contact.add_photos}}.
+  // keepalive lets the request finish while the page moves to /thank-you.
+  function attachPhotos(form) {
+    var photos = [];
+    try { photos = JSON.parse(form.dataset.photos || "[]"); } catch (err) {}
+    if (!photos.length) return;
+    var val = function (n) { var el = form.querySelector("[name=" + n + "]"); return el ? el.value.trim() : ""; };
+    try {
+      fetch("/api/attach-photos", {
+        method: "POST", keepalive: true, headers: { "content-type": "application/json" },
+        body: JSON.stringify({ name: val("full_name"), email: val("email"), phone: val("phone"), photos: photos })
+      }).catch(function () {});
+    } catch (err) { /* fetch unavailable */ }
+  }
   function fieldWrap(input) { return input.closest(".field"); }
   function validate(form) {
     var ok = true, first = null;
@@ -326,6 +340,7 @@
     var form = e.target;
     if (!form.classList || !form.classList.contains("js-quote")) return;
     e.preventDefault();
+    attachPhotos(form);
     setTimeout(function () { window.location.href = THANK_YOU; }, 1500);
   }, false);
 
